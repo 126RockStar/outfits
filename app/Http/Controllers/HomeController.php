@@ -37,8 +37,5 @@ class HomeController extends Controller
         $referredUsers=User::where('refered_user_id',Auth::id())->get();
         return view('home',compact('referredUsers'));
     }
-    public function adminDashboard()
-    {
-        return view('home');
-    }
+ 
 }
