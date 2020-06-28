@@ -16,7 +16,7 @@
 
   <!-- Stylesheet -->
   <link href="{{asset('public/frontEnd')}}/css/preloader.css" rel="stylesheet" type="text/css" />
-  <link rel="stylesheet" href="{{asset('public/frontEnd')}}/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{{asset('public/frontEnd')}}/css/bootstrap.min.css?v=1ea0">
   <link rel="stylesheet" href="{{asset('public/frontEnd')}}/css/all.min.css">
   <!-- Custom Stylesheet after this line -->
   <!-- SmartMenus core CSS (required) -->
@@ -26,7 +26,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-#4d5465 shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
