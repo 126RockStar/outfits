@@ -9,15 +9,20 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('public/js/app.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
-    <!-- Styles -->
-    <link href="{{ asset('public/css/app.css') }}" rel="stylesheet">
+  <!-- Stylesheet -->
+  <link href="{{asset('public/frontEnd')}}/css/preloader.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="{{asset('public/frontEnd')}}/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{{asset('public/frontEnd')}}/css/all.min.css">
+  <!-- Custom Stylesheet after this line -->
+  <!-- SmartMenus core CSS (required) -->
+  <link href="{{asset('public/frontEnd')}}/css/jquery.smartmenus.bootstrap-4.css" rel="stylesheet" type="text/css" />
+  {{-- <link href="{{asset('public/frontEnd')}}/css/style.css" rel="stylesheet" type="text/css" /> --}}
+    
 </head>
 <body>
     <div id="app">
@@ -36,8 +41,55 @@
 
                     </ul>
 
+                    @php
+                        $categories=App\Category::with('getSubCategories')->get();
+                    @endphp
+
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
+                    <ul class="navbar-nav ml-auto" id="categoryMenu">
+
+                        {{-- <li><a href="#">Categories</a>
+                            <ul>
+                                @forelse($categories as $key=>$category)
+                                    <li>
+                                        <a class="" href="{{route('index','category='.$category->id)}}" >{{$category->name}}</a>
+                                        @if(count($category->getSubCategories)>0)
+                                            <ul>
+                                                @forelse($category->getSubCategories as $subCategory)
+                                                    <li class="">
+                                                        <a class="" href="{{route('index','category='.$category->id.'&subCategory='.$subCategory->id)}}">{{$subCategory->name}}</a>
+                                                    </li>
+                                                @empty
+                                                    <li class="text-danger"> {{__('No sub-category found')}}</li>
+                                                @endforelse
+                                            </ul>
+                                        @endif
+                                    </li>
+                                @empty 
+                                    <li class="text-danger">{{__('No categories found.')}}</li>
+                                @endforelse
+                            </ul>
+                        </li> --}}
+
+
+                        @forelse($categories as $key=>$category)
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{$category->name}}
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#">All</a>
+                                <div class="dropdown-divider"></div>
+                                @forelse($category->getSubCategories as $subCategory)
+                                    <a class="dropdown-item" href="#">{{$subCategory->name}}</a>
+                                @empty
+                                    {{-- <li class="text-danger"> {{__('No sub-category found')}}</li> --}}
+                                @endforelse
+                                </div>
+                            </li>
+                        @empty 
+                            {{-- <li class="text-danger">{{__('No categories found.')}}</li> --}}
+                        @endforelse
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
@@ -106,5 +158,28 @@
             @yield('content')
         </main>
     </div>
+    <!-- Scripts -->
+    <script src="{{asset('public/frontEnd')}}/js/jquery-3.3.1.min.js"></script>
+    <script src="{{asset('public/frontEnd')}}/js/popper.min.js"></script>
+    <script src="{{asset('public/frontEnd')}}/js/bootstrap.min.js"></script>
+
+    <!-- SmartMenus jQuery plugin -->
+    <script type="text/javascript" src="{{asset('public/frontEnd')}}/js/jquery.smartmenus.min.js"></script>
+    <script type="text/javascript" src="{{asset('public/frontEnd')}}/js/jquery.smartmenus.bootstrap-4.min.js"></script>
+    {{-- <script>
+        $(document).ready(function() {
+            setTimeout(function(){
+                $('#preloader').hide();
+            }, 3000);
+        });
+    </script> --}}
+    <script>
+       $(function() {
+            $('#categoryMenu').smartmenus({
+                subMenusSubOffsetX: 1,
+                subMenusSubOffsetY: -8
+            });
+        });
+    </script>
 </body>
 </html>

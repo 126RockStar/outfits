@@ -13,10 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    // dd(\Bigbluebutton::isConnect());
-    return view('welcome');
-});
+Route::get('/','FrontendController@index')->name('index');
 Auth::routes(['verify'=>true]);
 Route::get('/home', 'HomeController@index')->name('home')->middleware(['verified']);
 
