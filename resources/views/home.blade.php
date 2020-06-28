@@ -13,7 +13,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <h1>Welcome <b>{{Auth::user()->name}}</b></h1>
+                    <h1>Welcome <b>{{Auth::user()->username}}</b></h1>
 <!-- ---------------------------------------------------------referral link code not going to be used yet 
                     @if(Auth::user()->type=='user')
                         <br><br>

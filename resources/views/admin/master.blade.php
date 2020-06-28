@@ -55,6 +55,7 @@
         @include('admin/inc/right-sidebar')
         <!-- bundle -->
         <script src="{{ asset('public/admin/sweetalert2/sweetalert2.min.js') }}"></script>
+        <script src="{{ asset('public/js/font-awesome.min.js') }}"></script>
         <!-- Scripts -->
         <script src="{{ asset('public/admin/js/app.min.js') }}"></script>
 

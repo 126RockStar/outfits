@@ -23,7 +23,13 @@
                 </a>
             </li>
 
-            <li class="side-nav-item {{Request::is('/admin')? 'active' : ''}}">
+            <li class="side-nav-item {{Request::is('/admin/categories')? 'active' : ''}}">
+                <a href="{{route('admin.categories.index')}}" class="side-nav-link">
+                    <i class="fa fa-list mr-2"></i>
+                    <span>&nbsp;Categories </span>
+                </a>
+            </li>
+            <li class="side-nav-item {{Request::is('/admin/users*')? 'active' : ''}}">
                 <a href="{{route('admin.users.list')}}" class="side-nav-link">
                     <i class="mdi mdi-account-multiple"></i>
                     <span> Users </span>

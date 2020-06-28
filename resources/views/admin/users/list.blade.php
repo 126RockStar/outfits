@@ -72,7 +72,7 @@
 
                                             @if($user->id !=1)
                                                 @if($user->deleted_at == '')
-                                                    <a href="{{route('admin.users.block',$user->id)}}" onclick="return confirm('Are you sure to block the user?')" class="btn btn-danger btn-sm"> <i class="mdi mdi-block-helper"></i></a>
+                                                    <a href="{{route('admin.users.block',$user->id)}}" onclick="return confirm('Are you sure to block the user?')" class="btn btn-warning btn-sm"> <i class="mdi mdi-block-helper"></i></a>
                                                 
                                                 @else
                                                     <a href="{{route('admin.users.unblock',$user->id)}}" class="btn btn-success btn-sm"> <i class="mdi mdi-restore"></i></a>
