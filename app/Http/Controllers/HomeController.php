@@ -26,10 +26,10 @@ class HomeController extends Controller
     public function index()
     {
         if(Auth::user()->type=='admin'){
-            return redirect(route('admin.cashboard'));
+            return redirect(route('admin.dashboard'));
         }else{
             
-            return redirect(route('user.cashboard'));
+            return redirect(route('user.dashboard'));
         }
     }
     public function userDashboard()

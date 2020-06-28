@@ -14,14 +14,14 @@
 <div class="container-fluid">
         <div class="row pt-3">
             <div class="col-md-3 ">
-              <div class="card bg-danger widget-flat">
+              <div class="card bg-success widget-flat">
                   <div class="card-body">
                       <div class="float-right">
-                          <i class="mdi mdi-account-check icon-lg"></i>
+                          <i class="mdi mdi-account-multiple icon-lg"></i>
                       </div>
-                      <h5 class="text-muted font-weight-normal mt-0" title="Number of Customers">User Verification</h5>
-                      <h3 class="mt-3 mb-3">2</h3>
-                      <a href="" class="btn btn-light btn-sm">View Details</a>
+                      <h5 class="text-white font-weight-normal mt-0" title="Number of Customers">Users</h5>
+                      <h3 class="mt-3 mb-3">{{$users}}</h3>
+                      <a href="{{route('admin.users.list')}}" class="btn btn-light btn-sm text white">View Details</a>
                       <!-- <p class="mb-0 text-muted">
                           <span class="text-success mr-2"><i class="mdi mdi-arrow-up-bold"></i> 5.27%</span>
                           <span class="text-nowrap">Since last month</span>
