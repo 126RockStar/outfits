@@ -22,7 +22,7 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware(['verified
 
 
 Route::middleware(['checkUser','verified'])->prefix('user/')->name('user.')->group(function(){
-    Route::get('/dashboard', 'HomeController@userDashboard')->name('cashboard');
+    Route::get('/dashboard', 'HomeController@userDashboard')->name('dashboard');
 
 
 
