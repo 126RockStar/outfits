@@ -2,10 +2,10 @@
 Route::middleware(['checkAdmin'])->prefix('admin/')->name('admin.')->group(function(){
 
     Route::get('/dashboard', 'AdminController@dashboard')->name('dashboard');
-    Route::get('/users/list', 'AdminController@userLists')->name('users.list');
-    Route::get('/users/block/{id}', 'AdminController@blockUser')->name('users.block');
-    Route::get('/users/unblock/{id}', 'AdminController@unblockUser')->name('users.unblock');
-    Route::get('/users/delete/{id}', 'AdminController@deleteUser')->name('users.delete');
+    Route::resource('/users', 'UserController');
+    Route::get('/users/block/{id}', 'UserController@blockUser')->name('users.block');
+    Route::get('/users/unblock/{id}', 'UserController@unblockUser')->name('users.unblock');
+    Route::get('/users/delete/{id}', 'UserController@deleteUser')->name('users.delete');
 
     route::resource('/categories','CategoryController');   
     Route::post('/sub-category/update/{id}','CategoryController@updateSubCategory')->name('sub-category.update');

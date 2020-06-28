@@ -21,7 +21,7 @@
                       </div>
                       <h5 class="text-white font-weight-normal mt-0" title="Number of Customers">Users</h5>
                       <h3 class="mt-3 mb-3">{{$users}}</h3>
-                      <a href="{{route('admin.users.list')}}" class="btn btn-light btn-sm text white">View Details</a>
+                      <a href="{{route('admin.users.index')}}" class="btn btn-light btn-sm text white">View Details</a>
                       <!-- <p class="mb-0 text-muted">
                           <span class="text-success mr-2"><i class="mdi mdi-arrow-up-bold"></i> 5.27%</span>
                           <span class="text-nowrap">Since last month</span>

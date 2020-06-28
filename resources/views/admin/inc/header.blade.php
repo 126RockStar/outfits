@@ -51,10 +51,10 @@
             <a class="nav-link dropdown-toggle nav-user arrow-none mr-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="false"
                 aria-expanded="false">
                 <span class="account-user-avatar">
-                    <img src="{{asset('public/storage/'.Auth::user()->profile_picture)}} " alt="user-image" class="rounded-circle">
+                    <img src="{{asset('public/storage/avatar.jpg')}} " alt="user-image" class="rounded-circle">
                 </span>
                 <span>
-                    <span class="account-user-name">{{Auth::user()->name}}</span>
+                    <span class="account-user-name">{{Auth::user()->username}}</span>
                     <span class="account-position">{{Auth::user()->type}}</span>
                 </span>
             </a>

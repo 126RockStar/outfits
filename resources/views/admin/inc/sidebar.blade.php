@@ -30,7 +30,7 @@
                 </a>
             </li>
             <li class="side-nav-item {{Request::is('/admin/users*')? 'active' : ''}}">
-                <a href="{{route('admin.users.list')}}" class="side-nav-link">
+                <a href="{{route('admin.users.index')}}" class="side-nav-link">
                     <i class="mdi mdi-account-multiple"></i>
                     <span> Users </span>
                 </a>

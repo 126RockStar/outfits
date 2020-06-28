@@ -78,6 +78,7 @@
                                                     <a href="{{route('admin.users.unblock',$user->id)}}" class="btn btn-success btn-sm"> <i class="mdi mdi-restore"></i></a>
                                                 @endif
                                                 <a href="{{route('admin.users.delete',$user->id)}}" onclick="return confirm('Are you sure to delete the user?')" class="btn btn-danger btn-sm"> <i class="mdi mdi-delete"></i></a>
+                                                <a href="{{route('admin.users.edit',$user->id)}}" class="btn btn-info btn-sm"> <i class="fa fa-edit"></i></a>
                                             @endif
                                         </td>
                                     </tr>

@@ -12,15 +12,16 @@
                         <div class="alert alert-success" role="alert">
                             {{ __('A fresh verification link has been sent to your email address.') }}
                         </div>
+                        {{ __('Before proceeding, please check your email for a verification link.') }}
+                        Check the spam box also in case you don't find in inbox.
+                    @else
+                       
+                        {{ __('If you did not receive the email') }},
+                        <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
+                            @csrf 
+                            <button type="submit" class="btn btn-link p-0 m-0 align-baseline text-warning">{{ __('click here to request another') }}</button>.
+                        </form>
                     @endif
-
-                    {{ __('Before proceeding, please check your email for a verification link.') }}
-                    Check the spam box also in case you don't find in inbox.
-                    {{ __('If you did not receive the email') }},
-                    <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
-                        @csrf 
-                        <button type="submit" class="btn btn-link p-0 m-0 align-baseline text-warning">{{ __('click here to request another') }}</button>.
-                    </form>
                 </div>
             </div>
         </div>
