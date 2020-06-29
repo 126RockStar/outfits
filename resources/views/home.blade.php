@@ -15,7 +15,7 @@
                         </div>
                     @endif
                     <div class="row">
-                        {{-- @forelse($contests as $contest)
+                        @forelse($contests as $contest)
                         <div class="col-md-4">
                             <div class="card">
                             <div class="card-header text-capitalize">{{$contest->getCategory->name}} > {{$contest->getSubCategory->name}}({{$contest->participants}} participants)</div>
@@ -37,7 +37,7 @@
                         @empty 
                             <h3 class="text-danger text-center">You haven't added any contest yet</h3>
                         @endforelse
-                        {{$contests->links()}} --}}
+                        {{$contests->links()}}
                     </div>
 
                     {{-- @if(Auth::user()->type=='user')

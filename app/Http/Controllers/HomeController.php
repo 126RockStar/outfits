@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Contest;
+use App\SubCategory;
 use Auth;
 use App\User;
 use Illuminate\Http\Request;
@@ -35,7 +37,13 @@ class HomeController extends Controller
     public function userDashboard()
     {
         $referredUsers=User::where('refered_user_id',Auth::id())->get();
-        return view('home',compact('referredUsers'));
+        $contests=Contest::where('user_id',Auth::id())->paginate(12);
+        return view('home',compact('referredUsers','contests'));
     }
+
+    public function fetchSubCategory(Request $request){
+        $subCategories = SubCategory::where("category_id",$request->catID)->pluck("name","id");
+        return json_encode($subCategories);
+      }
  
 }

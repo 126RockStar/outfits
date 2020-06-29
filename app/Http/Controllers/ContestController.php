@@ -38,7 +38,36 @@ class ContestController extends Controller
      */
     public function store(Request $request)
     {
-    
+        
+        $request->validate([
+            'title'=>'required',
+            'category'=>'required',
+            'sub_category'=>'required',
+            'description'=>'required',
+            'participants'=>'required',
+            'photo'=>'required',
+        ]);
+
+        if(isset($request->prize)){
+            $request->validate(['prize_description'=>'required']);
+        }
+        $path=$request->file('photo')->store('contest');
+
+        $contest=Contest::create([
+            'user_id'=>Auth::id(),
+            'title'=>$request->title,
+            'category'=>$request->category,
+            'sub_category'=>$request->sub_category,
+            'description'=>$request->description,
+            'participants'=>$request->participants,
+            'photo'=>$path,
+        ]);
+
+        if(isset($request->prize)){
+            $contest->update(['prize_description'=>$request->prize_description]);
+        }
+
+        return redirect(route('user.dashboard'))->with('success','contest added successfully');
     }
 
     /**
