@@ -23,7 +23,7 @@
      <!-- SmartMenus core CSS (required) -->
      <link href="{{asset('public/frontEnd')}}/css/sm-core-css.css" rel="stylesheet" type="text/css" />
      <link href="{{asset('public/frontEnd')}}/css/sm-clean/sm-clean.css" rel="stylesheet" type="text/css" />
-     
+     @yield('styles')
 </head>
 <body>
     <div id="app">
@@ -95,11 +95,11 @@
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link btn btn-outline-info btn-sm mr-1" style="padding: .1rem" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <a class="nav-link btn btn-info mr-1" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link btn btn-outline-info btn-sm" style="padding: .1rem" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link btn btn-success" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
                         @else
@@ -182,5 +182,6 @@
             subMenusSubOffsetY: -8
         });
     </script>
+    @yield('scripts')
 </body>
 </html>

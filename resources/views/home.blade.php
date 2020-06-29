@@ -14,6 +14,7 @@
                         </div>
                     @endif
                     <h1>Welcome <b>{{Auth::user()->username}}</b></h1>
+                    <a href="{{route('user.contests.create')}}"class="btn btn-success btn-lg">Create Contest</a>
 <!-- ---------------------------------------------------------referral link code not going to be used yet 
                     @if(Auth::user()->type=='user')
                         <br><br>
