@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use App\Category;
+use App\Contest;
 use Illuminate\Http\Request;
 
 class ContestController extends Controller
@@ -23,7 +26,8 @@ class ContestController extends Controller
      */
     public function create()
     {
-        return view('contests/create');
+        $categories=Category::all();
+        return view('contests/create',compact('categories'));
     }
 
     /**
@@ -34,7 +38,7 @@ class ContestController extends Controller
      */
     public function store(Request $request)
     {
-        //
+    
     }
 
     /**
@@ -79,6 +83,7 @@ class ContestController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Contest::where('id',$id)->delete();
+        return back()->with('success','contest delted successfully');
     }
 }
