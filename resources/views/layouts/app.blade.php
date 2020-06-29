@@ -16,13 +16,14 @@
 
   <!-- Stylesheet -->
   <link href="{{asset('public/frontEnd')}}/css/preloader.css" rel="stylesheet" type="text/css" />
-  <link rel="stylesheet" href="{{asset('public/frontEnd')}}/css/bootstrap.min.css?v=1ea0">
+  <link rel="stylesheet" href="{{asset('public/frontEnd')}}/css/bootstrap.min.css">
   <link rel="stylesheet" href="{{asset('public/frontEnd')}}/css/all.min.css">
   <!-- Custom Stylesheet after this line -->
-  <!-- SmartMenus core CSS (required) -->
-  <link href="{{asset('public/frontEnd')}}/css/jquery.smartmenus.bootstrap-4.css" rel="stylesheet" type="text/css" />
-  {{-- <link href="{{asset('public/frontEnd')}}/css/style.css" rel="stylesheet" type="text/css" /> --}}
-    
+
+     <!-- SmartMenus core CSS (required) -->
+     <link href="https://e-schooloflife.softnursery.com/public/frontEnd/vendor/smartmenu/sm-core-css.css" rel="stylesheet" type="text/css" />
+     <link href="https://e-schooloflife.softnursery.com/public/frontEnd/vendor/smartmenu/sm-clean/sm-clean.css" rel="stylesheet" type="text/css" />
+     
 </head>
 <body>
     <div id="app">
@@ -37,18 +38,12 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
-
                     @php
                         $categories=App\Category::with('getSubCategories')->get();
                     @endphp
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto" id="categoryMenu">
-
-                        {{-- <li><a href="#">Categories</a>
+                    <ul class="navbar-nav mr-auto sm sm-clean"  id="categoryMenu">
+                        
+                        <li><a href="#">Categories</a>
                             <ul>
                                 @forelse($categories as $key=>$category)
                                     <li>
@@ -66,12 +61,19 @@
                                         @endif
                                     </li>
                                 @empty 
-                                    <li class="text-danger">{{__('No categories found.')}}</li>
+                                    {{-- <li class="text-danger">{{__('No categories found.')}}</li> --}}
                                 @endforelse
                             </ul>
-                        </li> --}}
+                        </li>
+                    </ul>
+
+                   
+
+                    <!-- Right Side Of Navbar -->
+                    <ul class="navbar-nav ml-auto">
 
 
+{{-- 
                         @forelse($categories as $key=>$category)
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -83,13 +85,13 @@
                                 @forelse($category->getSubCategories as $subCategory)
                                     <a class="dropdown-item" href="#">{{$subCategory->name}}</a>
                                 @empty
-                                    {{-- <li class="text-danger"> {{__('No sub-category found')}}</li> --}}
+                                    <li class="text-danger"> {{__('No sub-category found')}}</li>
                                 @endforelse
                                 </div>
                             </li>
                         @empty 
-                            {{-- <li class="text-danger">{{__('No categories found.')}}</li> --}}
-                        @endforelse
+                            <li class="text-danger">{{__('No categories found.')}}</li>
+                        @endforelse --}}
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
@@ -163,9 +165,9 @@
     <script src="{{asset('public/frontEnd')}}/js/popper.min.js"></script>
     <script src="{{asset('public/frontEnd')}}/js/bootstrap.min.js"></script>
 
-    <!-- SmartMenus jQuery plugin -->
-    <script type="text/javascript" src="{{asset('public/frontEnd')}}/js/jquery.smartmenus.min.js"></script>
-    <script type="text/javascript" src="{{asset('public/frontEnd')}}/js/jquery.smartmenus.bootstrap-4.min.js"></script>
+ <!-- SmartMenus core CSS (required) -->
+    <script src="https://e-schooloflife.softnursery.com/public/frontEnd/vendor/smartmenu/jquery.smartmenus.min.js"></script>
+
     {{-- <script>
         $(document).ready(function() {
             setTimeout(function(){
@@ -174,11 +176,10 @@
         });
     </script> --}}
     <script>
-       $(function() {
-            $('#categoryMenu').smartmenus({
-                subMenusSubOffsetX: 1,
-                subMenusSubOffsetY: -8
-            });
+       
+        $('#categoryMenu').smartmenus({
+            subMenusSubOffsetX: 1,
+            subMenusSubOffsetY: -8
         });
     </script>
 </body>
