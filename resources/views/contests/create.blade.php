@@ -328,7 +328,7 @@ $(document).ready(function(){
             });
             setProgressBar(++current);
         }else{
-            showFrontendAlert('error', '{{ ("some required fields are missing, please fill star marked fields") }}');
+            alert("some required fields are missing, please fill star marked fields");
         }
     });
 
@@ -414,8 +414,10 @@ $(document).ready(function(){
         var product=$(this).attr('data');
         if($(this).prop('checked')){
             $("#prize-description-row").removeClass('d-none');
+            $("#prize_description").attr('required','');
         }else{
             $("#prize-description-row").addClass('d-none');
+            $("#prize_description").removeAttr('required');
         }
   });
 
@@ -456,7 +458,7 @@ $(document).ready(function(){
                             <ul id="progressbar">
                                 <li class="active" id="one"><strong>Title</strong></li>
                                 <li id="two"><strong>Category</strong></li>
-                                <li id="three"><strong>Rules</strong></li>
+                               <li id="three"><strong>Rules</strong></li>
                                 <li id="four"><strong>Entries</strong></li>
                                 <li id="five"><strong>Prize</strong></li>
                                 <li id="six"><strong>Upload</strong></li>
@@ -464,7 +466,6 @@ $(document).ready(function(){
                          {{--   <div class="progress">
                                 <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
                             </div> <br> --}} 
-							<!-- fieldsets -->
                             <fieldset>
                                 <div class="form-card p-3">
                                     <div class="row">
@@ -506,7 +507,7 @@ $(document).ready(function(){
 									{{--   <label  class="col-md-6 text-dark text-right">Category<span class="text-danger">*</span></label>--}}
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <select  style="width: 100%" class="select2 {{ $errors->has('sub_category') ? ' is-invalid' : '' }} form-control" id="contest-category" name="sub_category" title="sub_category" required>
+                                                <select  style="width: 100%" class="{{ $errors->has('sub_category') ? ' is-invalid' : '' }} form-control" id="contest-category" name="sub_category" title="sub_category" required>
                                                     <option value="">Select Category</option>
                                                     @forelse($categories as $category)
                                                     <optgroup label="{{$category->name}}">
@@ -593,7 +594,7 @@ $(document).ready(function(){
 									{{--  <label  class="col-md-6 text-dark text-right">Participants</label>--}}
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <select data-toggle="select2" class="{{ $errors->has('participants') ? ' is-invalid' : '' }} form-control" id="contest-sub_category" name="participants" title="participants">
+                                                <select class="{{ $errors->has('participants') ? ' is-invalid' : '' }} form-control" id="contest-sub_category" name="participants" title="participants" required>
                                                     <option value="">Select Participants</option>
                                                     <option value="50"{{ old('participants')=='50'?'selected':'' }}>50</option>
                                                     <option value="100"{{ old('participants')=='100'?'selected':'' }}>100</option>
@@ -635,7 +636,7 @@ $(document).ready(function(){
                                     <div class="row d-none" id="prize-description-row">
 									{{--  <label  class="col-md-4 text-dark text-right">Prize Description <span class="required-star text-danger">*</span></label> --}}
                                         <div class="col-md-8">
-                                            <textarea class="form-control mb-3 {{ $errors->has('prize_description') ? ' is-invalid' : '' }}" name="prize_description" placeholder="Description of contest prize">{{old('prize_description')}}</textarea>
+                                            <textarea id="prize_description" class="form-control mb-3 {{ $errors->has('prize_description') ? ' is-invalid' : '' }}" name="prize_description" placeholder="Description of contest prize">{{old('prize_description')}}</textarea>
                                             @if ($errors->has('prize_description'))
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('prize_description') }}</strong>
@@ -661,7 +662,7 @@ $(document).ready(function(){
 
 
                                     <div class="row">
-									{{-- <label class="col-md-4 text-dark text-right">Photo</label>--}}
+                                        <label class="col-md-4 text-dark text-right">Photo<span class="required-star text-danger">*</span></label>
                                         <div class="col-md-2">
                                             <div class="p-4 bg-light">
                                                 <div id="photoGallery"> </div>
