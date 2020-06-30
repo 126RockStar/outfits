@@ -13,4 +13,6 @@ Route::middleware(['checkAdmin'])->prefix('admin/')->name('admin.')->group(funct
     Route::get('/sub-category/delete/{id}','CategoryController@deleteSubCategory')->name('sub-category.delete');
     Route::post('/sub-category/add','CategoryController@addSubCategory')->name('sub-category.add');
     
+    Route::get('/contests', 'ContestController@list')->name('contests');
+    
 });

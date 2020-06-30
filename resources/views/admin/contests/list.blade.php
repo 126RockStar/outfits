@@ -1,10 +1,10 @@
 @extends('admin.master')
 
 @section('title')
-  Users
+Contests
 @endsection
 @section('breadcrumb')
-  <li class="breadcrumb-item active">{{__('Users')}}</li>
+  <li class="breadcrumb-item active">Contests</li>
 @endsection
 
 @section('extra-css')
@@ -38,30 +38,29 @@
                             <table class="table table-centered table-striped dt-responsive nowrap w-100" id="myTable">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
-                                        <th>User</th>
-                                        <th>Email</th>
-                                        <th>Joining Date</th>
-                                        <th>Status</th>
+                                        <th>Title</th>
+                                        <th>Description</th>
+                                        <th>Category</th>
+                                        <th>Prize</th>
                                         <th style="width: 75px;">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                  @forelse($users as $user)
+                                  @forelse($contests as $contest)
                                     <tr>
-                                        <td>{{$user->id}}</td>
                                         <td class="table-user">
                                             <a href="javascript:void(0);" class="text-body font-weight-semibold">
-                                            {{-- <img src="{{asset('public/storage/'.$user->profile_picture)}}" alt="table-user" class="mr-2 rounded-circle"> --}}
-                                            {{$user->username}}</a>
+                                            {{-- <img src="{{asset('public/storage/'.$contest->profile_picture)}}" alt="table-user" class="mr-2 rounded-circle"> --}}
+                                            {{$contest->title}}</a>
                                         </td>
-                                        <td>{{$user->email}}</td>
-                                        <td>{{$user->created_at}}</td>
+                                        <td>{{$contest->description}}</td>
+                                        <td>{{$contest->description}}</td>
+                                        <td>{{$contest->prize_description}}</td>
                                         <td>
-                                          @if($user->deleted_at != '')
+                                          @if($contest->deleted_at != '')
                                             <span class="badge badge-danger-lighten">Blocked</span>
                                           @else
-                                            @if($user->id ==1)
+                                            @if($contest->id ==1)
                                               <span class="badge badge-primary">Admin</span>
                                             @else
                                               <span class="badge badge-success-lighten">Active</span>
@@ -72,15 +71,15 @@
                                         <td>
                                             <!-- <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a> -->
 
-                                            @if($user->id !=1)
-                                                @if($user->deleted_at == '')
-                                                    <a href="{{route('admin.users.block',$user->id)}}" onclick="return confirm('Are you sure to block the user?')" class="btn btn-warning btn-sm"> <i class="mdi mdi-block-helper"></i></a>
+                                            @if($contest->id !=1)
+                                                @if($contest->deleted_at == '')
+                                                    <a href="{{route('admin.users.block',$contest->id)}}" onclick="return confirm('Are you sure to block the user?')" class="btn btn-warning btn-sm"> <i class="mdi mdi-block-helper"></i></a>
                                                 
                                                 @else
-                                                    <a href="{{route('admin.users.unblock',$user->id)}}" class="btn btn-success btn-sm"> <i class="mdi mdi-restore"></i></a>
+                                                    <a href="{{route('admin.users.unblock',$contest->id)}}" class="btn btn-success btn-sm"> <i class="mdi mdi-restore"></i></a>
                                                 @endif
-                                                <a href="{{route('admin.users.delete',$user->id)}}" onclick="return confirm('Are you sure to delete the user?')" class="btn btn-danger btn-sm"> <i class="mdi mdi-delete"></i></a>
-                                                <a href="{{route('admin.users.edit',$user->id)}}" class="btn btn-info btn-sm"> <i class="fa fa-edit"></i></a>
+                                                <a href="{{route('admin.users.delete',$contest->id)}}" onclick="return confirm('Are you sure to delete the user?')" class="btn btn-danger btn-sm"> <i class="mdi mdi-delete"></i></a>
+                                                <a href="{{route('admin.users.edit',$contest->id)}}" class="btn btn-info btn-sm"> <i class="fa fa-edit"></i></a>
                                             @endif
                                         </td>
                                     </tr>

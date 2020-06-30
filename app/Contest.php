@@ -3,11 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Contest extends Model
 {
-    use SoftDeletes;
     
     protected $fillable=['user_id','title','category','sub_category','description','participants','prize_description','photo'];
 

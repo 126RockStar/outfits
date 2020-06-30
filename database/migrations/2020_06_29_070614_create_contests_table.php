@@ -24,7 +24,6 @@ class CreateContestsTable extends Migration
             $table->longText('prize_description')->nullable();
             $table->string('photo');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

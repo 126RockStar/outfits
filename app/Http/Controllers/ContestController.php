@@ -41,15 +41,15 @@ class ContestController extends Controller
     {
         
         $request->validate([
-            'title'=>'required',
+            'title'=>'required|max:50',
             'sub_category'=>'required',
-            'description'=>'required',
+            'description'=>'required|max:150',
             'participants'=>'required',
             'photo'=>'required',
         ]);
 
         if(isset($request->prize)){
-            $request->validate(['prize_description'=>'required']);
+            $request->validate(['prize_description'=>'required|max:50']);
         }
         $path=$request->file('photo')->store('contest');
         $subCategory=SubCategory::where('id',$request->sub_category)->firstOrFail();
@@ -108,14 +108,14 @@ class ContestController extends Controller
         $contest=Contest::where('id',$id)->firstOrFail();
 
         $request->validate([
-            'title'=>'required',
+            'title'=>'required|max:50',
             'sub_category'=>'required',
-            'description'=>'required',
+            'description'=>'required|max:150',
             'participants'=>'required',
         ]);
 
         if(isset($request->prize)){
-            $request->validate(['prize_description'=>'required']);
+            $request->validate(['prize_description'=>'required|max:50']);
         }
 
         $subCategory=SubCategory::where('id',$request->sub_category)->firstOrFail();
@@ -148,7 +148,7 @@ class ContestController extends Controller
      */
     public function destroy($id)
     {
-        Contest::where('id',$id)->delete();
-        return back()->with('success','contest delted successfully');
+        Contest::where('id',$id)->where('user_id',Auth::id())->delete();
+        return back()->with('success','contest deleted successfully');
     }
 }
