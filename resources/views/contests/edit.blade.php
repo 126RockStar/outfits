@@ -17,7 +17,7 @@
 
         #msform fieldset {
             background: #4d5465;
-            border: 1px solid white;
+            border: 1px solid #a9a9a9;
             border-radius: 0.5rem;
             box-sizing: border-box;
             width: 100%;
@@ -64,7 +64,7 @@
             background: transparent;
             font-weight: bold;
             color: white;
-            border: 1px solid white;
+            border: 1px solid #a9a9a9;
             border-radius: 5px;
             cursor: pointer;
             padding: 10px 5px;
@@ -82,7 +82,7 @@
             background: transparent;
             font-weight: bold;
             color: white;
-            border: 1px solid white;
+            border: 1px solid #a9a9a9;
             border-radius: 5px;
             cursor: pointer;
             padding: 10px 5px;
@@ -143,7 +143,8 @@
             width: 16%;
             float: left;
             position: relative;
-            font-weight: 400
+            font-weight: 400;
+			color: #a9a9a9;
         }
 
         #progressbar #one:before {
@@ -176,9 +177,9 @@
             line-height: 45px;
             display: block;
             font-size: 20px;
-            color: #ffffff;
+            color: #a9a9a9;
             background: #4d5465;
-			border: 1px solid white;
+			border: 1px solid #a9a9a9;
             border-radius: 50%;
             margin: 0 auto 10px auto;
             padding: 2px
@@ -249,7 +250,7 @@
         width: 26px;
         left: 4px;
         bottom: 4px;
-        background-color: white;
+        background-color: #a9a9a9;
         -webkit-transition: .4s;
         transition: .4s;
         }
