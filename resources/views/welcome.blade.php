@@ -7,7 +7,8 @@
             <div class="card">
 
                 <div class="card-body">
-                    <div class="text-center" style="font-size:30px">Character Fashion Contests and more!</div>
+                    <div class="text-center" style="font-size:30px">Character Fashion Contests and more!</div><br><br>
+                    <h1 class="text-warning">Hey!!! May be you forgot ratings& feedback in fiverr order. asking here because asking feedback in fiverr is not allowed.</h1>
                 </div>
             </div>
         </div>

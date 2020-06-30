@@ -449,8 +449,9 @@ $(document).ready(function(){
                     <div class="card px-0  pb-0 mb-3">
                         {{--<h2 id="heading">Sign Up Your User Account</h2>--}}
                         {{-- <p>Fill all form field to go to next step</p>--}}
-                        <form id="msform" action="{{route('user.contests.store')}}" method="post" enctype="multipart/form-data">
+                        <form id="msform" action="{{route('user.contests.update',$contest->id)}}" method="post" enctype="multipart/form-data">
                             @csrf
+                            @method('PUT')
                             <!-- progressbar -->
                             <ul id="progressbar">
                                 <li class="active" id="one"><strong>Title</strong></li>
@@ -478,7 +479,7 @@ $(document).ready(function(){
                                             <label class="col-md-4 text-dark text-right">Title <span class="required-star text-danger">*</span></label>
                                        
                                         <div class="col-md-8">
-                                            <input type="text" class="form-control mb-3 {{ $errors->has('title') ? ' is-invalid' : '' }}" value="{{old('title')}}" name="title" placeholder="Title of contest" required>
+                                            <input type="text" class="form-control mb-3 {{ $errors->has('title') ? ' is-invalid' : '' }}" value="{{$contest->title}}" name="title" placeholder="Title of contest" required>
                                             @if ($errors->has('title'))
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('title') }}</strong>
@@ -509,7 +510,7 @@ $(document).ready(function(){
                                                     @forelse($categories as $category)
                                                     <optgroup label="{{$category->name}}">
                                                         @forelse($category->getSubCategories as $subCategory)
-                                                            <option value="{{$subCategory->id}}" {{ old('sub_category')==$subCategory->id?'selected':'' }}>{{$subCategory->name}}</option>
+                                                            <option value="{{$subCategory->id}}" {{ $contest->sub_category==$subCategory->id?'selected':'' }}>{{$subCategory->name}}</option>
                                                         @empty 
                                                             <option value="">No sub-category found</option>
                                                         @endforelse
@@ -562,7 +563,7 @@ $(document).ready(function(){
                                         <label class="col-md-4 text-dark text-right">Description <span class="required-star text-danger">*</span></label>
                                         
                                         <div class="col-md-8">
-                                            <textarea class="form-control mb-3 {{ $errors->has('description') ? ' is-invalid' : '' }}" name="description" placeholder="Description of contest" required>{{old('description')}}</textarea>
+                                            <textarea class="form-control mb-3 {{ $errors->has('description') ? ' is-invalid' : '' }}" name="description" placeholder="Description of contest" required>{{$contest->description}}</textarea>
                                             @if ($errors->has('description'))
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('description') }}</strong>
@@ -593,10 +594,10 @@ $(document).ready(function(){
                                             <div class="form-group">
                                                 <select data-toggle="select2" class="{{ $errors->has('participants') ? ' is-invalid' : '' }} form-control" id="contest-sub_category" name="participants" title="participants">
                                                     <option value="">Select Participants</option>
-                                                    <option value="50"{{ old('participants')=='50'?'selected':'' }}>50</option>
-                                                    <option value="100"{{ old('participants')=='100'?'selected':'' }}>100</option>
-                                                    <option value="200"{{ old('participants')=='200'?'selected':'' }}>200</option>
-                                                    <option value="500"{{ old('participants')=='500'?'selected':'' }}>500</option>
+                                                    <option value="50"{{ $contest->participants=='50'?'selected':'' }}>50</option>
+                                                    <option value="100"{{ $contest->participants=='100'?'selected':'' }}>100</option>
+                                                    <option value="200"{{ $contest->participants=='200'?'selected':'' }}>200</option>
+                                                    <option value="500"{{ $contest->participants=='500'?'selected':'' }}>500</option>
                                                 </select>
                                                 @if ($errors->has('participants'))
                                                     <span class="invalid-feedback" role="alert">
@@ -620,7 +621,7 @@ $(document).ready(function(){
                                             <p class="text-muted">Keep in mind that you will be paying the winner.If you win, we will pay you. This will come with perks in the future.</p>
                                     
                                             <label class="switch">
-                                                <input type="checkbox" name="prize" id="check-pirze">
+                                                <input type="checkbox" name="prize" id="check-pirze" {{empty($contest->prize_description)?'':'checked'}}>
                                                 <span class="slider round"></span>
                                             </label>   
                                         </div>
@@ -630,10 +631,10 @@ $(document).ready(function(){
                                        
 
                                     </div>
-                                    <div class="row d-none" id="prize-description-row">
+                                    <div class="row {{empty($contest->prize_description)?'d-none':''}}" id="prize-description-row">
                                         <label  class="col-md-4 text-dark text-right">Prize Description <span class="required-star text-danger">*</span></label>
                                         <div class="col-md-8">
-                                            <textarea class="form-control mb-3 {{ $errors->has('prize_description') ? ' is-invalid' : '' }}" name="prize_description" placeholder="Description of contest prize">{{old('prize_description')}}</textarea>
+                                            <textarea class="form-control mb-3 {{ $errors->has('prize_description') ? ' is-invalid' : '' }}" name="prize_description" placeholder="Description of contest prize">{{$contest->prize_description}}</textarea>
                                             @if ($errors->has('prize_description'))
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('prize_description') }}</strong>
@@ -664,11 +665,11 @@ $(document).ready(function(){
                                         </div>
                                         <div class="col-md-2">
                                             <div class="p-4 bg-light">
-                                                <div id="photoGallery"> </div>
+                                                <div id="photoGallery"><img src="{{asset('public/storage/'.$contest->photo)}}" class="img img-thumbnail" style="width: 100%"> </div>
                                                 <label for="image" class="btn  {{ $errors->has('photo') ? ' is-invalid' : '' }} cursor-pointer">
                                                     <i class="fa fa-plus-circle fa-4x"></i>
                                                 </label>
-                                                <input type="file" id="image" onchange="previewPhoto(this)" name="photo" class="d-none" required>
+                                                <input type="file" id="image" onchange="previewPhoto(this)" name="photo" class="d-none">
                                                 @if ($errors->has('photo'))
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $errors->first('photo') }}</strong>

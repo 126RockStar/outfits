@@ -23,10 +23,15 @@
      <!-- SmartMenus core CSS (required) -->
      <link href="{{asset('public/frontEnd')}}/css/sm-core-css.css" rel="stylesheet" type="text/css" />
      <link href="{{asset('public/frontEnd')}}/css/sm-clean/sm-clean.css" rel="stylesheet" type="text/css" />
+     <style>
+        .select2-results__option[aria-selected] {color:black}
+        .select2-container--classic .select2-results__group {color:black}
+        .cursor-pointer{cursor:pointer}
+     </style>
      @yield('styles')
 </head>
 <body>
-    <div id="app">
+    <div id="app" class="bg-dark">
         <nav class="navbar navbar-expand-md navbar-light shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -184,6 +189,10 @@
         $('#categoryMenu').smartmenus({
             subMenusSubOffsetX: 1,
             subMenusSubOffsetY: -8
+        });
+
+        $(document).ready(function() {
+            $('.select2').select2({width: 'resolve',theme: "classic"});
         });
     </script>
     @yield('scripts')

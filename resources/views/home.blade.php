@@ -28,6 +28,7 @@
                                     <h1>{{$contest->title}}</h1>
                                     <p>{{$contest->description}}</p>
                                     <p>{{$contest->prize_description}}</p><hr>
+                                    <a href="{{route('user.contests.edit',$contest->id)}}" class="btn btn-info float-right"><i class="fa fa-edit"></i></a>
                                     <form action="{{route('user.contests.destroy',$contest->id)}}" method="POST">
                                         @csrf
                                         @method('DELETE')

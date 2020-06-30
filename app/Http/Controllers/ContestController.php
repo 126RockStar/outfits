@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use App\Category;
 use App\Contest;
+use App\SubCategory;
 use Illuminate\Http\Request;
 
 class ContestController extends Controller
@@ -41,7 +42,6 @@ class ContestController extends Controller
         
         $request->validate([
             'title'=>'required',
-            'category'=>'required',
             'sub_category'=>'required',
             'description'=>'required',
             'participants'=>'required',
@@ -52,11 +52,12 @@ class ContestController extends Controller
             $request->validate(['prize_description'=>'required']);
         }
         $path=$request->file('photo')->store('contest');
+        $subCategory=SubCategory::where('id',$request->sub_category)->firstOrFail();
 
         $contest=Contest::create([
             'user_id'=>Auth::id(),
             'title'=>$request->title,
-            'category'=>$request->category,
+            'category'=>$subCategory->category_id,
             'sub_category'=>$request->sub_category,
             'description'=>$request->description,
             'participants'=>$request->participants,
@@ -89,7 +90,9 @@ class ContestController extends Controller
      */
     public function edit($id)
     {
-        //
+        $categories=Category::all();
+        $contest=Contest::where('id',$id)->firstOrFail();
+        return view('contests.edit',compact('contest','categories'));
     }
 
     /**
@@ -101,7 +104,40 @@ class ContestController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+        $contest=Contest::where('id',$id)->firstOrFail();
+
+        $request->validate([
+            'title'=>'required',
+            'sub_category'=>'required',
+            'description'=>'required',
+            'participants'=>'required',
+        ]);
+
+        if(isset($request->prize)){
+            $request->validate(['prize_description'=>'required']);
+        }
+
+        $subCategory=SubCategory::where('id',$request->sub_category)->firstOrFail();
+        $contest->update([
+            'user_id'=>Auth::id(),
+            'title'=>$request->title,
+            'category'=>$subCategory->category_id,
+            'sub_category'=>$request->sub_category,
+            'description'=>$request->description,
+            'participants'=>$request->participants,
+            
+        ]);
+
+        if(isset($request->prize)){
+            $contest->update(['prize_description'=>$request->prize_description]);
+        }
+        if($request->hasFile('photo')){
+            $path=$request->file('photo')->store('contest');
+            $contest->update(['photo'=>$path]);
+        }
+
+        return redirect(route('user.dashboard'))->with('success','contest updated successfully');
     }
 
     /**
