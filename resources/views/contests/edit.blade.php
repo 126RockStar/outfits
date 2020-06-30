@@ -328,7 +328,7 @@ $(document).ready(function(){
             });
             setProgressBar(++current);
         }else{
-            alert("some required fields are missing, please fill star marked fields");
+            alert("No,no,no... You need to fill out each step before moving on.");
         }
     });
 
@@ -636,7 +636,7 @@ $(document).ready(function(){
 
                                     </div>
                                     <div class="row {{empty($contest->prize_description)?'d-none':''}}" id="prize-description-row">
-                                        <label  class="col-md-4 text-dark text-right">Prize Description <span class="required-star text-danger">*</span></label>
+										{{--   <label  class="col-md-4 text-dark text-right">Prize Description <span class="required-star text-danger">*</span></label>--}}
                                         <div class="col-md-8">
                                             <textarea id="prize_description" class="form-control mb-3 {{ $errors->has('prize_description') ? ' is-invalid' : '' }}" name="prize_description" placeholder="Description of contest prize">{{$contest->prize_description}}</textarea>
                                             @if ($errors->has('prize_description'))
@@ -664,7 +664,7 @@ $(document).ready(function(){
 
 
                                     <div class="row">
-                                        <label class="col-md-4 text-dark text-right">Photo<span class="required-star text-danger">*</span></label>
+									{{--   <label class="col-md-4 text-dark text-right">Photo<span class="required-star text-danger">*</span></label>--}}
                                         
                                         <div class="col-md-2">
                                             <div class="p-4 bg-light">
