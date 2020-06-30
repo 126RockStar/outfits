@@ -659,9 +659,7 @@ $(document).ready(function(){
 
 
                                     <div class="row">
-                                        <div class="col-md-4">
-                                            <label class="fieldlabels">Photo</label>
-                                        </div>
+                                        <label class="col-md-4 text-dark text-right">Photo</label>
                                         <div class="col-md-2">
                                             <div class="p-4 bg-light">
                                                 <div id="photoGallery"> </div>
