@@ -16,7 +16,7 @@
 
   <!-- Stylesheet -->
   <link href="{{asset('public/frontEnd')}}/css/preloader.css" rel="stylesheet" type="text/css" />
-  <link rel="stylesheet" href="{{asset('public/frontEnd')}}/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{{asset('public/frontEnd')}}/css/bootstrap.min.css?v=1a04">
   <link rel="stylesheet" href="{{asset('public/frontEnd')}}/css/all.min.css">
   <!-- Custom Stylesheet after this line -->
 
@@ -100,11 +100,11 @@
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link btn btn-info mr-1" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <a class="nav-link btn btn-outline-info btn-sm mr-1" style="padding: .1rem" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link btn btn-success" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link btn btn-outline-info btn-sm" style="padding: .1rem" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
                         @else
