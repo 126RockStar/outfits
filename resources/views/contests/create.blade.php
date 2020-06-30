@@ -607,7 +607,7 @@ $('#contest-category').on('change', function(){
                                     <div class="row">
                                         <div class="col-7">
                                             <h2 class="fs-title">Would you like to supply the prize?</h2>
-                                            <p>Keep in mind that you will be paying the winner.If you win, we will pay you. This will come with perks in the future.</p>
+                                            <p class="text-muted">Keep in mind that you will be paying the winner.If you win, we will pay you. This will come with perks in the future.</p>
                                     
                                             <label class="switch">
                                                 <input type="checkbox" name="prize" id="check-pirze">

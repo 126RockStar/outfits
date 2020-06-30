@@ -18,7 +18,10 @@
                         @forelse($contests as $contest)
                         <div class="col-md-4">
                             <div class="card">
-                            <div class="card-header text-capitalize">{{$contest->getCategory->name}} > {{$contest->getSubCategory->name}}({{$contest->participants}} participants)</div>
+                            <div class="card-header text-capitalize">{{$contest->getCategory->name}} 
+
+                                {{!empty($contest->getSubCategory)? ' > '.$contest->getSubCategory->name :''}}
+                                ({{$contest->participants}} participants)</div>
                                 <div class="card-body">
                                     
                                     <img src="{{asset('public/storage/'.$contest->photo)}}" class="img img-thumbnail" style="width:100%">
