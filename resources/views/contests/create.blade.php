@@ -482,7 +482,7 @@ $(document).ready(function(){
 									{{-- <label class="col-md-4 text-dark text-right">Title <span class="required-star text-danger">*</span></label>--}}
                                        
                                         <div class="col-md-8">
-                                            <input type="text" class="form-control mb-3 {{ $errors->has('title') ? ' is-invalid' : '' }}" value="{{old('title')}}" name="title" placeholder="Title of contest" required>
+                                            <input type="text" maxlength="50" class="form-control mb-3 {{ $errors->has('title') ? ' is-invalid' : '' }}" value="{{old('title')}}" name="title" placeholder="Title of contest" required>
                                             @if ($errors->has('title'))
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('title') }}</strong>
@@ -566,7 +566,7 @@ $(document).ready(function(){
 									{{-- <label class="col-md-4 text-dark text-right">Description <span class="required-star text-danger">*</span></label>--}}
                                         
                                         <div class="col-md-8">
-                                            <textarea class="form-control mb-3 {{ $errors->has('description') ? ' is-invalid' : '' }}" name="description" placeholder="Description of contest" required>{{old('description')}}</textarea>
+                                            <textarea class="form-control mb-3 {{ $errors->has('description') ? ' is-invalid' : '' }}" maxlength="250" name="description" placeholder="Description of contest" required>{{old('description')}}</textarea>
                                             @if ($errors->has('description'))
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('description') }}</strong>
@@ -637,7 +637,7 @@ $(document).ready(function(){
                                     <div class="row d-none" id="prize-description-row">
 									{{--  <label  class="col-md-4 text-dark text-right">Prize Description <span class="required-star text-danger">*</span></label> --}}
                                         <div class="col-md-8">
-                                            <textarea id="prize_description" class="form-control mb-3 {{ $errors->has('prize_description') ? ' is-invalid' : '' }}" name="prize_description" placeholder="Description of contest prize">{{old('prize_description')}}</textarea>
+                                            <textarea id="prize_description" class="form-control mb-3 {{ $errors->has('prize_description') ? ' is-invalid' : '' }}" name="prize_description" maxlength="50" placeholder="Description of contest prize">{{old('prize_description')}}</textarea>
                                             @if ($errors->has('prize_description'))
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('prize_description') }}</strong>
