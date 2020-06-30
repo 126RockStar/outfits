@@ -39,6 +39,8 @@ Contests
                                 <thead>
                                     <tr>
                                         <th>Title</th>
+                                        <th>Added By</th>
+                                        <th>Participants</th>
                                         <th>Description</th>
                                         <th>Category</th>
                                         <th>Prize</th>
@@ -53,38 +55,26 @@ Contests
                                             {{-- <img src="{{asset('public/storage/'.$contest->profile_picture)}}" alt="table-user" class="mr-2 rounded-circle"> --}}
                                             {{$contest->title}}</a>
                                         </td>
+                                        <td>{{$contest->getCreator->username}}</td>
+                                        <td>{{$contest->participants}}</td>
                                         <td>{{$contest->description}}</td>
-                                        <td>{{$contest->description}}</td>
-                                        <td>{{$contest->prize_description}}</td>
                                         <td>
-                                          @if($contest->deleted_at != '')
-                                            <span class="badge badge-danger-lighten">Blocked</span>
-                                          @else
-                                            @if($contest->id ==1)
-                                              <span class="badge badge-primary">Admin</span>
-                                            @else
-                                              <span class="badge badge-success-lighten">Active</span>
-                                            @endif
-                                          @endif
+                                            {{$contest->getCategory->name}} 
+                                            {{!empty($contest->getSubCategory)? ' > '.$contest->getSubCategory->name :''}}
                                         </td>
+                                        <td>{{$contest->prize_description}}</td>
 
                                         <td>
                                             <!-- <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a> -->
 
-                                            @if($contest->id !=1)
-                                                @if($contest->deleted_at == '')
-                                                    <a href="{{route('admin.users.block',$contest->id)}}" onclick="return confirm('Are you sure to block the user?')" class="btn btn-warning btn-sm"> <i class="mdi mdi-block-helper"></i></a>
-                                                
-                                                @else
-                                                    <a href="{{route('admin.users.unblock',$contest->id)}}" class="btn btn-success btn-sm"> <i class="mdi mdi-restore"></i></a>
-                                                @endif
-                                                <a href="{{route('admin.users.delete',$contest->id)}}" onclick="return confirm('Are you sure to delete the user?')" class="btn btn-danger btn-sm"> <i class="mdi mdi-delete"></i></a>
-                                                <a href="{{route('admin.users.edit',$contest->id)}}" class="btn btn-info btn-sm"> <i class="fa fa-edit"></i></a>
-                                            @endif
+                                        
+                                            <a href="{{route('admin.contest.delete',$contest->id)}}" onclick="return confirm('Are you sure to delete the contest?')" class="btn btn-danger btn-sm"> <i class="mdi mdi-delete"></i></a>
+                                            <a href="{{route('admin.contest.edit',$contest->id)}}" class="btn btn-info btn-sm"> <i class="fa fa-edit"></i></a>
+                                        
                                         </td>
                                     </tr>
                                     @empty
-                                    <tr><td collspan="5" class="text-danger">No Users Found</td></tr>
+                                    <tr><td collspan="5" class="text-danger">No contest Found</td></tr>
                                     @endforelse
                                 </tbody>
                             </table>

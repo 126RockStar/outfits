@@ -131,7 +131,10 @@ class ContestController extends Controller
 
         if(isset($request->prize)){
             $contest->update(['prize_description'=>$request->prize_description]);
+        }else{
+            $contest->update(['prize_description'=>NULL]);
         }
+        
         if($request->hasFile('photo')){
             $path=$request->file('photo')->store('contest');
             $contest->update(['photo'=>$path]);

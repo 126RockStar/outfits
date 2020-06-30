@@ -15,4 +15,7 @@ class Contest extends Model
     public function getSubCategory(){
         return $this->hasOne('App\SubCategory','id','sub_category');
     }
+    public function getCreator(){
+        return $this->hasOne('App\User','id','user_id');
+    }
 }
