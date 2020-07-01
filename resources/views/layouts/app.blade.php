@@ -16,7 +16,7 @@
 
   <!-- Stylesheet -->
   <link href="{{asset('public/frontEnd')}}/css/preloader.css" rel="stylesheet" type="text/css" />
-  <link rel="stylesheet" href="{{asset('public/frontEnd')}}/css/bootstrap.min.css?v=1a04">
+  <link rel="stylesheet" href="{{asset('public/frontEnd')}}/css/bootstrap.min.css?v=1a22">
   <link rel="stylesheet" href="{{asset('public/frontEnd')}}/css/all.min.css">
   <!-- Custom Stylesheet after this line -->
 
