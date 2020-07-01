@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/','FrontendController@index')->name('index');
+Route::get('/contests','FrontendController@contests')->name('contests');
 Auth::routes(['verify'=>true]);
 Route::get('/home', 'HomeController@index')->name('home')->middleware(['verified']);
 Route::post('/fetch-sub_category', 'HomeController@fetchSubCategory')->middleware('cors');
