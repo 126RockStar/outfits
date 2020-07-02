@@ -43,7 +43,7 @@ class ContestController extends Controller
         $request->validate([
             'title'=>'required|max:50',
             'sub_category'=>'required',
-            'description'=>'required|max:150',
+            'description'=>'required|max:250',
             'participants'=>'required',
             'file'=>'required|mimes:jpg,jpeg,png,bmp,gif,svg,mp4',
         ]);
