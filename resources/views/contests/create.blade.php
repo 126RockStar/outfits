@@ -422,22 +422,37 @@ $(document).ready(function(){
         }
   });
 
-  function previewPhoto(input){
+  function previewFile(input){
         if (input.files){
             $('#photoGallery').empty('');
-            var totalFiles=input.files.length;
-
-            //preview multiple file
-            for(i=0;i < totalFiles; i++){
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    $('#photoGallery').append("<img src='"+e.target.result+"'width='100%' style='border:1px solid gray' alt='' />");
-                };
-                reader.readAsDataURL(input.files[i]);
+            var filetype = input.files[0].type;
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                if(filetype.indexOf("image") > -1){
+                    $("#file_type").val('image');
+                    $('#photoGallery').append("<img src='"+event.target.result+"'width='100%' style='border:1px solid gray' alt='' />");
+                }else if(filetype.indexOf("video") > -1){
+                    $("#file_type").val('video');
+                   
+                   // create the video element but don't add it to the page
+                    var vid = document.createElement('video');
+                    var fileURL = URL.createObjectURL(input.files[0]);
+                    vid.src = fileURL;
+                    // wait for duration to change from NaN to the actual duration
+                    vid.ondurationchange = function() {
+                        if(this.duration>=31){
+                            $("#file").val('');
+                            alert('The video duration is greater than 30 seconds, please choose another');
+                        }else{
+                            $('#photoGallery').append("<video src='"+event.target.result+"'width='100%' style='border:1px solid gray' controls></video>");
+                        }
+                    };
+                }else{
+                    alert('No,no,no... You need to choose either Photo or Video');
+                }
+                
             }
-
-            //ajax multiple upload
-
+            reader.readAsDataURL(event.target.files[0]);
         }
     }
 </script>
@@ -455,6 +470,7 @@ $(document).ready(function(){
                         {{-- <p>Fill all form field to go to next step</p>--}}
                         <form id="msform" action="{{route('user.contests.store')}}" method="post" enctype="multipart/form-data">
                             @csrf
+                            <input type="hidden" id="file_type" name="file_type" value="">
                             <!-- progressbar -->
                             <ul id="progressbar">
                                 <li class="active" id="one"><strong>Title</strong></li>
@@ -654,7 +670,8 @@ $(document).ready(function(){
                                 <div class="form-card p-3">
                                     <div class="row">
                                         <div class="col-7">
-                                            <h2 class="fs-title">Choose your photo. then Press 'Save' button.</h2>
+                                            <h2 class="fs-title">Choose your photo/video. then Press 'Save' button.</h2>
+                                            <p class="text-muted">maximum video duration is 30 seconds</p>
                                         </div>
                                         <div class="col-5">
                                             <h2 class="steps">{{ __('Step') }} 6 - 6</h2>
@@ -664,19 +681,17 @@ $(document).ready(function(){
 
                                     <div class="row">
 									{{--   <label class="col-md-4 text-dark text-right">Photo<span class="required-star text-danger">*</span></label>--}}
-                                        <div class="col-md-2">
-                                            <div class="p-4 bg-light">
-                                                <div id="photoGallery"> </div>
-                                                <label for="image" class="btn  {{ $errors->has('photo') ? ' is-invalid' : '' }} cursor-pointer">
-                                                    <i class="fa fa-plus-circle fa-4x"></i>
-                                                </label>
-                                                <input type="file" id="image" onchange="previewPhoto(this)" name="photo" class="d-none" required>
-                                                @if ($errors->has('photo'))
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $errors->first('photo') }}</strong>
-                                                    </span>
-                                                @endif
-                                            </div>
+                                        <div class="col-md-3">
+                                            <div id="photoGallery"> </div>
+                                            <label for="file" class="btn  {{ $errors->has('photo') ? ' is-invalid' : '' }} cursor-pointer">
+                                                <i class="fa fa-plus-circle text-info fa-8x"></i>
+                                            </label>
+                                            <input type="file" id="file" accept="video/*|image/*" onchange="previewFile(this)" name="file" class="d-none" required>
+                                            @if ($errors->has('photo'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('photo') }}</strong>
+                                                </span>
+                                            @endif
                                         </div>
                                     </div>
 

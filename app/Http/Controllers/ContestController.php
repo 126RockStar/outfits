@@ -45,13 +45,19 @@ class ContestController extends Controller
             'sub_category'=>'required',
             'description'=>'required|max:150',
             'participants'=>'required',
-            'photo'=>'required',
+            'file'=>'required|mimes:jpg,jpeg,png,bmp,gif,svg,mp4',
         ]);
 
         if(isset($request->prize)){
             $request->validate(['prize_description'=>'required|max:50']);
         }
-        $path=$request->file('photo')->store('contest');
+
+
+        // else if(strstr($mime, "image/")){
+        //     // this code for image
+        // }
+
+        $path=$request->file('file')->store('contest');
         $subCategory=SubCategory::where('id',$request->sub_category)->firstOrFail();
 
         $contest=Contest::create([
@@ -61,7 +67,8 @@ class ContestController extends Controller
             'sub_category'=>$request->sub_category,
             'description'=>$request->description,
             'participants'=>$request->participants,
-            'photo'=>$path,
+            'file'=>$path,
+            'file_type'=>$request->file_type,
         ]);
 
         if(isset($request->prize)){
@@ -135,9 +142,9 @@ class ContestController extends Controller
             $contest->update(['prize_description'=>NULL]);
         }
         
-        if($request->hasFile('photo')){
-            $path=$request->file('photo')->store('contest');
-            $contest->update(['photo'=>$path]);
+        if($request->hasFile('file')){
+            $path=$request->file('file')->store('contest');
+            $contest->update(['file'=>$path,'file_type'=>$request->file_type]);
         }
 
         return redirect(route('user.dashboard'))->with('success','contest updated successfully');

@@ -23,8 +23,11 @@
                                 {{!empty($contest->getSubCategory)? ' > '.$contest->getSubCategory->name :''}}
                                 ({{$contest->participants}} participants)</div>
                                 <div class="card-body">
-                                    
-                                    <img src="{{asset('public/storage/'.$contest->photo)}}" class="img img-thumbnail" style="width:100%">
+                                    @if($contest->file_type=='image')
+                                        <img src="{{asset('public/storage/'.$contest->file)}}" class="img img-thumbnail" style="width:100%">
+                                    @else
+                                        <video src="{{asset('public/storage/'.$contest->file)}}" width="100%"></video>
+                                    @endif
                                     <h1>{{$contest->title}}</h1>
                                     <p>{{$contest->description}}</p>
                                     <p>{{$contest->prize_description}}</p><hr>
