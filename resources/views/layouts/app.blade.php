@@ -100,7 +100,7 @@
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
-                    <strong>{{__('Oh snap')}}!</strong>{{__(session('error'))}}
+                    <strong>{{__('Oh snap')}}! </strong>{{__(session('error'))}}
                     </div>
                 @endif
 
@@ -110,7 +110,7 @@
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
-                        <strong>{{__('Oh snap')}}!</strong>{{__($error)}}
+                        <strong>{{__('Oh snap')}}! </strong>{{__($error)}}
                         </div>
                     @endforeach
                 @endif
