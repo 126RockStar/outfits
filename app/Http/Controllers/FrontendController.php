@@ -24,4 +24,9 @@ class FrontendController extends Controller
 
         return view('contests/index',compact('contests','categories'));
     }
+    public function viewContest($id)
+    {
+        $contest=Contest::where('id',$id)->firstOrFail();
+        return view('contests/show',compact('contest'));
+    }
 }

@@ -23,21 +23,23 @@
                                 {{!empty($contest->getSubCategory)? ' > '.$contest->getSubCategory->name :''}}
                                 ({{$contest->participants}} participants)</div>
                                 <div class="card-body">
+                                    <a href="{{route('contest.show',$contest->id)}}">
                                     @if($contest->file_type=='image')
-                                        <i class="fa fa-image position-absolute p-2 bg-info"></i>
+                                        <i class="fa fa-image position-absolute p-2 bg-info text-white"></i>
                                         <img src="{{asset('public/storage/'.$contest->file)}}" class="img img-thumbnail posiiton-relative" style="width:100%">
                                     @else
-                                        <i class="fa fa-video position-absolute p-2 bg-info"></i>
+                                        <i class="fa fa-video position-absolute p-2 bg-info text-white"></i>
                                         <video src="{{asset('public/storage/'.$contest->file)}}" class="posiiton-relative" width="100%"></video>
                                     @endif
-                                    <h2>{{$contest->title}}</h2>
+                                    <h2 class="text-white">{{$contest->title}}</h2>
                                     <p class="text-muted">by <b>{{$contest->getCreator->username}}</b></p>
-                                    <p>{{$contest->description}}</p>
+                                    <p class="text-white">{{$contest->description}}</p>
                                     @if(empty($contest->prize_description))
                                         <p class="text-warning">no prize for this contest</p>
                                     @else
-                                        <p>{{$contest->prize_description}}</p>
+                                        <p class="text-white">{{$contest->prize_description}}</p>
                                     @endif
+                                    </a>
                                     <hr>
                                     <a href="{{route('user.contests.edit',$contest->id)}}" class="btn btn-info float-right"><i class="fa fa-edit"></i></a>
                                     <form action="{{route('user.contests.destroy',$contest->id)}}" method="POST">

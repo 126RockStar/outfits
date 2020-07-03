@@ -16,7 +16,7 @@
 
   <!-- Stylesheet -->
   <link href="{{asset('public/frontEnd')}}/css/preloader.css" rel="stylesheet" type="text/css" />
-  <link rel="stylesheet" href="{{asset('public/frontEnd')}}/css/bootstrap.min.css?v=1a22">
+  <link rel="stylesheet" href="{{asset('public/frontEnd')}}/css/bootstrap.min.css?v=1a04">
   <link rel="stylesheet" href="{{asset('public/frontEnd')}}/css/all.min.css">
   <!-- Custom Stylesheet after this line -->
 
@@ -24,6 +24,7 @@
         .select2-results__option[aria-selected] {color:black}
         .select2-container--classic .select2-results__group {color:black}
         .cursor-pointer{cursor:pointer}
+        a{text-decoration: none!important;}
      </style>
      @yield('styles')
 </head>
@@ -100,7 +101,7 @@
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
-                    <strong>{{__('Oh snap')}}! </strong>{{__(session('error'))}}
+                    <strong>{{__('Oh snap')}}!</strong>{{__(session('error'))}}
                     </div>
                 @endif
 
@@ -110,7 +111,7 @@
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
-                        <strong>{{__('Oh snap')}}! </strong>{{__($error)}}
+                        <strong>{{__('Oh snap')}}!</strong>{{__($error)}}
                         </div>
                     @endforeach
                 @endif

@@ -6,6 +6,7 @@ use Auth;
 use App\Category;
 use App\Contest;
 use App\SubCategory;
+use Faker\Provider\ar_JO\Company;
 use Illuminate\Http\Request;
 
 class ContestController extends Controller
@@ -43,7 +44,7 @@ class ContestController extends Controller
         $request->validate([
             'title'=>'required|max:50',
             'sub_category'=>'required',
-            'description'=>'required|max:250',
+            'description'=>'required|max:150',
             'participants'=>'required',
             'file'=>'required|mimes:jpg,jpeg,png,bmp,gif,svg,mp4',
         ]);
@@ -161,4 +162,5 @@ class ContestController extends Controller
         Contest::where('id',$id)->where('user_id',Auth::id())->delete();
         return back()->with('success','contest deleted successfully');
     }
+  
 }
