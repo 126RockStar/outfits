@@ -277,6 +277,7 @@
         .slider.round:before {
         border-radius: 50%;
         } 
+
     </style>
     <link rel="stylesheet" href="{{asset('public/vendors/select2/select2.min.css')}}">
 @endsection
@@ -422,7 +423,9 @@ $(document).ready(function(){
         }
   });
 
+
   function previewFile(input){
+            $('#loadingPreview').removeClass('d-none');
         if (input.files){
             $('#photoGallery').empty('');
             var filetype = input.files[0].type;
@@ -431,6 +434,7 @@ $(document).ready(function(){
                 if(filetype.indexOf("image") > -1){
                     $("#file_type").val('image');
                     $('#photoGallery').append("<img src='"+event.target.result+"'width='100%' style='border:1px solid gray' alt='' />");
+                    $('#loadingPreview').addClass('d-none');
                 }else if(filetype.indexOf("video") > -1){
                     $("#file_type").val('video');
                    
@@ -445,6 +449,7 @@ $(document).ready(function(){
                             alert('The video duration is greater than 30 seconds, please choose another');
                         }else{
                             $('#photoGallery').append("<video src='"+event.target.result+"'width='100%' style='border:1px solid gray' controls></video>");
+                            $('#loadingPreview').addClass('d-none');
                         }
                     };
                 }else{
@@ -684,6 +689,7 @@ $(document).ready(function(){
 									{{--   <label class="col-md-4 text-dark text-right">Photo<span class="required-star text-danger">*</span></label>--}}
                                         
                                         <div class="col-md-3">
+                                                <i class="fas fa-spinner fa-pulse fa-8x d-none" id="loadingPreview"></i>
                                                 <div id="photoGallery">
                                                     @if($contest->file_type=='image')
                                                         <img src="{{asset('public/storage/'.$contest->file)}}" class="img img-thumbnail" style="width:100%">
