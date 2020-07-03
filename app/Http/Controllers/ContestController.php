@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use App\Category;
 use App\Contest;
+use App\ContestParticipant;
 use App\SubCategory;
 use Faker\Provider\ar_JO\Company;
 use Illuminate\Http\Request;
@@ -161,6 +162,16 @@ class ContestController extends Controller
     {
         Contest::where('id',$id)->where('user_id',Auth::id())->delete();
         return back()->with('success','contest deleted successfully');
+    }
+
+    public function participateContest (Request $request)
+    {
+        ContestParticipant::create([
+            'user_id'=>Auth::id(),
+            'contest_id'=>$request->id,
+            'file'=>$request->file('file')->store('entries'),
+        ]);
+        return back()->with('success','contest participation successfully');
     }
   
 }

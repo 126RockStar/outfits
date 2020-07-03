@@ -266,10 +266,10 @@
         border-radius: 50%;
         } 
     </style>
-    <link rel="stylesheet" href="{{asset('public/vendors/select2/select2.min.css')}}">
+    <link rel="stylesheet" href="{{asset('public/vendors/magnific-popup/magnific-popup.css')}}">
 @endsection
 @section('scripts')
-<script src="{{asset('public/vendors/select2/select2.min.js')}}"></script>
+<script src="{{asset('public/vendors/magnific-popup/jquery.magnific-popup.min.js')}}"></script>
 <script>
     //three steps product upload start
     $(document).ready(function(){
@@ -441,6 +441,12 @@
             $('#loadingPreview').removeClass('d-none');
         }
     }
+
+    $('.parent-container').magnificPopup({
+        delegate: 'a', // child items selector, by clicking on it popup will open
+        type: 'image'
+        // other options
+    });
 </script>
 @endsection
 @section('content')
@@ -482,10 +488,6 @@
                         <!-- Modal body -->
                         <div class="modal-body">
                        
-                            
-
-
-
                             <form id="msform" action="{{route('user.contest.participate')}}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden"  name="id" value="{{$contest->id}}">
@@ -541,7 +543,9 @@
                                         <div class="row">
                                             <div class="col-7">
                                                 <h2 class="fs-title">Choose your {{$contest->file_type}}. then Press 'Save' button.</h2>
-                                                <p class="text-muted">maximum video duration is 30 seconds</p>
+                                                @if($contest->file_type=='video')
+                                                    <p class="text-muted">maximum video duration is 30 seconds</p>
+                                                @endif
                                             </div>
                                             <div class="col-5">
                                                 <h2 class="steps">{{ __('Step') }} 3 - 3</h2>
@@ -694,5 +698,18 @@
     
     <hr>
     <p class="text-white">{{$contest->description}}</p>
+
+
+    @if(count($participants)>0)
+    <div class="parent-container">
+        @foreach ($participants as $participant)
+            
+        <a href="{{asset('public/storage/'.$participant->file)}}"><img src="{{asset('public/storage/'.$participant->file)}}"></a>
+        @endforeach
+    </div>
+    @else 
+        <h3 class="text-danger">No entries found</h3>
+    @endif
+
 </div>
 @endsection

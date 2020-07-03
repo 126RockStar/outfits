@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Contest;
+use App\ContestParticipant;
 use Illuminate\Http\Request;
 
 class FrontendController extends Controller
@@ -27,6 +28,7 @@ class FrontendController extends Controller
     public function viewContest($id)
     {
         $contest=Contest::where('id',$id)->firstOrFail();
-        return view('contests/show',compact('contest'));
+        $participants=ContestParticipant::where('contest_id',$id)->get();
+        return view('contests/show',compact('contest','participants'));
     }
 }
