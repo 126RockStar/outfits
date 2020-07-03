@@ -444,7 +444,10 @@
 
     $('.parent-container').magnificPopup({
         delegate: 'a', // child items selector, by clicking on it popup will open
-        type: 'image'
+        type: 'image',
+        gallery:{
+            enabled:true
+        }
         // other options
     });
 </script>
@@ -575,23 +578,6 @@
                                 </fieldset>
                             </form>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                         </div>
                 
                         {{-- <!-- Modal footer -->
@@ -701,10 +687,12 @@
 
 
     @if(count($participants)>0)
+    <h2>Participants:</h2>
     <div class="parent-container">
         @foreach ($participants as $participant)
             
-        <a href="{{asset('public/storage/'.$participant->file)}}"><img src="{{asset('public/storage/'.$participant->file)}}"></a>
+        <a href="{{asset('public/storage/'.$participant->file)}}">
+            <img src="{{asset('public/storage/'.$participant->file)}}" height="150px" title="{{$participant->getParticipant->username}}"></a>
         @endforeach
     </div>
     @else 

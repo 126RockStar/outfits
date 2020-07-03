@@ -12,6 +12,7 @@ class Contest extends Model
     public function getCategory(){
         return $this->hasOne('App\Category','id','category');
     }
+    
     public function getSubCategory(){
         return $this->hasOne('App\SubCategory','id','sub_category');
     }
