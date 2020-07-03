@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/','FrontendController@index')->name('index');
+Route::post('/login/continue','Auth\LoginController@continueLogin')->name('login.continue');
 Route::get('/contests','FrontendController@contests')->name('contests');
 Route::get('/contest/{id}','FrontendController@viewContest')->name('contest.show');
 Auth::routes(['verify'=>true]);

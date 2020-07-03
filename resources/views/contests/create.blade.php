@@ -3,7 +3,7 @@
 @section('styles')
     <style>
 
-#heading {
+        #heading {
             text-transform: uppercase;
             color: #673AB7;
             font-weight: normal
@@ -284,96 +284,96 @@
 <script src="{{asset('public/vendors/select2/select2.min.js')}}"></script>
 <script>
     //three steps product upload start
-$(document).ready(function(){
+    $(document).ready(function(){
 
-    var current_fs, next_fs, previous_fs; //fieldsets
-    var opacity;
-    var current = 1;
-    var steps = $("fieldset").length;
+        var current_fs, next_fs, previous_fs; //fieldsets
+        var opacity;
+        var current = 1;
+        var steps = $("fieldset").length;
 
-    setProgressBar(current);
+        setProgressBar(current);
 
-    $(".next").click(function(){
-        current_fs = $(this).parent();
-        next_fs = $(this).parent().next();
+        $(".next").click(function(){
+            current_fs = $(this).parent();
+            next_fs = $(this).parent().next();
 
-        var required = current_fs.find('input,textarea,select').filter('[required]');
+            var required = current_fs.find('input,textarea,select').filter('[required]');
 
-        var allRequired = true;
-        required.each(function(){
-            if($(this).val() == ''){
-                allRequired = false;
-                $(this).addClass('border-danger');
+            var allRequired = true;
+            required.each(function(){
+                if($(this).val() == ''){
+                    allRequired = false;
+                    $(this).addClass('border-danger');
+                }
+            });
+
+            if(allRequired){
+                //Add Class Active
+                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+
+                //show the next fieldset
+                next_fs.show();
+                //hide the current fieldset with style
+                current_fs.animate({opacity: 0}, {
+                    step: function(now) {
+                        // for making fielset appear animation
+                        opacity = 1 - now;
+
+                        current_fs.css({
+                            'display': 'none',
+                            'position': 'relative'
+                        });
+                        next_fs.css({'opacity': opacity});
+                    },
+                    duration: 500
+                });
+                setProgressBar(++current);
+            }else{
+                alert("No,no,no... You need to fill out each step before moving on.");
             }
         });
 
-        if(allRequired){
-            //Add Class Active
-            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+        $(".previous").click(function(){
 
-            //show the next fieldset
-            next_fs.show();
+            current_fs = $(this).parent();
+            previous_fs = $(this).parent().prev();
+
+            //Remove class active
+                $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+
+            //show the previous fieldset
+                previous_fs.show();
+
             //hide the current fieldset with style
-            current_fs.animate({opacity: 0}, {
-                step: function(now) {
-                    // for making fielset appear animation
-                    opacity = 1 - now;
+                current_fs.animate({opacity: 0}, {
+                    step: function(now) {
+            // for making fielset appear animation
+                        opacity = 1 - now;
 
-                    current_fs.css({
-                        'display': 'none',
-                        'position': 'relative'
-                    });
-                    next_fs.css({'opacity': opacity});
-                },
-                duration: 500
+                        current_fs.css({
+                            'display': 'none',
+                            'position': 'relative'
+                        });
+                        previous_fs.css({'opacity': opacity});
+                    },
+                    duration: 500
+                });
+                setProgressBar(--current);
             });
-            setProgressBar(++current);
-        }else{
-            alert("No,no,no... You need to fill out each step before moving on.");
-        }
+
+            function setProgressBar(curStep){
+                var percent = parseFloat(100 / steps) * curStep;
+                percent = percent.toFixed();
+                $(".progress-bar")
+                    .css("width",percent+"%")
+            }
+
+            $(".submit").click(function(){
+                return false;
+            })
+
     });
-
-    $(".previous").click(function(){
-
-        current_fs = $(this).parent();
-        previous_fs = $(this).parent().prev();
-
-        //Remove class active
-            $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
-
-        //show the previous fieldset
-            previous_fs.show();
-
-        //hide the current fieldset with style
-            current_fs.animate({opacity: 0}, {
-                step: function(now) {
-        // for making fielset appear animation
-                    opacity = 1 - now;
-
-                    current_fs.css({
-                        'display': 'none',
-                        'position': 'relative'
-                    });
-                    previous_fs.css({'opacity': opacity});
-                },
-                duration: 500
-            });
-            setProgressBar(--current);
-        });
-
-        function setProgressBar(curStep){
-            var percent = parseFloat(100 / steps) * curStep;
-            percent = percent.toFixed();
-            $(".progress-bar")
-                .css("width",percent+"%")
-        }
-
-        $(".submit").click(function(){
-            return false;
-        })
-
-});
-//three steps product upload end
+    //three steps product upload end
 
 
 
@@ -625,10 +625,10 @@ $(document).ready(function(){
                                             <div class="form-group">
                                                 <select class="{{ $errors->has('participants') ? ' is-invalid' : '' }} form-control" id="contest-sub_category" name="participants" title="participants" required>
                                                     <option value="">Select Participants</option>
+                                                    <option value="15"{{ old('participants')=='15'?'selected':'' }}>15</option>
+                                                    <option value="25"{{ old('participants')=='25'?'selected':'' }}>25</option>
                                                     <option value="50"{{ old('participants')=='50'?'selected':'' }}>50</option>
                                                     <option value="100"{{ old('participants')=='100'?'selected':'' }}>100</option>
-                                                    <option value="200"{{ old('participants')=='200'?'selected':'' }}>200</option>
-                                                    <option value="500"{{ old('participants')=='500'?'selected':'' }}>500</option>
                                                 </select>
                                                 @if ($errors->has('participants'))
                                                     <span class="invalid-feedback" role="alert">
