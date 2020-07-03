@@ -24,13 +24,20 @@
                                 ({{$contest->participants}} participants)</div>
                                 <div class="card-body">
                                     @if($contest->file_type=='image')
-                                        <img src="{{asset('public/storage/'.$contest->file)}}" class="img img-thumbnail" style="width:100%">
+                                        <i class="fa fa-image position-absolute p-2 bg-info"></i>
+                                        <img src="{{asset('public/storage/'.$contest->file)}}" class="img img-thumbnail posiiton-relative" style="width:100%">
                                     @else
-                                        <video src="{{asset('public/storage/'.$contest->file)}}" width="100%"></video>
+                                        <i class="fa fa-video position-absolute p-2 bg-info"></i>
+                                        <video src="{{asset('public/storage/'.$contest->file)}}" class="posiiton-relative" width="100%"></video>
                                     @endif
                                     <h1>{{$contest->title}}</h1>
                                     <p>{{$contest->description}}</p>
-                                    <p>{{$contest->prize_description}}</p><hr>
+                                    @if(empty($contest->prize_description))
+                                        <p class="text-warning">no prize for this contest</p>
+                                    @else
+                                        <p>{{$contest->prize_description}}</p>
+                                    @endif
+                                    <hr>
                                     <a href="{{route('user.contests.edit',$contest->id)}}" class="btn btn-info float-right"><i class="fa fa-edit"></i></a>
                                     <form action="{{route('user.contests.destroy',$contest->id)}}" method="POST">
                                         @csrf
