@@ -463,7 +463,9 @@ $(document).ready(function(){
         var hasFile = $("#file").val();
         if(!hasFile) {
             alert('No,no,no... You need to choose either Photo or Video');
-        } 
+        }else{
+            $('#loadingPreview').removeClass('d-none');
+        }
     }
 </script>
 @endsection

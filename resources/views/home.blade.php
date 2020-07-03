@@ -30,7 +30,8 @@
                                         <i class="fa fa-video position-absolute p-2 bg-info"></i>
                                         <video src="{{asset('public/storage/'.$contest->file)}}" class="posiiton-relative" width="100%"></video>
                                     @endif
-                                    <h1>{{$contest->title}}</h1>
+                                    <h2>{{$contest->title}}</h2>
+                                    <p class="text-muted">by <b>{{$contest->getCreator->username}}</b></p>
                                     <p>{{$contest->description}}</p>
                                     @if(empty($contest->prize_description))
                                         <p class="text-warning">no prize for this contest</p>
