@@ -374,7 +374,7 @@
         }
   });
 
-  function previewFile(input){
+  function previewimage(input){
       $('#loadingPreview').removeClass('d-none');
         if (input.files){
             $('#photoGallery').empty('');
@@ -385,7 +385,25 @@
                     $("#file_type").val('image');
                     $('#photoGallery').append("<img src='"+event.target.result+"'width='100%' style='border:1px solid gray' alt='' />");
                     $('#loadingPreview').addClass('d-none');
-                }else if(filetype.indexOf("video") > -1){
+                }else{
+                    $("#file").val('');
+                    $('#loadingPreview').addClass('d-none');
+                    alert('No,no,no... You need to choose Photo');
+                }
+                
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    }
+
+  function previewvideo(input){
+      $('#loadingPreview').removeClass('d-none');
+        if (input.files){
+            $('#photoGallery').empty('');
+            var filetype = input.files[0].type;
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                if(filetype.indexOf("video") > -1){
                     $("#file_type").val('video');
                    
                    // create the video element but don't add it to the page
@@ -396,6 +414,7 @@
                     vid.ondurationchange = function() {
                         if(this.duration>=31){
                             $("#file").val('');
+                            $('#loadingPreview').addClass('d-none');
                             alert('The video duration is greater than 30 seconds, please choose another');
                         }else{
                             $('#photoGallery').append("<video src='"+event.target.result+"'width='100%' style='border:1px solid gray' controls></video>");
@@ -403,13 +422,16 @@
                         }
                     };
                 }else{
-                    alert('No,no,no... You need to choose either Photo or Video');
+                    $("#file").val('');
+                    $('#loadingPreview').addClass('d-none');
+                    alert('No,no,no... You need to choose Video');
                 }
                 
             }
             reader.readAsDataURL(event.target.files[0]);
         }
     }
+
 
     function checkFile(){
         var hasFile = $("#file").val();
@@ -464,9 +486,9 @@
 
 
 
-                            <form id="msform" action="{{route('user.contests.store')}}" method="post" enctype="multipart/form-data">
+                            <form id="msform" action="{{route('user.contest.participate')}}" method="post" enctype="multipart/form-data">
                                 @csrf
-                                <input type="hidden" id="file_type" name="file_type" value="">
+                                <input type="hidden"  name="id" value="{{$contest->id}}">
                                 <!-- progressbar -->
                                 <ul id="progressbar">
                                     <li id="one" class="active"><strong>Contest</strong></li>
@@ -511,14 +533,14 @@
                                         <p class="text-muted">{{$contest->description}}</p> 
                                         </div>
                                         <input type="button" name="next" class="next action-button mr-3" value="Yes" />
-                                        {{-- <input type="button" name="previous" class="previous action-button-previous" value="No" /> --}}
+                                        <input type="button" name="previous" class="previous action-button-previous" value="No" />
                                 </fieldset>
 
                                 <fieldset>
                                     <div class="form-card p-3">
                                         <div class="row">
                                             <div class="col-7">
-                                                <h2 class="fs-title">Choose your photo/video. then Press 'Save' button.</h2>
+                                                <h2 class="fs-title">Choose your {{$contest->file_type}}. then Press 'Save' button.</h2>
                                                 <p class="text-muted">maximum video duration is 30 seconds</p>
                                             </div>
                                             <div class="col-5">
@@ -532,13 +554,13 @@
                                             <div class="col-md-3">
                                                 <i class="fas fa-spinner fa-pulse fa-8x d-none" id="loadingPreview"></i>
                                                 <div id="photoGallery"> </div>
-                                                <label for="file" class="btn  {{ $errors->has('photo') ? ' is-invalid' : '' }} cursor-pointer">
+                                                <label for="file" class="btn  {{ $errors->has('file') ? ' is-invalid' : '' }} cursor-pointer">
                                                     <i class="fa fa-plus-circle text-info fa-8x"></i>
                                                 </label>
-                                                <input type="file" id="file" accept="video/*|image/*" onchange="previewFile(this)" name="file" class="d-none" required>
-                                                @if ($errors->has('photo'))
+                                                <input type="file" id="file" accept="{{$contest->file_type}}/*" onchange="preview{{$contest->file_type}}(this)" name="file" class="d-none" required>
+                                                @if ($errors->has('file'))
                                                     <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $errors->first('photo') }}</strong>
+                                                        <strong>{{ $errors->first('file') }}</strong>
                                                     </span>
                                                 @endif
                                             </div>
