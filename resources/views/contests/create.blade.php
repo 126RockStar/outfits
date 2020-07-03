@@ -455,6 +455,13 @@ $(document).ready(function(){
             reader.readAsDataURL(event.target.files[0]);
         }
     }
+
+    function checkFile(){
+        var hasFile = $("#file").val();
+        if(!hasFile) {
+            alert('No,no,no... You need to choose either Photo or Video');
+        } 
+    }
 </script>
 @endsection
 @section('content')
@@ -706,7 +713,7 @@ $(document).ready(function(){
                                     {{--   </div>--}}
                                     {{--   </div>--}}
                                 </div>
-                                <input type="submit" class="action-button mr-3" value="{{ __('Save') }}" />
+                                <input type="submit" onclick="checkFile()" class="action-button mr-3" value="{{ __('Save') }}" />
                                 <input type="button" name="previous" class="previous action-button-previous" value="{{ __('Previous') }}" />
                             </fieldset>
                         </form>
