@@ -1,15 +1,15 @@
 @extends('admin.master')
 
 @section('title')
-  Edit Contest
+  {{$contest->title}}
 @endsection
 @section('breadcrumb')
   <li class="breadcrumb-item active">Edit Contest</li>
 @endsection
 @section('extra-css')
-    <link href="{{ asset('public/admin/css/vendor/jquery-jvectormap-1.2.2.css')}}" rel="stylesheet" type="text/css" />
+    {{-- <link href="{{ asset('public/admin/css/vendor/jquery-jvectormap-1.2.2.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('public/admin/css/vendor/fullcalendar.min.css')}}" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="{{asset('public/vendors/select2/select2.min.css')}}">
+    <link rel="stylesheet" href="{{asset('public/vendors/select2/select2.min.css')}}"> --}}
     <style>
                 /* The switch - the box around the slider */
                 .switch {
@@ -80,6 +80,20 @@
 <!-- Header Layout Content -->
      <div class="mdk-header-layout__content page-content pt-3">
          <div class="container page__container">
+             <div class="row">
+                <div class="col-md-3">
+                    <a href="{{asset('public/storage/'.$contest->file)}}" class="media-left mr-16pt">
+                        @if($contest->file_type=='image')
+                            <i class="mdi mdi-image position-absolute p-1 bg-info text-white"></i>
+                            <img src="{{asset('public/storage/'.$contest->file)}}" class="img img-thumbnail posiiton-relative" style="width:100%">
+                        @else
+                            <i class="mdi mdi-video position-absolute p-1 bg-info text-white"></i>
+                            <video src="{{asset('public/storage/'.$contest->file)}}" class="posiiton-relative" width="100%"></video>
+                        @endif
+                    </a>
+                </div>
+                <div class="col-md-9"></div>
+             </div>
              <form action="{{route('admin.contest.update')}}" method="post" enctype="multipart/form-data">
                @csrf
                <input type="hidden" name="id" value="{{$contest->id}}">
@@ -89,16 +103,10 @@
                              <div class="list-group list-group-form">
                                  <div class="list-group-item">
                                      <div class="form-group row mb-0">
-                                         <label class="col-form-label col-sm-3">Contest File</label>
+                                         <label class="col-form-label col-sm-3">Contest photo</label>
                                          <div class="col-sm-9 media align-items-center">
-                                             <a href="{{asset('public/storage/'.$contest->file)}}" class="media-left mr-16pt">
-                                                @if($contest->file_type=='image')
-                                                    <i class="mdi mdi-image position-absolute p-1 bg-info text-white"></i>
-                                                    <img src="{{asset('public/storage/'.$contest->file)}}" class="img img-thumbnail posiiton-relative" style="width:80px">
-                                                @else
-                                                    <i class="mdi mdi-video position-absolute p-1 bg-info text-white"></i>
-                                                    <video src="{{asset('public/storage/'.$contest->file)}}" class="posiiton-relative" width="80px"></video>
-                                                @endif
+                                             <a href="{{asset('public/storage/'.$contest->photo)}}" class="media-left mr-16pt">
+                                                 <img src="{{asset('public/storage/'.$contest->photo)}}" alt="people" width="56" class="rounded-circle" />
                                              </a>
                                              <div class="media-body">
                                                 <div class="custom-file">
@@ -123,36 +131,7 @@
                                             </div>
                                      </div>
                                  </div>
-
-                                 
-                                 <div class="list-group-item">
-                                    <div class="form-group row mb-0">
-                                        <label class="col-form-label col-sm-3">Category</label>
-                                        <div class="col-sm-9">
-                                            <div class="form-group">
-                                                <select  style="width: 100%" class="select2 {{ $errors->has('sub_category') ? ' is-invalid' : '' }} form-control" id="contest-category" name="sub_category" title="sub_category" required>
-                                                    <option value="">Select Category</option>
-                                                    @forelse($categories as $category)
-                                                    <optgroup label="{{$category->name}}">
-                                                        @forelse($category->getSubCategories as $subCategory)
-                                                            <option value="{{$subCategory->id}}" {{ $contest->sub_category==$subCategory->id?'selected':'' }}>{{$subCategory->name}}</option>
-                                                        @empty 
-                                                            <option value="">No sub-category found</option>
-                                                        @endforelse
-                                                    </optgroup>
-                                                    @empty
-                                                        <option class="text-danger" value=""> No Category Found</option>
-                                                    @endforelse
-                                                </select>
-                                                @if ($errors->has('sub_category'))
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $errors->first('sub_category') }}</strong>
-                                                    </span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                
 
                                  <div class="list-group-item">
                                      <div class="form-group row mb-0">
@@ -224,7 +203,7 @@
 
 @section('extra-scripts')
 
-    <script src="{{asset('public/vendors/select2/select2.min.js')}}"></script>
+    {{-- <script src="{{asset('public/vendors/select2/select2.min.js')}}"></script> --}}
     <script>
         $('.select2').select2();
         $('#check-pirze').click(function(){

@@ -56,7 +56,9 @@ Contests
                                             {{$contest->title}}</a>
                                         </td>
                                         <td>{{$contest->getCreator->username}}</td>
-                                        <td>{{$contest->participants}}</td>
+                                        <td>
+                                            {{count($contest->getParticipants)}} of {{$contest->participants}}
+                                        </td>
                                         <td>{{$contest->description}}</td>
                                         <td>
                                             {{$contest->getCategory->name}} 
@@ -69,7 +71,8 @@ Contests
 
                                         
                                             <a href="{{route('admin.contest.delete',$contest->id)}}" onclick="return confirm('Are you sure to delete the contest?')" class="btn btn-danger btn-sm"> <i class="mdi mdi-delete"></i></a>
-                                            <a href="{{route('admin.contest.edit',$contest->id)}}" class="btn btn-info btn-sm"> <i class="fa fa-edit"></i></a>
+                                            <a href="{{route('admin.contest.edit',$contest->id)}}" class="btn btn-primary btn-sm"> <i class="fa fa-edit"></i></a>
+                                            <a href="{{route('admin.contest.show',$contest->id)}}" class="btn btn-info btn-sm">Manage/View Entries</a>
                                         
                                         </td>
                                     </tr>

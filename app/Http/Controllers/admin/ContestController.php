@@ -30,7 +30,7 @@ class ContestController extends Controller
         $request->validate([
             'title'=>'required|max:50',
             'sub_category'=>'required',
-            'description'=>'required|max:250',
+            'description'=>'required|max:150',
             'participants'=>'required',
         ]);
 
@@ -65,6 +65,10 @@ class ContestController extends Controller
     public function delete($id){
         Contest::where('id',$id)->delete();
         return back()->with('success','contest deleted successfully');
+    }
+    public function show($id){
+        $contest=Contest::where('id',$id)->firstOrFail();
+        return view('admin/contests/show',compact('contest'));
     }
 
 }
