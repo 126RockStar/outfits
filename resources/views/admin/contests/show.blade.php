@@ -4,7 +4,7 @@
   {{$contest->title}}
 @endsection
 @section('breadcrumb')
-  <li class="breadcrumb-item active">Edit Contest</li>
+  <li class="breadcrumb-item active">View Entries</li>
 @endsection
 @section('extra-css')
     {{-- <link href="{{ asset('public/admin/css/vendor/jquery-jvectormap-1.2.2.css')}}" rel="stylesheet" type="text/css" />
@@ -91,111 +91,58 @@
                             <video src="{{asset('public/storage/'.$contest->file)}}" class="posiiton-relative" width="100%"></video>
                         @endif
                     </a>
+                    <h3>{{$contest->title}}</h3>
+                    <p>{{$contest->description}}</p>
+                    @if(empty($contest->prize_description))
+                        <p class="text-warning">no prize for this contest</p>
+                    @else
+                        <p class="text-secondary">{{$contest->prize_description}}</p>
+                    @endif
                 </div>
-                <div class="col-md-9"></div>
+                <div class="col-md-9">
+                    <h2>Participants:  {{count($contest->getParticipants)}} of {{$contest->participants}}</h2>
+                    <div class="list-group list-group-form">
+                        @forelse ($contest->getParticipants as $participant)
+                            <div class="list-group-item">
+                                <div class="form-group row mb-0">
+                                    <label class="col-form-label col-md-3">{{$participant->getParticipant->username}}</label>
+                                    <div class="col-md-3">
+                                        <a href="{{asset('public/storage/'.$contest->file)}}" target="_blank" class="media-left mr-16pt">
+                                            @if($contest->file_type=='image')
+                                                <i class="mdi mdi-image position-absolute p-1 bg-info text-white"></i>
+                                                <img src="{{asset('public/storage/'.$contest->file)}}" class="img img-thumbnail posiiton-relative" style="width:80px">
+                                            @else
+                                                <i class="mdi mdi-video position-absolute p-1 bg-info text-white"></i>
+                                                <video src="{{asset('public/storage/'.$contest->file)}}" class="posiiton-relative" width="80px"></video>
+                                            @endif
+                                         </a>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <form action="{{route('admin.contest.entry.update')}}" method="post" enctype="multipart/form-data">
+                                            @csrf
+                                            <input type="hidden" name="id" value="{{$participant->id}}">
+                                            <input type="file" name="title" class="form-control @error('title') is-invalid @enderror" value="{{$contest->title}}">
+                                            <!-- <small class="form-text text-muted">Your profile name will be used as part of your public profile URL address.</small> -->
+                                        </form>
+                                    
+                                    @error('title')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                    </div>
+                                </div>
+                            </div>
+                        @empty
+                            <h3 class="text-danger">No user participated in this contest</h3>
+                        @endforelse
+                      
+                        {{-- <div class="list-group-item">
+                            <button type="submit" class="btn btn-success">Save changes</button>
+                        </div> --}}
+                    </div>
+                </div>
              </div>
-             <form action="{{route('admin.contest.update')}}" method="post" enctype="multipart/form-data">
-               @csrf
-               <input type="hidden" name="id" value="{{$contest->id}}">
-                 <div class="row">
-                     <div class="col-lg-12">
-                         <div class="page-section">
-                             <div class="list-group list-group-form">
-                                 <div class="list-group-item">
-                                     <div class="form-group row mb-0">
-                                         <label class="col-form-label col-sm-3">Contest photo</label>
-                                         <div class="col-sm-9 media align-items-center">
-                                             <a href="{{asset('public/storage/'.$contest->photo)}}" class="media-left mr-16pt">
-                                                 <img src="{{asset('public/storage/'.$contest->photo)}}" alt="people" width="56" class="rounded-circle" />
-                                             </a>
-                                             <div class="media-body">
-                                                <div class="custom-file">
-                                                    <input type="file" name="photo" class="custom-file-input" id="inputGroupFile01">
-                                                    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                                                </div>
-                                             </div>
-                                         </div>
-                                     </div>
-                                 </div>
-                                 <div class="list-group-item">
-                                     <div class="form-group row mb-0">
-                                         <label class="col-form-label col-sm-3">Title</label>
-                                         <div class="col-sm-9">
-                                             <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" value="{{$contest->title}}" placeholder="Title of the contest ...">
-                                             <!-- <small class="form-text text-muted">Your profile name will be used as part of your public profile URL address.</small> -->
-                                            @error('title')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                            </div>
-                                     </div>
-                                 </div>
-                
-
-                                 <div class="list-group-item">
-                                     <div class="form-group row mb-0">
-                                         <label class="col-form-label col-sm-3">Description</label>
-                                         <div class="col-sm-9">
-                                            <textarea class="form-control mb-3 {{ $errors->has('description') ? ' is-invalid' : '' }}" name="description" placeholder="Description of contest" required>{{$contest->description}}</textarea>
-                                            @if ($errors->has('description'))
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('description') }}</strong>
-                                                </span>
-                                            @endif
-                                        </div>
-                                     </div>
-                                 </div>
-                                
-                                 <div class="list-group-item">
-                                     <div class="form-group row mb-0">
-                                         <label class="col-form-label col-sm-3">Participants</label>
-                                         <div class="col-sm-9">
-                                            <select  class="{{ $errors->has('participants') ? ' is-invalid' : '' }} form-control" id="contest-sub_category" name="participants" title="participants">
-                                                <option value="">Select Participants</option>
-                                                <option value="50"{{ $contest->participants=='50'?'selected':'' }}>50</option>
-                                                <option value="100"{{ $contest->participants=='100'?'selected':'' }}>100</option>
-                                                <option value="200"{{ $contest->participants=='200'?'selected':'' }}>200</option>
-                                                <option value="500"{{ $contest->participants=='500'?'selected':'' }}>500</option>
-                                            </select>
-                                            @if ($errors->has('participants'))
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('participants') }}</strong>
-                                                </span>
-                                            @endif
-                                        </div>
-                                     </div>
-                                 </div>
-                                
-                                 <div class="list-group-item">
-                                     <div class="form-group row mb-0">
-                                         <label class="col-form-label col-sm-3">Prize</label>
-                                         <div class="col-sm-9">
-                                            <label class="switch">
-                                                <input type="checkbox" name="prize" id="check-pirze" {{empty($contest->prize_description)?'':'checked'}}>
-                                                <span class="slider round"></span>
-                                            </label> 
-                                            <textarea id="prize-description-row" class="form-control {{empty($contest->prize_description)?'d-none':''}} mb-3 {{ $errors->has('prize_description') ? ' is-invalid' : '' }}" name="prize_description" placeholder="Description of contest prize">{{$contest->prize_description}}</textarea>
-                                            @if ($errors->has('prize_description'))
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('prize_description') }}</strong>
-                                                </span>
-                                            @endif
-                                        </div>
-                                     </div>
-                                 </div>
-
-              
-               
-                   
-                                 <div class="list-group-item">
-                                     <button type="submit" class="btn btn-success">Save changes</button>
-                                 </div>
-                             </div>
-                         </div>
-                     </div>
-                 </div>
-             </form>
          </div>
      </div>
      <!-- // END Header Layout Content -->
