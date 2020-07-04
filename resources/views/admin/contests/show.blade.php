@@ -105,15 +105,19 @@
                         @forelse ($contest->getParticipants as $participant)
                             <div class="list-group-item">
                                 <div class="form-group row mb-0">
-                                    <label class="col-form-label col-md-3">{{$participant->getParticipant->username}}</label>
+                                    <label class="col-form-label col-md-3">
+                                        {{$participant->getParticipant->username}}
+                                        <a href="{{route('admin.contest.entry.delete',$participant->id)}}" onclick="return confirm('Are you sure to delete the contest entry?')" class="btn btn-danger btn-sm"> <i class="mdi mdi-delete"></i></a>
+                                            
+                                    </label>
                                     <div class="col-md-3">
-                                        <a href="{{asset('public/storage/'.$contest->file)}}" target="_blank" class="media-left mr-16pt">
+                                        <a href="{{asset('public/storage/'.$participant->file)}}" target="_blank" class="media-left mr-16pt">
                                             @if($contest->file_type=='image')
                                                 <i class="mdi mdi-image position-absolute p-1 bg-info text-white"></i>
-                                                <img src="{{asset('public/storage/'.$contest->file)}}" class="img img-thumbnail posiiton-relative" style="width:80px">
+                                                <img src="{{asset('public/storage/'.$participant->file)}}" class="img img-thumbnail posiiton-relative" style="width:80px">
                                             @else
                                                 <i class="mdi mdi-video position-absolute p-1 bg-info text-white"></i>
-                                                <video src="{{asset('public/storage/'.$contest->file)}}" class="posiiton-relative" width="80px"></video>
+                                                <video src="{{asset('public/storage/'.$participant->file)}}" class="posiiton-relative" width="80px"></video>
                                             @endif
                                          </a>
                                     </div>
@@ -121,15 +125,15 @@
                                         <form action="{{route('admin.contest.entry.update')}}" method="post" enctype="multipart/form-data">
                                             @csrf
                                             <input type="hidden" name="id" value="{{$participant->id}}">
-                                            <input type="file" name="title" class="form-control @error('title') is-invalid @enderror" value="{{$contest->title}}">
+                                            <input type="file" name="file" onchange="this.form.submit()" class="form-control @error('title') is-invalid @enderror" value="{{$contest->title}}">
                                             <!-- <small class="form-text text-muted">Your profile name will be used as part of your public profile URL address.</small> -->
                                         </form>
                                     
-                                    @error('title')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                        @error('file')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>

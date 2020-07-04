@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Category;
 use Auth;
 use App\Contest;
+use App\ContestParticipant;
 use App\Http\Controllers\Controller;
 use App\SubCategory;
 use Illuminate\Http\Request;
@@ -54,9 +55,9 @@ class ContestController extends Controller
         }else{
             $contest->update(['prize_description'=>NULL]);
         }
-        if($request->hasFile('photo')){
-            $path=$request->file('photo')->store('contest');
-            $contest->update(['photo'=>$path]);
+        if($request->hasFile('file')){
+            $path=$request->file('file')->store('contest');
+            $contest->update(['file'=>$path]);
         }
 
         return redirect(route('admin.contests'))->with('success','contest updated successfully');
@@ -66,9 +67,26 @@ class ContestController extends Controller
         Contest::where('id',$id)->delete();
         return back()->with('success','contest deleted successfully');
     }
+
     public function show($id){
         $contest=Contest::where('id',$id)->firstOrFail();
         return view('admin/contests/show',compact('contest'));
+    }
+
+    public function updateEntry(Request $request){
+        $request->validate([
+            'file'=>'required'
+        ]);
+        $path=$request->file('file')->store('entries');
+        ContestParticipant::where('id',$request->id)->update([
+            'file'=>$path
+        ]);
+        return back()->with('success','contest entry updated successfully');
+    }
+
+    public function deleteEntry($id){
+        ContestParticipant::where('id',$id)->delete();
+        return back()->with('success','contest entry deleted successfully');
     }
 
 }
