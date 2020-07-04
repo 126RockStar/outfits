@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Category;
 use App\Contest;
 use App\ContestParticipant;
@@ -27,8 +28,13 @@ class FrontendController extends Controller
     }
     public function viewContest($id)
     {
+        if(Auth::check()){
+            $isParticipated=ContestParticipant::where('contest_id',$id)->where('user_id',Auth::id())->first();
+        }else{
+            $isParticipated='';
+        }
         $contest=Contest::where('id',$id)->firstOrFail();
         $participants=ContestParticipant::where('contest_id',$id)->get();
-        return view('contests/show',compact('contest','participants'));
+        return view('contests/show',compact('contest','participants','isParticipated'));
     }
 }

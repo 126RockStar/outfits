@@ -173,5 +173,11 @@ class ContestController extends Controller
         ]);
         return back()->with('success','contest participation successfully');
     }
+
+    public function unjoinContest($id){
+        $entry=ContestParticipant::where('contest_id',$id)->where('user_id',Auth::id())->firstOrFail();
+        $entry->delete();
+        return back()->with('success','Your contest entry is deleted successfully');
+    }
   
 }

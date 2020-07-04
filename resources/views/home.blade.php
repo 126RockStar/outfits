@@ -21,7 +21,7 @@
                             <div class="card-header text-capitalize">{{$contest->getCategory->name}} 
 
                                 {{!empty($contest->getSubCategory)? ' > '.$contest->getSubCategory->name :''}}
-                                ({{$contest->participants}} participants)</div>
+                                ({{count($contest->getParticipants)}} of {{$contest->participants}} participants)</div>
                                 <div class="card-body">
                                     <a href="{{route('contest.show',$contest->id)}}">
                                     @if($contest->file_type=='image')
@@ -41,13 +41,16 @@
                                     @endif
                                     </a>
                                     <hr>
-                                    <a href="{{route('user.contests.edit',$contest->id)}}" class="btn btn-info float-right"><i class="fa fa-edit"></i></a>
-                                    <form action="{{route('user.contests.destroy',$contest->id)}}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" onclick="return confirm('Are you sure to delete the contest')" class="btn btn-danger"><i class="fa fa-trash"></i></button>
-                                    </form>
-                            
+                                    @if(count($contest->getParticipants)==0)
+                                        <a href="{{route('user.contests.edit',$contest->id)}}" class="btn btn-info float-right"><i class="fa fa-edit"></i></a>
+                                        <form action="{{route('user.contests.destroy',$contest->id)}}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" onclick="return confirm('Are you sure to delete the contest')" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                        </form>
+                                    @else 
+                                        <p class="text-danger">Contest can't modifed as users participated</p>
+                                    @endif
                                 </div>
                             </div>
                         </div>

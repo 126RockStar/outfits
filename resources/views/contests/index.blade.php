@@ -59,7 +59,7 @@
             <div class="card-header text-capitalize">{{$contest->getCategory->name}} 
 
                 {{!empty($contest->getSubCategory)? ' > '.$contest->getSubCategory->name :''}}
-                ({{$contest->participants}} participants)</div>
+                ({{count($contest->getParticipants)}} of {{$contest->participants}} participants)</div>
                 <div class="card-body">
                     <a href="{{route('contest.show',$contest->id)}}">
                     @if($contest->file_type=='image')

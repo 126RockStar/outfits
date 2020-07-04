@@ -27,6 +27,7 @@ Route::middleware(['checkUser','verified'])->prefix('user/')->name('user.')->gro
     Route::get('/dashboard', 'HomeController@userDashboard')->name('dashboard');
     route::resource('/contests','ContestController');
     route::post('/contest/participate','ContestController@participateContest')->name('contest.participate');
+    route::get('/contest/unjoin/{id}','ContestController@unjoinContest')->name('contest.unjoin');
 
 
 
