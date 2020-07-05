@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contest;
+use App\ContestParticipant;
 use App\SubCategory;
 use Auth;
 use App\User;
@@ -37,8 +38,13 @@ class HomeController extends Controller
     public function userDashboard()
     {
         $referredUsers=User::where('refered_user_id',Auth::id())->get();
-        $contests=Contest::where('user_id',Auth::id())->where('status','open')->paginate(12);
-        return view('home',compact('referredUsers','contests'));
+        $participatedContests=ContestParticipant::where('user_id',Auth::id())->pluck('contest_id');
+        if(isset($_GET['joined'])){
+            $contests=Contest::where('user_id',Auth::id())->where('status','open')->WhereIn('id',$participatedContests)->orderBy('id','DESC')->paginate(12);
+        }else{
+            $contests=Contest::where('user_id',Auth::id())->where('status','open')->orderBy('id','DESC')->paginate(12);
+        }
+        return view('home',compact('referredUsers','contests','participatedContests'));
     }
 
     public function fetchSubCategory(Request $request){

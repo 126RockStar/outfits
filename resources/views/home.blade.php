@@ -2,7 +2,16 @@
 
 @section('content')
 <div class="container">
-    <h1>Welcome <b>{{Auth::user()->username}}</b></h1>
+    <h1 class="text-center">Welcome <b>{{Auth::user()->username}}</b></h1>
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link text-info {{!isset($_GET['joined'])?'active':''}}" href="{{route('user.dashboard')}}">My Created</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-info {{isset($_GET['joined'])?'active':''}}" href="{{route('user.dashboard','joined')}}">Joined({{count($participatedContests)}})</a>
+        </li>
+      </ul> 
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
@@ -41,21 +50,27 @@
                                     @endif
                                     </a>
                                     <hr>
-                                    @if(count($contest->getParticipants)<2)
+                                    @if(count($contest->getParticipants)<2 && $contest->user_id==Auth::id())
                                         <a href="{{route('user.contests.edit',$contest->id)}}" class="btn btn-info float-right"><i class="fa fa-edit"></i></a>
                                         <form action="{{route('user.contests.destroy',$contest->id)}}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" onclick="return confirm('Are you sure to delete the contest')" class="btn btn-danger"><i class="fa fa-trash"></i></button>
                                         </form>
-                                    @else 
-                                        <p class="text-danger">Contest can't modifed as users participated</p>
+                                    @else
+                                        @if(!isset($_GET['joined']))
+                                            <p class="text-danger">Contest can't modifed as users participated</p>
+                                        @endif
                                     @endif
                                 </div>
                             </div>
                         </div>
                         @empty 
-                            <h3 class="text-danger text-center">You haven't added any contest yet</h3>
+                            @isset($_GET['joined'])
+                                <h3 class="text-danger text-center">You haven't joined any contest yet</h3>
+                            @else
+                                <h3 class="text-danger text-center">You haven't added any contest yet</h3>
+                            @endisset
                         @endforelse
                         {{$contests->links()}}
                     </div>
