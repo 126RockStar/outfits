@@ -18,39 +18,46 @@
 @endsection
 @section('content')
  <div class="container">
-     
-    <div class="row">
-        <ul class="navbar-nav mr-auto sm sm-clean col-2" id="categoryMenu">
-                        
-            <li><a href="#">Categories</a>
-                <ul>
-                    @forelse($categories as $key=>$category)
-                        <li>
-                            <a class="@if(isset($_GET['category'])) {{$category->id==$_GET['category']?'bg-success text-white ':''}} @endif" href="{{route('contests','category='.$category->id)}}" >{{$category->name}}</a>
-                            @if(count($category->getSubCategories)>0)
-                                <ul>
-                                    @forelse($category->getSubCategories as $subCategory)
-                                        <li class="">
-                                            <a class="@if(isset($_GET['subCategory'])) {{$subCategory->id==$_GET['subCategory']?'bg-success text-white ':''}} @endif" href="{{route('contests','category='.$category->id.'&subCategory='.$subCategory->id)}}">{{$subCategory->name}}</a>
-                                        </li>
-                                    @empty
-                                        <li class="text-danger"> {{__('No sub-category found')}}</li>
-                                    @endforelse
-                                </ul>
-                            @endif
-                        </li>
-                    @empty 
-                        {{-- <li class="text-danger">{{__('No categories found.')}}</li> --}}
-                    @endforelse
-                </ul>
-            </li>
-        </ul>
-    </div>
+    <ul class="sm sm-clean"id="categoryMenu">
+        <li><a href="#">Categories</a>
+            <ul>
+                @forelse($categories as $key=>$category)
+                    <li>
+                        <a class="@if(isset($_GET['category'])) {{$category->id==$_GET['category']?'bg-success text-white ':''}} @endif" href="{{route('contests','category='.$category->id)}}" >{{$category->name}}</a>
+                        @if(count($category->getSubCategories)>0)
+                            <ul>
+                                @forelse($category->getSubCategories as $subCategory)
+                                    <li class="">
+                                        <a class="@if(isset($_GET['subCategory'])) {{$subCategory->id==$_GET['subCategory']?'bg-success text-white ':''}} @endif" href="{{route('contests','category='.$category->id.'&subCategory='.$subCategory->id)}}">{{$subCategory->name}}</a>
+                                    </li>
+                                @empty
+                                    <li class="text-danger"> {{__('No sub-category found')}}</li>
+                                @endforelse
+                            </ul>
+                        @endif
+                    </li>
+                @empty 
+                    {{-- <li class="text-danger">{{__('No categories found.')}}</li> --}}
+                @endforelse
+            </ul>
+        </li>
+        <li>
+            <a href="#">Type</a>
+            <ul>
+                <li> <a href="">Image</a></li>
+                <li> <a href="">Video</a></li>
+            </ul>
+        </li>
+        <li>
+            <div class="custom-control custom-switch mt-2  text-dark">
+                <input type="checkbox" class="custom-control-input" id="switch1">
+                <label class="custom-control-label text-dark" for="switch1">Prize</label>
+              </div>
+        </li>
+      </ul> 
+      
+
     
-
-
-     
-    <br><br><br>
 	
 	
 <section id="team" class="pb-5">
