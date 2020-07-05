@@ -464,6 +464,7 @@
         </div>
         <div class="col-md-6">
             <h1 class="text-white">{{$contest->title}}</h1>
+			    <p class="text-white">{{$contest->description}}</p>
             <p class="text-muted">by <b>{{$contest->getCreator->username}}</b></p>
             @if(empty($contest->prize_description))
                 <p class="text-warning">no prize for this contest</p>
@@ -699,7 +700,7 @@
  <div class="container">
     
     <hr>
-    <p class="text-white">{{$contest->description}}</p>
+
 
 
     <h2>Participants:  {{count($contest->getParticipants)}} of {{$contest->participants}}</h2>
