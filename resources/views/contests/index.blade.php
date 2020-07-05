@@ -44,8 +44,8 @@
         <li>
             <a href="#">Type</a>
             <ul>
-                <li> <a href="">Image</a></li>
-                <li> <a href="">Video</a></li>
+                <li> <a href="?type=image">Image</a></li>
+                <li> <a href="?type=video">Video</a></li>
             </ul>
         </li>
         <li>
