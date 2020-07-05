@@ -41,7 +41,7 @@
                                     @endif
                                     </a>
                                     <hr>
-                                    @if(count($contest->getParticipants)==0)
+                                    @if(count($contest->getParticipants)<2)
                                         <a href="{{route('user.contests.edit',$contest->id)}}" class="btn btn-info float-right"><i class="fa fa-edit"></i></a>
                                         <form action="{{route('user.contests.destroy',$contest->id)}}" method="POST">
                                             @csrf

@@ -17,9 +17,9 @@ class FrontendController extends Controller
     public function contests(){
         $categories=Category::all();
         if(isset($_GET['subCategory']) && isset($_GET['category'])){
-            $contests=Contest::where('sub_category',$_GET['subCategory'])->orderBy('id','DESC')->paginate(12);
+            $contests=Contest::where('sub_category',$_GET['subCategory'])->where('status','open')->orderBy('id','DESC')->paginate(12);
         }else if(isset($_GET['category']) && !isset($_GET['subCategory'])){
-            $contests=Contest::where('category',$_GET['category'])->orderBy('id','DESC')->paginate(12);
+            $contests=Contest::where('category',$_GET['category'])->where('status','open')->orderBy('id','DESC')->paginate(12);
         }else{
             $contests=Contest::orderBy('id','DESC')->paginate(12);
         }
@@ -33,7 +33,7 @@ class FrontendController extends Controller
         }else{
             $isParticipated='';
         }
-        $contest=Contest::where('id',$id)->firstOrFail();
+        $contest=Contest::where('id',$id)->where('status','open')->firstOrFail();
         $participants=ContestParticipant::where('contest_id',$id)->get();
         return view('contests/show',compact('contest','participants','isParticipated'));
     }

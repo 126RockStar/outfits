@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('styles')
-
      <!-- SmartMenus core CSS (required) -->
      <link href="{{asset('public/frontEnd')}}/css/sm-core-css.css" rel="stylesheet" type="text/css" />
      <link href="{{asset('public/frontEnd')}}/css/sm-clean/sm-clean.css" rel="stylesheet" type="text/css" />

@@ -37,7 +37,7 @@ class HomeController extends Controller
     public function userDashboard()
     {
         $referredUsers=User::where('refered_user_id',Auth::id())->get();
-        $contests=Contest::where('user_id',Auth::id())->paginate(12);
+        $contests=Contest::where('user_id',Auth::id())->where('status','open')->paginate(12);
         return view('home',compact('referredUsers','contests'));
     }
 

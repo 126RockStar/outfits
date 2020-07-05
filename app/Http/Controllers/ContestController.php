@@ -73,6 +73,12 @@ class ContestController extends Controller
             'file_type'=>$request->file_type,
         ]);
 
+        ContestParticipant::create([
+            'user_id'=>Auth::id(),
+            'contest_id'=>$contest->id,
+            'file'=>$request->file('file')->store('entries'),
+        ]);
+
         if(isset($request->prize)){
             $contest->update(['prize_description'=>$request->prize_description]);
         }
@@ -166,11 +172,20 @@ class ContestController extends Controller
 
     public function participateContest (Request $request)
     {
+
+        $contest=Contest::where('id',$request->id)->firstOrFail();
+
         ContestParticipant::create([
             'user_id'=>Auth::id(),
             'contest_id'=>$request->id,
             'file'=>$request->file('file')->store('entries'),
         ]);
+
+        if(count($contest->getParticipants)>=$contest->participnats){
+            $contest->update(['status'=>'judge']);
+        }
+
+
         return back()->with('success','contest participation successfully');
     }
 

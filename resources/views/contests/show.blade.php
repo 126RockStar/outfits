@@ -704,13 +704,6 @@
 
     <h2>Participants:  {{count($contest->getParticipants)}} of {{$contest->participants}}</h2>
     <div class="parent-container">
-        <a href="{{asset('public/storage/'.$contest->file)}}" class="{{$contest->file_type=='video'?'mfp-iframe':''}}">
-            @if($contest->file_type=='image')
-                    <img src="{{asset('public/storage/'.$contest->file)}}" height="150px">
-                @else
-                    <video src="{{asset('public/storage/'.$contest->file)}}" height="150px"></video>
-                @endif
-            </a>
         @forelse($participants as $participant)
             <a href="{{asset('public/storage/'.$participant->file)}}" class="{{$contest->file_type=='video'?'mfp-iframe':''}}">
             @if($contest->file_type=='image')
