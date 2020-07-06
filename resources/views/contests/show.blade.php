@@ -2,7 +2,9 @@
 
 @section('styles')
     <style>
-
+		.modal-backdrop.show {
+			display: none;
+		}
         #heading {
             text-transform: uppercase;
             color: #673AB7;
