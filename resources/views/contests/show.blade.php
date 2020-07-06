@@ -388,7 +388,7 @@
                 }else{
                     $("#file").val('');
                     $('#loadingPreview').addClass('d-none');
-                    alert('No,no,no... You need to choose Photo');
+                    alert('No,no,no... You need to choose a Photo');
                 }
                 
             }
@@ -424,7 +424,7 @@
                 }else{
                     $("#file").val('');
                     $('#loadingPreview').addClass('d-none');
-                    alert('No,no,no... You need to choose Video');
+                    alert('No,no,no... You need to choose a Video');
                 }
                 
             }
@@ -436,7 +436,7 @@
     function checkFile(){
         var hasFile = $("#file").val();
         if(!hasFile) {
-            alert('No,no,no... You need to choose {{$contest->file_type}}');
+            alert('No,no,no... You need to choose a {{$contest->file_type}}');
         }else{
             $('#loadingPreview').removeClass('d-none');
         }
@@ -455,14 +455,23 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-7">
+               <h4>Participants:  {{count($contest->getParticipants)}} of {{$contest->participants}}</h4>
+    <div class="parent-container">
+        @forelse($participants as $participant)
+            <a href="{{asset('public/storage/'.$participant->file)}}" class="{{$contest->file_type=='video'?'mfp-iframe':''}}">
             @if($contest->file_type=='image')
-                <img src="{{asset('public/storage/'.$contest->file)}}" class="img img-thumbnail" style="width:100%">
+                <img src="{{asset('public/storage/'.$participant->file)}}"  height="100px" title="{{$participant->getParticipant->username}}">
             @else
-                <video src="{{asset('public/storage/'.$contest->file)}}" class="img img-thumbnail" width="100%" controls></video>
+                <video src="{{asset('public/storage/'.$participant->file)}}"  height="100px" title="{{$participant->getParticipant->username}}"></video>
             @endif
+        @empty 
+
+        @endforelse
+
+    </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-5">
             <h1 class="text-white">{{$contest->title}}</h1>
 			    <p class="text-white">{{$contest->description}}</p>
             <p class="text-muted">by <b>{{$contest->getCreator->username}}</b></p>
@@ -488,7 +497,7 @@
                             
                                     <!-- Modal Header -->
                                     <div class="modal-header">
-                                    <h4 class="modal-title text-dark">Participate in this Contest</h4>
+                                    <h4 class="modal-title text-dark">{{$contest->title}}</h4>
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     </div>
                             
@@ -500,7 +509,7 @@
                                             <input type="hidden"  name="id" value="{{$contest->id}}">
                                             <!-- progressbar -->
                                             <ul id="progressbar">
-                                                <li id="one" class="active"><strong>Contest</strong></li>
+                                                <li id="one" class="active"><strong>Type</strong></li>
                                             <li id="two"><strong>Rules</strong></li>
                                                 <li id="three"><strong>Upload</strong></li>
                                             </ul>
@@ -513,8 +522,8 @@
                                                 <div class="form-card p-3">
                                                     <div class="row">
                                                         <div class="col-7">
-                                                            <h2 class="fs-title">Have you understood the contest?</h2>
-                                                            <p class="text-muted"></p>
+                                                            <h2 class="fs-title">This is a {{$contest->file_type}} contest.</h2>
+                                                            <p class="text-muted">Make sure you have a {{$contest->file_type}} ready for step 3<br>Video can be max 30 seconds</p>
                                                         </div>
                                                         <div class="col-5">
                                                             <h2 class="steps">{{ __('Step') }} 1 - 3</h2>
@@ -524,13 +533,13 @@
                                                     </div>
                                                 
                                                     </div>
-                                                    <input type="button" name="next" class="next action-button mr-3" value="{{ __('Yes') }}" />
+                                                    <input type="button" name="next" class="next action-button mr-3" value="{{ __('Next') }}" />
                                             </fieldset>
                                             <fieldset>
                                                 <div class="form-card p-3">
                                                     <div class="row">
                                                         <div class="col-7">
-                                                            <h2 class="fs-title">Have you read the contest rules?</h2>
+                                                            <h2 class="fs-title">Does your {{$contest->file_type}} follow these rules?</h2>
                                                         </div>
                                                         <div class="col-5">
                                                             <h2 class="steps">{{ __('Step') }} 2 - 3</h2>
@@ -541,17 +550,18 @@
                                                 
                                                     <p class="text-muted">{{$contest->description}}</p> 
                                                     </div>
-                                                    <input type="button" name="next" class="next action-button mr-3" value="Yes" />
-                                                    <input type="button" name="previous" class="previous action-button-previous" value="No" />
+                                                    <input type="button" name="next" class="next action-button mr-3" value="Next" />
+                                                    
                                             </fieldset>
 
                                             <fieldset>
                                                 <div class="form-card p-3">
                                                     <div class="row">
                                                         <div class="col-7">
-                                                            <h2 class="fs-title">Choose your {{$contest->file_type}}. then Press 'Save' button.</h2>
+                                                            <h2 class="fs-title">Upload your {{$contest->file_type}}.</h2>
+															 <p class="text-muted">After you preview your {{$contest->file_type}}, click save.</p>
                                                             @if($contest->file_type=='video')
-                                                                <p class="text-muted">maximum video duration is 30 seconds</p>
+                                                                <p class="text-muted">Maximum video duration is 30 seconds<br>After you preview your {{$contest->file_type}}, click save.</p>
                                                             @endif
                                                         </div>
                                                         <div class="col-5">
@@ -566,7 +576,7 @@
                                                             <i class="fas fa-spinner fa-pulse fa-8x d-none" id="loadingPreview"></i>
                                                             <div id="photoGallery"> </div>
                                                             <label for="file" class="btn  {{ $errors->has('file') ? ' is-invalid' : '' }} cursor-pointer">
-                                                                <i class="fa fa-plus-circle text-info fa-8x"></i>
+                                                                <i class="fa fa-plus-circle text-info fa-6x"></i>
                                                             </label>
                                                             <input type="file" id="file" accept="{{$contest->file_type}}/*" onchange="preview{{$contest->file_type}}(this)" name="file" class="d-none" required>
                                                             @if ($errors->has('file'))
@@ -593,7 +603,7 @@
                                 </div>
                             </div>
                         @else 
-                            <h3 class="text-danger">You already participated in this contest</h3>
+                            <h3 class="text-danger">You have joined this contest.</h3>
                             <p class="text-muted">You can unjoin this contest until participants is full</p>
                             @if(count($participants)<$contest->participants)
                                 <a href="{{route('user.contest.unjoin',$contest->id)}}" onclick="return confirm('Are you sure to delete your entry in this contest?')" class="btn btn-danger">Unjoin</a>
@@ -703,20 +713,7 @@
 
 
 
-    <h2>Participants:  {{count($contest->getParticipants)}} of {{$contest->participants}}</h2>
-    <div class="parent-container">
-        @forelse($participants as $participant)
-            <a href="{{asset('public/storage/'.$participant->file)}}" class="{{$contest->file_type=='video'?'mfp-iframe':''}}">
-            @if($contest->file_type=='image')
-                <img src="{{asset('public/storage/'.$participant->file)}}"  height="150px" title="{{$participant->getParticipant->username}}">
-            @else
-                <video src="{{asset('public/storage/'.$participant->file)}}"  height="150px" title="{{$participant->getParticipant->username}}"></video>
-            @endif
-        @empty 
 
-        @endforelse
-
-    </div>
 
 </div>
 @endsection
