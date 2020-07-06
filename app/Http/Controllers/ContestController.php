@@ -181,7 +181,7 @@ class ContestController extends Controller
             'file'=>$request->file('file')->store('entries'),
         ]);
 
-        if(count($contest->getParticipants)>=$contest->participnats){
+        if(count($contest->getParticipants)>=$contest->participants){
             $contest->update(['status'=>'judge']);
         }
 
