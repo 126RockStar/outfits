@@ -454,13 +454,12 @@
 @endsection
 @section('content')
 <div class="container">
+<div class="card">
+  <div class="card-body">
     <div class="row">
-	
-	
-	
-
-        <div class="col-md-5">
+       <div class="col-md-5">
             <h3 class="text-white">{{$contest->title}}<span class="text-muted">...by <b>{{$contest->getCreator->username}}</b></span></h3>
+			<br>
 			    <p class="text-white">RULES: {{$contest->description}}</p>
             
             @if(empty($contest->prize_description))
@@ -693,7 +692,7 @@
         </div>
 		
 		
-		<div class="col-md-7">
+		<div class="col-md-7 pr-0">
 		   <h6>Participants:  {{count($contest->getParticipants)}} of {{$contest->participants}}</h6>
 			<div class="parent-container">
 				@forelse($participants as $participant)
@@ -709,5 +708,7 @@
 			</div>
         </div>				
     </div>   
+</div>
+</div>
 </div>
 @endsection
