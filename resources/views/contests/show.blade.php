@@ -455,30 +455,18 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-7">
-               <h4>Participants:  {{count($contest->getParticipants)}} of {{$contest->participants}}</h4>
-    <div class="parent-container">
-        @forelse($participants as $participant)
-            <a href="{{asset('public/storage/'.$participant->file)}}" class="{{$contest->file_type=='video'?'mfp-iframe':''}}">
-            @if($contest->file_type=='image')
-                <img src="{{asset('public/storage/'.$participant->file)}}"  height="100px" title="{{$participant->getParticipant->username}}">
-            @else
-                <video src="{{asset('public/storage/'.$participant->file)}}"  height="100px" title="{{$participant->getParticipant->username}}"></video>
-            @endif
-        @empty 
+	
+	
+	
 
-        @endforelse
-
-    </div>
-        </div>
         <div class="col-md-5">
-            <h1 class="text-white">{{$contest->title}}</h1>
-			    <p class="text-white">{{$contest->description}}</p>
-            <p class="text-muted">by <b>{{$contest->getCreator->username}}</b></p>
+            <h3 class="text-white">{{$contest->title}}<span class="text-muted">...by <b>{{$contest->getCreator->username}}</b></span></h3>
+			    <p class="text-white">RULES: {{$contest->description}}</p>
+            
             @if(empty($contest->prize_description))
-                <p class="text-warning">no prize for this contest</p>
+                <p class="text-warning">PRIZE: No Prize</p>
             @else
-                <p class="text-white">{{$contest->prize_description}}</p>
+                <p class="text-white">PRIZE: {{$contest->prize_description}}</p>
             @endif
 
             @auth 
@@ -603,10 +591,10 @@
                                 </div>
                             </div>
                         @else 
-                            <h3 class="text-danger">You have joined this contest.</h3>
-                            <p class="text-muted">You can unjoin this contest until participants is full</p>
+                            <div class="text-danger">You have joined this contest.</div>
+                            <p class="text-muted">You can unjoin until contest is full.</p>
                             @if(count($participants)<$contest->participants)
-                                <a href="{{route('user.contest.unjoin',$contest->id)}}" onclick="return confirm('Are you sure to delete your entry in this contest?')" class="btn btn-danger">Unjoin</a>
+                                <a href="{{route('user.contest.unjoin',$contest->id)}}" onclick="return confirm('Are you sure to delete your entry in this contest?')" class="btn btn-danger btn-sm">Unjoin</a>
                             @endif
                         @endif
                     @else 
@@ -703,17 +691,23 @@
                 </div>
             @endauth
         </div>
-    </div>
-   
-   
-</div>
- <div class="container">
-    
-    <hr>
-
-
-
-
-
+		
+		
+		<div class="col-md-7">
+		   <h6>Participants:  {{count($contest->getParticipants)}} of {{$contest->participants}}</h6>
+			<div class="parent-container">
+				@forelse($participants as $participant)
+				<a href="{{asset('public/storage/'.$participant->file)}}" class="{{$contest->file_type=='video'?'mfp-iframe':''}}">
+				@if($contest->file_type=='image')
+					<img src="{{asset('public/storage/'.$participant->file)}}"  height="120px" title="{{$participant->getParticipant->username}}">
+				@else
+					<video src="{{asset('public/storage/'.$participant->file)}}"  height="120px" title="{{$participant->getParticipant->username}}"></video>
+				@endif
+				@empty 
+				@endforelse
+				</a>
+			</div>
+        </div>				
+    </div>   
 </div>
 @endsection
