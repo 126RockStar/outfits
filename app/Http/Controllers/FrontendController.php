@@ -20,8 +20,12 @@ class FrontendController extends Controller
             $contests=Contest::where('sub_category',$_GET['subCategory'])->where('status','open')->orderBy('id','DESC')->paginate(12);
         }else if(isset($_GET['category']) && !isset($_GET['subCategory'])){
             $contests=Contest::where('category',$_GET['category'])->where('status','open')->orderBy('id','DESC')->paginate(12);
+        }else if(isset($_GET['type'])){
+            $contests=Contest::where('file_type',$_GET['type'])->where('status','open')->orderBy('id','DESC')->paginate(12);
+        }else if(isset($_GET['prized'])){
+            $contests=Contest::whereNotNull('prize_description')->where('status','open')->orderBy('id','DESC')->paginate(12);
         }else{
-            $contests=Contest::orderBy('id','DESC')->paginate(12);
+            $contests=Contest::orderBy('id','DESC')->where('status','open')->paginate(12);
         }
 
         return view('contests/index',compact('contests','categories'));

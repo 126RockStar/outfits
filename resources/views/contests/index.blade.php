@@ -204,15 +204,10 @@
         <li>
             <a href="#">Type</a>
             <ul>
-                <li> <a href="">Image</a></li>
-                <li> <a href="">Video</a></li>
+                <li> <a class="@if(isset($_GET['subCategory'])) {{$subCategory->id==$_GET['subCategory']?'bg-success text-white ':''}} @endif" href="{{route('contests','type=image')}}">Image</a></li>
+                <li> <a class="@if(isset($_GET['subCategory'])) {{$subCategory->id==$_GET['subCategory']?'bg-success text-white ':''}} @endif" href="{{route('contests','type=video')}}">Video</a></li>
+                <li> <a class="@if(isset($_GET['prized'])) bg-success text-white @endif" href="{{route('contests','prized')}}">Prized</a></li>
             </ul>
-        </li>
-        <li>
-            <div class="custom-control custom-switch mt-2  text-dark">
-                <input type="checkbox" class="custom-control-input" id="switch1">
-                <label class="custom-control-label text-dark" for="switch1">Prize</label>
-              </div>
         </li>
       </ul> 
       
@@ -231,19 +226,16 @@
                             <div class="card">
                                 <div class="card-body text-center p-0">
 								      <div class="view">
-                    @if($contest->file_type=='image')
-                        <i class="fa fa-image position-absolute p-2 bg-info text-white"></i>
-                        <img src="{{asset('public/storage/'.$contest->file)}}" class="img img-thumbnail posiiton-relative">
-                    @else
-                        <i class="fa fa-video position-absolute p-2 bg-info text-white"></i>
-                        <video src="{{asset('public/storage/'.$contest->file)}}" class="posiiton-relative" style="height:200px"></video>
-                    @endif
-                    <h6 class="text-white">{{$contest->title}}</h6>
-                    <p class="text-muted">by <b>{{$contest->getCreator->username}}</b></p>
-
-                    
-                    
-                    
+                                        @if($contest->file_type=='image')
+                                            <i class="fa fa-image position-absolute p-2 bg-info text-white"></i>
+                                            <img src="{{asset('public/storage/'.$contest->file)}}" class="img img-thumbnail posiiton-relative">
+                                        @else
+                                            <i class="fa fa-video position-absolute p-2 bg-info text-white"></i>
+                                            <video src="{{asset('public/storage/'.$contest->file)}}" class="posiiton-relative" style="height:200px"></video>
+                                        @endif
+                                        <h6 class="text-white">{{$contest->title}}</h6>
+                                        <p class="text-muted">by <b>{{$contest->getCreator->username}}</b></p>
+                                        <p class="text-muted">by <b>{{$contest->status}}</b></p>
 									</div>                                                      
                                 </div>
                             </div>
@@ -263,12 +255,8 @@
 									{{!empty($contest->getSubCategory)? ' > '.$contest->getSubCategory->name :''}}</h6></li>
 										<li class="list-group-item"><h6>{{count($contest->getParticipants)}} of {{$contest->participants}} contestants</h6></li>
 									  </ul>
-
                                 </div>
-								 
-    <a href="{{route('contest.show',$contest->id)}}">Details</a>
-
-  
+                                <a href="{{route('contest.show',$contest->id)}}" class="btn btn-success btn-block">Details</a>
                             </div>
                         </div>
                     </div>  
