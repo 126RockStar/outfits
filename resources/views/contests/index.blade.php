@@ -179,6 +179,7 @@
 
  <div class="container">
     <ul class="sm sm-clean"id="categoryMenu">
+        <li> <a class="@if(!isset($_GET['prized']) && !isset($_GET['type']) && !isset($_GET['category'])) bg-success text-white @endif" href="{{route('contests')}}">All</a></li>
         <li><a href="#">Categories</a>
             <ul>
                 @forelse($categories as $key=>$category)
@@ -204,8 +205,8 @@
         <li>
             <a href="#">Type</a>
             <ul>
-                <li> <a class="@if(isset($_GET['subCategory'])) {{$subCategory->id==$_GET['subCategory']?'bg-success text-white ':''}} @endif" href="{{route('contests','type=image')}}">Image</a></li>
-                <li> <a class="@if(isset($_GET['subCategory'])) {{$subCategory->id==$_GET['subCategory']?'bg-success text-white ':''}} @endif" href="{{route('contests','type=video')}}">Video</a></li>
+                <li> <a class="@if(isset($_GET['type'])) {{$_GET['type']=='image'?'bg-success text-white ':''}} @endif" href="{{route('contests','type=image')}}">Image</a></li>
+                <li> <a class="@if(isset($_GET['type'])) {{$_GET['type']=='video'?'bg-success text-white ':''}} @endif" href="{{route('contests','type=video')}}">Video</a></li>
                 <li> <a class="@if(isset($_GET['prized'])) bg-success text-white @endif" href="{{route('contests','prized')}}">Prized</a></li>
             </ul>
         </li>

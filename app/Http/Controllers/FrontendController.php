@@ -11,7 +11,8 @@ use Illuminate\Http\Request;
 class FrontendController extends Controller
 {
     public function index(){
-        return view('welcome');
+        $latestContests=Contest::where('status','open')->orderBy('id','DESC')->limit(3)->get();
+        return view('welcome',compact('latestContests'));
     }
 
     public function contests(){

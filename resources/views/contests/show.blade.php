@@ -471,138 +471,142 @@
             @endif
 
             @auth 
-                @if($contest->user_id!=Auth::id())
-                    @if(count($participants)<$contest->participants)
-                        @if(empty($isParticipated))
-                            <!-- Button to Open the Modal -->
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                                Join Contest
-                            </button>
-                            
-                            <!-- The Modal -->
-                            <div class="modal fade" id="myModal">
-                                <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                            
-                                    <!-- Modal Header -->
-                                    <div class="modal-header">
-                                    <h4 class="modal-title text-dark">{{$contest->title}}</h4>
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    </div>
-                            
-                                    <!-- Modal body -->
-                                    <div class="modal-body">
+                @if(!empty(Auth::user()->email_verfied_at))
+                    @if($contest->user_id!=Auth::id())
+                        @if(count($participants)<$contest->participants)
+                            @if(empty($isParticipated))
+                                <!-- Button to Open the Modal -->
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                    Join Contest
+                                </button>
                                 
-                                        <form id="msform" action="{{route('user.contest.participate')}}" method="post" enctype="multipart/form-data">
-                                            @csrf
-                                            <input type="hidden"  name="id" value="{{$contest->id}}">
-                                            <!-- progressbar -->
-                                            <ul id="progressbar">
-                                                <li id="one" class="active"><strong>Type</strong></li>
-                                            <li id="two"><strong>Rules</strong></li>
-                                                <li id="three"><strong>Upload</strong></li>
-                                            </ul>
-                                            {{--<div class="progress">
-                                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div> <br> --}} 
-            
+                                <!-- The Modal -->
+                                <div class="modal fade" id="myModal">
+                                    <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                
+                                        <!-- Modal Header -->
+                                        <div class="modal-header">
+                                        <h4 class="modal-title text-dark">{{$contest->title}}</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+                                
+                                        <!-- Modal body -->
+                                        <div class="modal-body">
+                                    
+                                            <form id="msform" action="{{route('user.contest.participate')}}" method="post" enctype="multipart/form-data">
+                                                @csrf
+                                                <input type="hidden"  name="id" value="{{$contest->id}}">
+                                                <!-- progressbar -->
+                                                <ul id="progressbar">
+                                                    <li id="one" class="active"><strong>Type</strong></li>
+                                                <li id="two"><strong>Rules</strong></li>
+                                                    <li id="three"><strong>Upload</strong></li>
+                                                </ul>
+                                                {{--<div class="progress">
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div> <br> --}} 
+                
 
-                                            <fieldset>
-                                                <div class="form-card p-3">
-                                                    <div class="row">
-                                                        <div class="col-7">
-                                                            <h2 class="fs-title">This is a {{$contest->file_type}} contest.</h2>
-                                                            <p class="text-muted">Make sure you have a {{$contest->file_type}} ready for step 3<br>Video can be max 30 seconds</p>
-                                                        </div>
-                                                        <div class="col-5">
-                                                            <h2 class="steps">{{ __('Step') }} 1 - 3</h2>
+                                                <fieldset>
+                                                    <div class="form-card p-3">
+                                                        <div class="row">
+                                                            <div class="col-7">
+                                                                <h2 class="fs-title">This is a {{$contest->file_type}} contest.</h2>
+                                                                <p class="text-muted">Make sure you have a {{$contest->file_type}} ready for step 3<br>Video can be max 30 seconds</p>
+                                                            </div>
+                                                            <div class="col-5">
+                                                                <h2 class="steps">{{ __('Step') }} 1 - 3</h2>
+                                                            </div>
+                                                        
+                    
                                                         </div>
                                                     
-                
-                                                    </div>
-                                                
-                                                    </div>
-                                                    <input type="button" name="next" class="next action-button mr-3" value="{{ __('Next') }}" />
-                                            </fieldset>
-                                            <fieldset>
-                                                <div class="form-card p-3">
-                                                    <div class="row">
-                                                        <div class="col-7">
-                                                            <h2 class="fs-title">Does your {{$contest->file_type}} follow these rules?</h2>
                                                         </div>
-                                                        <div class="col-5">
-                                                            <h2 class="steps">{{ __('Step') }} 2 - 3</h2>
+                                                        <input type="button" name="next" class="next action-button mr-3" value="{{ __('Next') }}" />
+                                                </fieldset>
+                                                <fieldset>
+                                                    <div class="form-card p-3">
+                                                        <div class="row">
+                                                            <div class="col-7">
+                                                                <h2 class="fs-title">Does your {{$contest->file_type}} follow these rules?</h2>
+                                                            </div>
+                                                            <div class="col-5">
+                                                                <h2 class="steps">{{ __('Step') }} 2 - 3</h2>
+                                                            </div>
+                                                        
+                    
                                                         </div>
                                                     
-                
-                                                    </div>
-                                                
-                                                    <p class="text-muted">{{$contest->description}}</p> 
-                                                    </div>
-                                                    <input type="button" name="next" class="next action-button mr-3" value="Next" />
-                                                    
-                                            </fieldset>
+                                                        <p class="text-muted">{{$contest->description}}</p> 
+                                                        </div>
+                                                        <input type="button" name="next" class="next action-button mr-3" value="Next" />
+                                                        
+                                                </fieldset>
 
-                                            <fieldset>
-                                                <div class="form-card p-3">
-                                                    <div class="row">
-                                                        <div class="col-7">
-                                                            <h2 class="fs-title">Upload your {{$contest->file_type}}.</h2>
-															 <p class="text-muted">After you preview your {{$contest->file_type}}, click save.</p>
-                                                            @if($contest->file_type=='video')
-                                                                <p class="text-muted">Maximum video duration is 30 seconds<br>After you preview your {{$contest->file_type}}, click save.</p>
-                                                            @endif
+                                                <fieldset>
+                                                    <div class="form-card p-3">
+                                                        <div class="row">
+                                                            <div class="col-7">
+                                                                <h2 class="fs-title">Upload your {{$contest->file_type}}.</h2>
+                                                                <p class="text-muted">After you preview your {{$contest->file_type}}, click save.</p>
+                                                                @if($contest->file_type=='video')
+                                                                    <p class="text-muted">Maximum video duration is 30 seconds<br>After you preview your {{$contest->file_type}}, click save.</p>
+                                                                @endif
+                                                            </div>
+                                                            <div class="col-5">
+                                                                <h2 class="steps">{{ __('Step') }} 3 - 3</h2>
+                                                            </div>
                                                         </div>
-                                                        <div class="col-5">
-                                                            <h2 class="steps">{{ __('Step') }} 3 - 3</h2>
+                    
+                    
+                                                        <div class="row">
+                                                        {{--   <label class="col-md-4 text-dark text-right">Photo<span class="required-star text-danger">*</span></label>--}}
+                                                            <div class="col-md-3">
+                                                                <i class="fas fa-spinner fa-pulse fa-8x d-none" id="loadingPreview"></i>
+                                                                <div id="photoGallery"> </div>
+                                                                <label for="file" class="btn  {{ $errors->has('file') ? ' is-invalid' : '' }} cursor-pointer">
+                                                                    <i class="fa fa-plus-circle text-info fa-6x"></i>
+                                                                </label>
+                                                                <input type="file" id="file" accept="{{$contest->file_type}}/*" onchange="preview{{$contest->file_type}}(this)" name="file" class="d-none" required>
+                                                                @if ($errors->has('file'))
+                                                                    <span class="invalid-feedback" role="alert">
+                                                                        <strong>{{ $errors->first('file') }}</strong>
+                                                                    </span>
+                                                                @endif
+                                                            </div>
                                                         </div>
                                                     </div>
-                
-                
-                                                    <div class="row">
-                                                    {{--   <label class="col-md-4 text-dark text-right">Photo<span class="required-star text-danger">*</span></label>--}}
-                                                        <div class="col-md-3">
-                                                            <i class="fas fa-spinner fa-pulse fa-8x d-none" id="loadingPreview"></i>
-                                                            <div id="photoGallery"> </div>
-                                                            <label for="file" class="btn  {{ $errors->has('file') ? ' is-invalid' : '' }} cursor-pointer">
-                                                                <i class="fa fa-plus-circle text-info fa-6x"></i>
-                                                            </label>
-                                                            <input type="file" id="file" accept="{{$contest->file_type}}/*" onchange="preview{{$contest->file_type}}(this)" name="file" class="d-none" required>
-                                                            @if ($errors->has('file'))
-                                                                <span class="invalid-feedback" role="alert">
-                                                                    <strong>{{ $errors->first('file') }}</strong>
-                                                                </span>
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <input type="submit" onclick="checkFile()" class="action-button mr-3" value="{{ __('Save') }}" />
-                                                <input type="button" name="previous" class="previous action-button-previous" value="{{ __('Previous') }}" />
-                                            </fieldset>
-                                        </form>
+                                                    <input type="submit" onclick="checkFile()" class="action-button mr-3" value="{{ __('Save') }}" />
+                                                    <input type="button" name="previous" class="previous action-button-previous" value="{{ __('Previous') }}" />
+                                                </fieldset>
+                                            </form>
 
+                                        </div>
+                                
+                                        {{-- <!-- Modal footer -->
+                                        <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                        </div> --}}
+                                
                                     </div>
-                            
-                                    {{-- <!-- Modal footer -->
-                                    <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                    </div> --}}
-                            
+                                    </div>
                                 </div>
-                                </div>
-                            </div>
-                        @else 
-                            <div class="text-danger">You have joined this contest.</div>
-                            <p class="text-muted">You can unjoin until contest is full.</p>
-                            @if(count($participants)<$contest->participants)
-                                <a href="{{route('user.contest.unjoin',$contest->id)}}" onclick="return confirm('Are you sure to delete your entry in this contest?')" class="btn btn-danger btn-sm">Unjoin</a>
+                            @else 
+                                <div class="text-danger">You have joined this contest.</div>
+                                <p class="text-muted">You can unjoin until contest is full.</p>
+                                @if(count($participants)<$contest->participants)
+                                    <a href="{{route('user.contest.unjoin',$contest->id)}}" onclick="return confirm('Are you sure to delete your entry in this contest?')" class="btn btn-danger btn-sm">Unjoin</a>
+                                @endif
                             @endif
+                        @else 
+                            <h3 class="text warning">Judging</h3>
                         @endif
                     @else 
-                        <h3 class="text warning">Judging</h3>
+                        <p class="text-warning">You can't join in your created contest</p>
                     @endif
                 @else 
-                    <p class="text-warning">You can't join in your created contest</p>
+                    <a href="{{route('verification.notice')}}"class="text-warning">Click here to Verify your account, then you can join this contest</a>
                 @endif
             @else 
                 <!-- Button to Open the Modal -->
