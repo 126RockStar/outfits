@@ -471,7 +471,7 @@
             @endif
 
             @auth 
-                @if(!empty(Auth::user()->email_verfied_at))
+                @if(!empty(Auth::user()->email_verified_at))
                     @if($contest->user_id!=Auth::id())
                         @if(count($participants)<$contest->participants)
                             @if(empty($isParticipated))
@@ -603,7 +603,66 @@
                             <h3 class="text warning">Judging</h3>
                         @endif
                     @else 
-                        <p class="text-warning">You can't join in your created contest</p>
+                         <!-- Button to Open the Modal -->
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                            Post
+                        </button>
+                        
+                        <!-- The Modal -->
+                        <div class="modal fade" id="myModal">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                        
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title text-dark">Post</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                        
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    <form method="POST" action="{{ route('login.continue') }}">
+                                        @csrf
+                
+                                        <div class="form-group row">
+                                            <label for="description" class="col-md-4 col-form-label text-md-right text-dark">{{ __('Description') }}</label>
+                
+                                            <div class="col-md-6">
+                                                <textarea id="description" type="text" class="form-control @error('description') is-invalid @enderror" name="description" required autocomplete="description" autofocus>{{ old('description') }}<textarea>
+                
+                                                @error('description')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+        
+                
+                                        <div class="form-group row mb-0">
+                                            <div class="col-md-8 offset-md-4">
+                                                <button type="submit" class="btn btn-primary">
+                                                    {{ __('Login') }}
+                                                </button>
+                
+                                                @if (Route::has('password.request'))
+                                                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                                                        {{ __('Forgot Your Password?') }}
+                                                    </a>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                        
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                </div>
+                        
+                            </div>
+                            </div>
+                        </div>
                     @endif
                 @else 
                     <a href="{{route('verification.notice')}}"class="text-warning">Click here to Verify your account, then you can join this contest</a>

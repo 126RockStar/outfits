@@ -40,7 +40,7 @@ class HomeController extends Controller
         $referredUsers=User::where('refered_user_id',Auth::id())->get();
         $participatedContests=ContestParticipant::where('user_id',Auth::id())->pluck('contest_id');
         if(isset($_GET['joined'])){
-            $contests=Contest::where('user_id',Auth::id())->where('status','open')->WhereIn('id',$participatedContests)->orderBy('id','DESC')->paginate(12);
+            $contests=Contest::where('status','open')->WhereIn('id',$participatedContests)->orderBy('id','DESC')->paginate(12);
         }else{
             $contests=Contest::where('user_id',Auth::id())->where('status','open')->orderBy('id','DESC')->paginate(12);
         }
