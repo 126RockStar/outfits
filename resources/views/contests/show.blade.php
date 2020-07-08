@@ -267,6 +267,9 @@
         .slider.round:before {
         border-radius: 50%;
         } 
+        .mfp-bg{
+            opacity: 1!important;
+        }
     </style>
     <link rel="stylesheet" href="{{asset('public/vendors/magnific-popup/magnific-popup.css')}}">
 @endsection
@@ -470,6 +473,20 @@
                 <p class="text-white">PRIZE: {{$contest->prize_description}}</p>
             @endif
 
+            @if(!empty($contest->post))
+                <p class="text-white">
+                    POST: {{$contest->post}}
+                    @auth
+                        @if($contest->user_id==Auth::id())
+                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#editPost">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <a href="{{route('user.contest.post.delete',$contest->id)}}" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+                        @endif
+                    @endauth
+                </p>
+            @endif
+
             @auth 
                 @if(!empty(Auth::user()->email_verified_at))
                     @if($contest->user_id!=Auth::id())
@@ -604,71 +621,56 @@
                         @endif
                     @else 
                          <!-- Button to Open the Modal -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                    Post
-                </button>
-                
-                <!-- The Modal -->
-                <div class="modal fade" id="myModal">
-                    <div class="modal-dialog">
-                    <div class="modal-content">
-                
-                        <!-- Modal Header -->
-                        <div class="modal-header">
-                        <h4 class="modal-title text-dark">Post</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        </div>
-                
-                        <!-- Modal body -->
-                        <div class="modal-body">
-                            <form method="POST" action="{{ route('login.continue') }}">
-                                @csrf
-        
-                                <div class="form-group row">
-                                    <label for="username" class="col-md-4 col-form-label text-md-right text-dark">{{ __('Username') }}</label>
-        
-                                    <div class="col-md-6">
-                                        <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
-        
-                                        @error('username')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editPost">
+                            Post
+                        </button>
+                        
+                        <!-- The Modal -->
+                        <div class="modal fade" id="editPost">
+                            <div class="modal-dialog modal-lg">
+                                <form method="POST" class="modal-content" action="{{ route('user.contest.post.update') }}">
+                                    @csrf
+                                    <input type="hidden" name="id" value="{{$contest->id}}">
+                        
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title text-dark">Post</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 </div>
-
-        
-                                <div class="form-group row mb-0">
-                                    <div class="col-md-8 offset-md-4">
-                                        <button type="submit" class="btn btn-primary">
-                                            {{ __('Login') }}
-                                        </button>
-                                    </div>
+                        
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                        <div class="form-group">
+                                                <textarea id="post" type="text" class="form-control @error('post') is-invalid @enderror" name="post" required autocomplete="post" autofocus>{{$contest->post}}</textarea>
+                                                @error('post')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                        </div>
+                                </div>
+                        
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">
+                                        Update
+                                    </button>
                                 </div>
                             </form>
+                            </div>
                         </div>
-                
-                        <!-- Modal footer -->
-                        <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        </div>
-                
-                    </div>
-                    </div>
-                </div>
                     @endif
                 @else 
                     <a href="{{route('verification.notice')}}"class="text-warning">Click here to Verify your account, then you can join this contest</a>
                 @endif
             @else 
                 <!-- Button to Open the Modal -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">
                     Login
                 </button>
                 
                 <!-- The Modal -->
-                <div class="modal fade" id="myModal">
+                <div class="modal fade" id="loginModal">
                     <div class="modal-dialog">
                     <div class="modal-content">
                 

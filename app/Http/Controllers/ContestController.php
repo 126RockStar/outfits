@@ -194,5 +194,17 @@ class ContestController extends Controller
         $entry->delete();
         return back()->with('success','Your contest entry is deleted successfully');
     }
+
+    public function updatePost(Request $request){
+        $entry=Contest::where('id',$request->id)->where('user_id',Auth::id())->firstOrFail();
+        $entry->update(['post'=>$request->post]);
+        return back()->with('success','Your contest post is updated successfully');
+    }
+
+    public function deletePost($id){
+        $entry=Contest::where('id',$id)->where('user_id',Auth::id())->firstOrFail();
+        $entry->update(['post'=>NULL]);
+        return back()->with('success','Your contest post is deleted successfully');
+    }
   
 }

@@ -41,7 +41,6 @@ class ContestController extends Controller
 
         $subCategory=SubCategory::where('id',$request->sub_category)->firstOrFail();
         $contest->update([
-            'user_id'=>Auth::id(),
             'title'=>$request->title,
             'category'=>$subCategory->category_id,
             'sub_category'=>$request->sub_category,
@@ -55,6 +54,12 @@ class ContestController extends Controller
         }else{
             $contest->update(['prize_description'=>NULL]);
         }
+        if(isset($request->hasPost)){
+            $contest->update(['post'=>$request->post]);
+        }else{
+            $contest->update(['post'=>NULL]);
+        }
+
         if($request->hasFile('file')){
             $path=$request->file('file')->store('contest');
             $contest->update(['file'=>$path]);

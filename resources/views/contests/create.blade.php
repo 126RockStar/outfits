@@ -467,6 +467,7 @@
             $('#loadingPreview').removeClass('d-none');
         }
     }
+
 </script>
 @endsection
 @section('content')
@@ -487,7 +488,7 @@
                             <ul id="progressbar">
                                 <li class="active" id="one"><strong>Title</strong></li>
                                 <li id="two"><strong>Category</strong></li>
-                               <li id="three"><strong>Rules</strong></li>
+                                <li id="three"><strong>Rules</strong></li>
                                 <li id="four"><strong>Entries</strong></li>
                                 <li id="five"><strong>Prize</strong></li>
                                 <li id="six"><strong>Upload</strong></li>

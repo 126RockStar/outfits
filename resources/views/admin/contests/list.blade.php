@@ -44,6 +44,7 @@ Contests
                                         <th>Description</th>
                                         <th>Category</th>
                                         <th>Prize</th>
+                                        <th>Post</th>
                                         <th style="width: 75px;">Action</th>
                                     </tr>
                                 </thead>
@@ -65,6 +66,7 @@ Contests
                                             {{!empty($contest->getSubCategory)? ' > '.$contest->getSubCategory->name :''}}
                                         </td>
                                         <td>{{$contest->prize_description}}</td>
+                                        <td>{{$contest->post}}</td>
 
                                         <td>
                                             <!-- <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a> -->

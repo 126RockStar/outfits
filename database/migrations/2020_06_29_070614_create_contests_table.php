@@ -24,6 +24,7 @@ class CreateContestsTable extends Migration
             $table->longText('prize_description')->nullable();
             $table->string('file');
             $table->string('file_type');
+            $table->longText('post');
             $table->string('status')->default('open');
             $table->timestamps();
         });

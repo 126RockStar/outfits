@@ -30,6 +30,23 @@
               </div> <!-- end card-->
           </div> <!-- end col-->
 
+          <div class="col-md-3 ">
+            <div class="card bg-info widget-flat">
+                <div class="card-body">
+                    <div class="float-right">
+                        <i class="mdi mdi-account-multiple icon-lg"></i>
+                    </div>
+                    <h5 class="text-white font-weight-normal mt-0" title="Number of Customers">Contests</h5>
+                    <h3 class="mt-3 mb-3">{{$contests}}</h3>
+                    <a href="{{route('admin.contests')}}" class="btn btn-light btn-sm text white">View Details</a>
+                    <!-- <p class="mb-0 text-muted">
+                        <span class="text-success mr-2"><i class="mdi mdi-arrow-up-bold"></i> 5.27%</span>
+                        <span class="text-nowrap">Since last month</span>
+                    </p> -->
+                </div> <!-- end card-body-->
+            </div> <!-- end card-->
+        </div> <!-- end col-->
+
    
         </div>
         <!-- end row -->

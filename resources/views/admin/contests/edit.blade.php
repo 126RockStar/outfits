@@ -205,6 +205,23 @@
                                         </div>
                                      </div>
                                  </div>
+                                 <div class="list-group-item">
+                                     <div class="form-group row mb-0">
+                                         <label class="col-form-label col-sm-3">Post</label>
+                                         <div class="col-sm-9">
+                                            <label class="switch">
+                                                <input type="checkbox" name="hasPost" id="check-post" {{empty($contest->post)?'':'checked'}}>
+                                                <span class="slider round"></span>
+                                            </label> 
+                                            <textarea type="text" id="post-description-row" class="form-control @error('post') is-invalid @enderror" name="post" required autocomplete="post" autofocus>{{$contest->post}}</textarea>
+                                                @error('post')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                        </div>
+                                     </div>
+                                 </div>
 
               
                
@@ -228,12 +245,18 @@
     <script>
         $('.select2').select2();
         $('#check-pirze').click(function(){
-                var product=$(this).attr('data');
-                if($(this).prop('checked')){
-                    $("#prize-description-row").removeClass('d-none');
-                }else{
-                    $("#prize-description-row").addClass('d-none');
-                }
+            if($(this).prop('checked')){
+                $("#prize-description-row").removeClass('d-none');
+            }else{
+                $("#prize-description-row").addClass('d-none');
+            }
+        });
+        $('#check-post').click(function(){
+            if($(this).prop('checked')){
+                $("#post-description-row").removeClass('d-none');
+            }else{
+                $("#post-description-row").addClass('d-none');
+            }
         });
 
 
