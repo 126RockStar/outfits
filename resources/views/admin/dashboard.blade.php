@@ -13,6 +13,25 @@
 <!-- Start Content-->
 <div class="container-fluid">
         <div class="row pt-3">
+
+            
+          <div class="col-md-3 ">
+            <div class="card bg-warning widget-flat">
+                <div class="card-body">
+                    <div class="float-right">
+                        <i class="mdi mdi-message-reply-text icon-lg"></i>
+                    </div>
+                    <h5 class="text-white font-weight-normal mt-0" title="Number of Customers">New Messages</h5>
+                    <h3 class="mt-3 mb-3">{{$messages}}</h3>
+                    <a href="{{route('admin.messages')}}" class="btn btn-light btn-sm text white">View Details</a>
+                    <!-- <p class="mb-0 text-muted">
+                        <span class="text-success mr-2"><i class="mdi mdi-arrow-up-bold"></i> 5.27%</span>
+                        <span class="text-nowrap">Since last month</span>
+                    </p> -->
+                </div> <!-- end card-body-->
+            </div> <!-- end card-->
+        </div> <!-- end col-->
+        
             <div class="col-md-3 ">
               <div class="card bg-success widget-flat">
                   <div class="card-body">
@@ -46,6 +65,7 @@
                 </div> <!-- end card-body-->
             </div> <!-- end card-->
         </div> <!-- end col-->
+
 
    
         </div>

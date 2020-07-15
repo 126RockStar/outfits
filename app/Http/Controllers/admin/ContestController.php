@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Category;
+use App\Contact;
 use Auth;
 use App\Contest;
 use App\ContestParticipant;
@@ -93,5 +94,15 @@ class ContestController extends Controller
         ContestParticipant::where('id',$id)->delete();
         return back()->with('success','contest entry deleted successfully');
     }
+
+    public function feature(Request $request){
+        $contest=Contest::where('id',$request->contest)->firstOrFail();
+        if($contest->is_featured==0){
+            $contest->update(['is_featured'=>1]);
+        }else{
+            $contest->update(['is_featured'=>0]);
+        }
+        return response()->json(['status'=>'done']);
+      }
 
 }

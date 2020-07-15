@@ -1,10 +1,10 @@
 @extends('admin.master')
 
 @section('title')
-Contests
+  Messages
 @endsection
 @section('breadcrumb')
-  <li class="breadcrumb-item active">Contests</li>
+  <li class="breadcrumb-item active">Messages</li>
 @endsection
 
 @section('extra-css')
@@ -12,71 +12,7 @@ Contests
       <link href="{{asset('public/admin/css/jquery.dataTables.min.css')}}" rel="stylesheet" type="text/css" />
       <link href="{{asset('public/admin/css/vendor/responsive.bootstrap4.css')}}" rel="stylesheet" type="text/css" />
       <!-- third party css end -->
-
-      <style>
-        /* The switch - the box around the slider */
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 60px;
-      height: 34px;
-    }
-    
-    /* Hide default HTML checkbox */
-    .switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-    
-    /* The slider */
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #ccc;
-      -webkit-transition: .4s;
-      transition: .4s;
-    }
-    
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 26px;
-      width: 26px;
-      left: 4px;
-      bottom: 4px;
-      background-color: white;
-      -webkit-transition: .4s;
-      transition: .4s;
-    }
-    
-    input:checked + .slider {
-      background-color: #2196F3;
-    }
-    
-    input:focus + .slider {
-      box-shadow: 0 0 1px #2196F3;
-    }
-    
-    input:checked + .slider:before {
-      -webkit-transform: translateX(26px);
-      -ms-transform: translateX(26px);
-      transform: translateX(26px);
-    }
-    
-    /* Rounded sliders */
-    .slider.round {
-      border-radius: 34px;
-    }
-    
-    .slider.round:before {
-      border-radius: 50%;
-    } 
-     </style>
+  
 @endsection
 
 @section('contents')
@@ -103,56 +39,47 @@ Contests
                             <table class="table table-centered table-striped dt-responsive nowrap w-100" id="myTable">
                                 <thead>
                                     <tr>
-                                        <th>Title</th>
-                                        <th>Added By</th>
-                                        <th>Featured</th>
-                                        <th>Participants</th>
-                                        <th>Description</th>
-                                        <th>Category</th>
-                                        <th>Prize</th>
-                                        <th>Post</th>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Subject</th>
+                                        <th>Message</th>
+                                        <th>Sent At</th>
+                                        <th>Status</th>
                                         <th style="width: 75px;">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                  @forelse($contests as $contest)
-                                    <tr>
-                                        <td class="table-user">
-                                            <a href="javascript:void(0);" class="text-body font-weight-semibold">
-                                            {{-- <img src="{{asset('public/storage/'.$contest->profile_picture)}}" alt="table-user" class="mr-2 rounded-circle"> --}}
-                                            {{$contest->title}}</a>
-                                        </td>
-                                        <td>{{$contest->getCreator->username}}</td>
-                                        
+                                  @forelse($messages as $message)
+                                    <tr class="@if($message->status == 'unseen') bg-warning @endif">
+                                        <td>{{$message->id}}</td>
+                                        <td>{{$message->name}}</td>
+                                        <td>{{$message->email}}</td>
+                                        <td>{{$message->subject}}</td>
+                                        <td>{{$message->message}}</td>
+
+
+                                        <td>{{$message->created_at}}</td>
                                         <td>
-                                            <label class="switch">
-                                            <input type="checkbox" class="feature-contest" data="{{$contest->id}}"{{$contest->is_featured==1?'checked':''}}>
-                                            <span class="slider round"></span>
-                                            </label>
+                                            @if($message->status =='seen')
+                                              <span class="badge badge-success">Seen</span>
+                                            @else
+                                              <span class="badge badge-warning-lighten">Unseen</span>
+                                            @endif
                                         </td>
-                                        <td>
-                                            {{count($contest->getParticipants)}} of {{$contest->participants}}
-                                        </td>
-                                        <td>{{$contest->description}}</td>
-                                        <td>
-                                            {{$contest->getCategory->name}} 
-                                            {{!empty($contest->getSubCategory)? ' > '.$contest->getSubCategory->name :''}}
-                                        </td>
-                                        <td>{{$contest->prize_description}}</td>
-                                        <td>{{$contest->post}}</td>
 
                                         <td>
-                                            <!-- <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a> -->
-
-                                        
-                                            <a href="{{route('admin.contest.delete',$contest->id)}}" onclick="return confirm('Are you sure to delete the contest?')" class="btn btn-danger btn-sm"> <i class="mdi mdi-delete"></i></a>
-                                            <a href="{{route('admin.contest.edit',$contest->id)}}" class="btn btn-primary btn-sm"> <i class="fa fa-edit"></i></a>
-                                            <a href="{{route('admin.contest.show',$contest->id)}}" class="btn btn-info btn-sm">Manage/View Entries</a>
+                                            @if($message->status == 'seen')
+                                                <a href="{{route('admin.message.unseen',$message->id)}}"  class="btn btn-warning btn-sm"> <i class="fa fa-eye-slash"></i></a>
+                                            @else
+                                                <a href="{{route('admin.message.seen',$message->id)}}" class="btn btn-success btn-sm"> <i class="fa fa-eye"></i></a>
+                                            @endif
+                                            <a href="{{route('admin.message.delete',$message->id)}}" onclick="return confirm('Are you sure to delete the message?')" class="btn btn-danger btn-sm"> <i class="mdi mdi-delete"></i></a>
                                         
                                         </td>
                                     </tr>
                                     @empty
-                                    <tr><td collspan="5" class="text-danger">No contest Found</td></tr>
+                                    <tr><td collspan="5" class="text-danger">No Messages Found</td></tr>
                                     @endforelse
                                 </tbody>
                             </table>
@@ -238,20 +165,6 @@ Contests
        $('#myTable').DataTable();
      });
 
-     $('.feature-contest').click(function(){
-              var contest=$(this).attr('data');
-            
-              var _token=$('meta[name="csrf-token"]').attr('content');
 
-              $.ajax({
-                  url: '{{url("/admin/contest/feature")}}',
-                  type:"POST",
-                  data:{contest:contest,_token:_token},
-                  success:function(data) {
-                    alert('done');
-                  }
-
-              });
-          });
    </script>
 @endsection

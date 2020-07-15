@@ -1,20 +1,6 @@
 @extends('layouts.app')
 @section('title') 
-  Dashboard
-@endsection
-@section('styles') 
-  Dashboard
-@endsection
-@section('scripts') 
- <script>
-     $('.editPost').click(function(){
-        var id=$(this).attr('data-id');
-        var post=$(this).attr('data-post');
-        $("input[name=id]").val(id);
-        $("textarea[name=post]").val(post);
-     });
-
- </script>
+  Joined Contests
 @endsection
 @section('content')
 <div class="container">
@@ -22,12 +8,12 @@
 
     <ul class="nav nav-tabs">
         <li class="nav-item">
-          <a class="nav-link text-info active" href="{{route('user.dashboard')}}">My Created</a>
+          <a class="nav-link text-info" href="{{route('user.dashboard')}}">My Created</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-info" href="{{route('user.contests.joinded')}}">Joined</a>
+          <a class="nav-link text-info active" href="{{route('user.dashboard','joined')}}">Joined</a>
         </li>
-    </ul> 
+      </ul> 
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
@@ -44,9 +30,9 @@
                         <div class="col-md-4">
                             <div class="card">
                             <div class="card-header text-capitalize">{{$contest->getCategory->name}} 
+
                                 {{!empty($contest->getSubCategory)? ' > '.$contest->getSubCategory->name :''}}
-                                ({{count($contest->getParticipants)}} of {{$contest->participants}} participants)
-                            </div>
+                                ({{count($contest->getParticipants)}} of {{$contest->participants}} participants)</div>
                                 <div class="card-body">
                                     <a href="{{route('contest.show',$contest->id)}}">
                                     @if($contest->file_type=='image')
@@ -65,27 +51,11 @@
                                         <p class="text-white">{{$contest->prize_description}}</p>
                                     @endif
                                     </a>
-                                    <hr>
-                                    @if(count($contest->getParticipants)<2)
-                                        <a href="{{route('user.contests.edit',$contest->id)}}" class="btn btn-info float-right"><i class="fa fa-edit"></i></a>
-                                        <form action="{{route('user.contests.destroy',$contest->id)}}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" onclick="return confirm('Are you sure to delete the contest')" class="btn btn-danger"><i class="fa fa-trash"></i></button>
-                                        </form>
-                                    @else
-                                        <p class="text-danger">Contest can't modifed as users participated</p>
-                                    @endif
-
-                                      <!-- Button to Open the Modal -->
-                                    <button type="button" class="btn btn-primary editPost" data-id="{{$contest->id}}" data-post="{{$contest->post}}" data-toggle="modal" data-target="#editPost">
-                                        Post
-                                    </button>
                                 </div>
                             </div>
                         </div>
                         @empty 
-                            <h3 class="text-danger text-center">You haven't added any contest yet</h3>
+                            <h3 class="text-danger text-center">You haven't joined any contest yet</h3>
                         @endforelse
                         {{$contests->links()}}
                     </div>
@@ -121,41 +91,6 @@
                             </tbody>
                         </table>
                     @endif --}}
-
-                     <!-- The Modal -->
-                     <div class="modal fade" id="editPost">
-                        <div class="modal-dialog modal-lg">
-                            <form method="POST" class="modal-content" action="{{ route('user.contest.post.update') }}">
-                                @csrf
-                                <input type="hidden" name="id" value="{{$contest->id}}">
-                    
-                            <!-- Modal Header -->
-                            <div class="modal-header">
-                                <h4 class="modal-title text-dark">Post</h4>
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            </div>
-                    
-                            <!-- Modal body -->
-                            <div class="modal-body">
-                                    <div class="form-group">
-                                            <textarea id="post" type="text" class="form-control @error('post') is-invalid @enderror" name="post" required autocomplete="post" autofocus>{{$contest->post}}</textarea>
-                                            @error('post')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                    </div>
-                            </div>
-                    
-                            <!-- Modal footer -->
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">
-                                    Update
-                                </button>
-                            </div>
-                        </form>
-                        </div>
-                    </div>
 			
                 </div>
             </div>

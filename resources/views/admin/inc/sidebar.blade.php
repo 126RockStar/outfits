@@ -42,6 +42,19 @@
                     <span> Contests </span>
                 </a>
             </li>
+            <li class="side-nav-item {{Request::is('/admin/messages*')? 'active' : ''}}">
+                <a href="{{route('admin.messages')}}" class="side-nav-link">
+                    <i class="mdi mdi-message-reply-text"></i>
+                    <span> Messages </span>
+                </a>
+            </li>
+
+            <li class="side-nav-item {{Request::is('/admin/pages*')? 'active' : ''}}">
+                <a href="{{route('admin.pages.index')}}" class="side-nav-link">
+                    <i class="mdi mdi-file"></i>
+                    <span> Pages </span>
+                </a>
+            </li>
 
             <!-- <li class="side-nav-item">
                 <a href="{{route('admin.dashboard')}}" class="side-nav-link">

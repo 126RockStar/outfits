@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@section('title') 
+Create Contest
+@endsection
 @section('styles')
     <style>
 

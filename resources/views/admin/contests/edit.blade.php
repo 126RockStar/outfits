@@ -174,10 +174,10 @@
                                          <div class="col-sm-9">
                                             <select  class="{{ $errors->has('participants') ? ' is-invalid' : '' }} form-control" id="contest-sub_category" name="participants" title="participants">
                                                 <option value="">Select Participants</option>
+                                                <option value="15"{{ $contest->participants=='15'?'selected':'' }}>15</option>
+                                                <option value="25"{{ $contest->participants=='25'?'selected':'' }}>25</option>
                                                 <option value="50"{{ $contest->participants=='50'?'selected':'' }}>50</option>
                                                 <option value="100"{{ $contest->participants=='100'?'selected':'' }}>100</option>
-                                                <option value="200"{{ $contest->participants=='200'?'selected':'' }}>200</option>
-                                                <option value="500"{{ $contest->participants=='500'?'selected':'' }}>500</option>
                                             </select>
                                             @if ($errors->has('participants'))
                                                 <span class="invalid-feedback" role="alert">

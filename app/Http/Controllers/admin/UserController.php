@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Contact;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
@@ -109,4 +110,22 @@ class UserController extends Controller
         User::where('id',$id)->forceDelete();
         return back()->with('success','the user is deleted successfully');
     }
+    public function messages(){
+        $messages=Contact::all();
+        return view('admin/contact/list',compact('messages'));
+    }
+    public function seenMessage($id){
+        Contact::where('id',$id)->update(['status'=>'seen']);
+        return back()->with('success','the message is marked as seen successfully');
+    }
+    public function unseenMessage($id){
+        Contact::where('id',$id)->update(['status'=>'unseen']);
+        return back()->with('success','the message is marked as unseen successfully');
+    }
+    public function deleteMessage($id){
+        User::where('id',$id)->forceDelete();
+        return back()->with('success','the user is deleted successfully');
+    }
+
+
 }

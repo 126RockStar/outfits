@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('title') 
+ Contests
+@endsection
 @section('styles')
      <!-- SmartMenus core CSS (required) -->
      <link href="{{asset('public/frontEnd')}}/css/sm-core-css.css" rel="stylesheet" type="text/css" />

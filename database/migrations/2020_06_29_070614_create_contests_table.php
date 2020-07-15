@@ -25,6 +25,7 @@ class CreateContestsTable extends Migration
             $table->string('file');
             $table->string('file_type');
             $table->longText('post');
+            $table->integer('status',1)->is_featured(0);
             $table->string('status')->default('open');
             $table->timestamps();
         });

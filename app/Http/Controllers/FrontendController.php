@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use Auth;
 use App\Category;
+use App\Contact;
 use App\Contest;
 use App\ContestParticipant;
+use App\Page;
 use Illuminate\Http\Request;
+use App\Notifications\Contact as Message;
+use Notification;
 
 class FrontendController extends Controller
 {
@@ -42,4 +46,38 @@ class FrontendController extends Controller
         $participants=ContestParticipant::where('contest_id',$id)->get();
         return view('contests/show',compact('contest','participants','isParticipated'));
     }
+
+    public function faq(){
+        $details=Page::where('name','faq')->firstOrFail()->details;
+        return view('static/faq',compact('details'));
+    }
+
+    public function terms(){
+        $details=Page::where('name','terms')->firstOrFail()->details;
+        return view('static/terms',compact('details'));
+    }
+
+    public function contact(){
+        return view('static/contact');
+    }
+
+    public function submitContact(Request $request){
+        $contact=Contact::create([
+            'name'=>$request->name,
+            'email'=>$request->email,
+            'subject'=>$request->subject,
+            'message'=>$request->message,
+        ]);
+
+        $arr=['contact'=>$contact];
+
+        Notification::route('mail', 'altafhossainlimon@gmail.com')
+            ->notify(new Message($arr));
+
+
+        return back()->with('success','Your query is sent to admin');
+
+    }
+
+
 }

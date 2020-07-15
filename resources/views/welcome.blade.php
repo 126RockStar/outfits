@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('title') 
+  Home
+@endsection
 @section('styles') 
   <style>
     .fakeimg {

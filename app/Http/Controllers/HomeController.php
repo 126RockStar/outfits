@@ -35,16 +35,18 @@ class HomeController extends Controller
             return redirect(route('user.dashboard'));
         }
     }
+
     public function userDashboard()
     {
         $referredUsers=User::where('refered_user_id',Auth::id())->get();
+        $contests=Contest::where('user_id',Auth::id())->where('status','open')->orderBy('id','DESC')->paginate(12);
+        return view('home',compact('referredUsers','contests'));
+    }
+    public function joinedContests()
+    {
         $participatedContests=ContestParticipant::where('user_id',Auth::id())->pluck('contest_id');
-        if(isset($_GET['joined'])){
-            $contests=Contest::where('status','open')->WhereIn('id',$participatedContests)->orderBy('id','DESC')->paginate(12);
-        }else{
-            $contests=Contest::where('user_id',Auth::id())->where('status','open')->orderBy('id','DESC')->paginate(12);
-        }
-        return view('home',compact('referredUsers','contests','participatedContests'));
+        $contests=Contest::where('status','open')->where('user_id','!=',Auth::id())->WhereIn('id',$participatedContests)->orderBy('id','DESC')->paginate(12);
+        return view('contests/joined',compact('contests'));
     }
 
     public function fetchSubCategory(Request $request){

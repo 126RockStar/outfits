@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('title') | {{ config('app.name', 'Laravel') }}</title>
 
 
     <!-- Fonts -->
@@ -119,6 +119,22 @@
 
             @yield('content')
         </main>
+        <footer class="bg-secondary pt-5 pb-3">
+           <div class="container justify-content-center">
+            <ul class="nav nav-pills btin-active-bordered-pill">
+                <li class="nav-item">
+                  <a class="nav-link text-white" href="{{route('faq')}}">faq</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{{route('terms')}}">terms</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{{route('contact')}}">contact</a>
+                </li>
+              </ul>
+            <p class="text-center">&copy; Copyright {{date('Y')}}, All rights reserved</p>
+           </div>
+        </footer>
     </div>
     <!-- Scripts -->
     <script src="{{asset('public/frontEnd')}}/js/jquery-3.3.1.min.js"></script>

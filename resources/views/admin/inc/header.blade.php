@@ -130,6 +130,17 @@
             <strong>Error - </strong> {{session('error')}}!
         </div>
       @endif
+
+      @if($errors->any())
+        @foreach ($errors->all() as $error)
+            <div class="alert bg-danger alert-icon-left alert-dismissible mb-2 mt-2 text-white" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <strong class="text-white">{{__('Oh snap')}}!</strong>{{__($error)}}
+            </div>
+        @endforeach
+    @endif
     </div>
   </div>
 </div>

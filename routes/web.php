@@ -21,10 +21,16 @@ Auth::routes(['verify'=>true]);
 Route::get('/home', 'HomeController@index')->name('home')->middleware(['verified']);
 Route::post('/fetch-sub_category', 'HomeController@fetchSubCategory')->middleware('cors');
 
+//pages
+Route::get('/faq','FrontendController@faq')->name('faq');
+Route::get('/terms','FrontendController@terms')->name('terms');
+Route::get('/contact','FrontendController@contact')->name('contact');
+Route::post('/contact','FrontendController@submitContact')->name('contact');
 
 Route::middleware(['checkUser','verified'])->prefix('user/')->name('user.')->group(function(){
 
     Route::get('/dashboard', 'HomeController@userDashboard')->name('dashboard');
+    Route::get('/contests/joined', 'HomeController@joinedContests')->name('contests.joinded');
     route::resource('/contests','ContestController');
     route::post('/contest/participate','ContestController@participateContest')->name('contest.participate');
     route::get('/contest/unjoin/{id}','ContestController@unjoinContest')->name('contest.unjoin');

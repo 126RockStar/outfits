@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('title') 
+View Contest
+@endsection
 @section('styles')
     <style>
 		.modal-backdrop.show {
