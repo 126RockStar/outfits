@@ -71,7 +71,7 @@ class FrontendController extends Controller
 
         $arr=['contact'=>$contact];
 
-        Notification::route('mail', 'altafhossainlimon@gmail.com')
+        Notification::route('mail', 'outfitszone@yahoo.com')
             ->notify(new Message($arr));
 
 
