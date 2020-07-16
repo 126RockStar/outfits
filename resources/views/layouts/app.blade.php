@@ -123,6 +123,15 @@
            <div class="container justify-content-center">
             <ul class="nav nav-pills btin-active-bordered-pill">
                 <li class="nav-item">
+                  <a class="nav-link text-white" href="{{route('contests.quickview')}}">Quickview</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-white" href="{{route('contests.prizes')}}">Prizes</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-white" href="{{route('games.wheel')}}">Wheel</a>
+                </li>
+                <li class="nav-item">
                   <a class="nav-link text-white" href="{{route('faq')}}">faq</a>
                 </li>
                 <li class="nav-item">

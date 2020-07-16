@@ -36,6 +36,17 @@ class FrontendController extends Controller
 
         return view('contests/index',compact('contests','categories'));
     }
+
+    public function quickview(){
+        return view('contests/quickview');
+    }
+    public function prizes(){
+        return view('contests/prizes');
+    }
+    public function wheel(){
+        return view('games/wheel');
+    }
+
     public function viewContest($id)
     {
         if(Auth::check()){
