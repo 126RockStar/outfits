@@ -213,7 +213,7 @@
                                                 <input type="checkbox" name="hasPost" id="check-post" {{empty($contest->post)?'':'checked'}}>
                                                 <span class="slider round"></span>
                                             </label> 
-                                            <textarea type="text" id="post-description-row" class="form-control @error('post') is-invalid @enderror" name="post" required autocomplete="post" autofocus>{{$contest->post}}</textarea>
+                                            <textarea type="text" id="post-description-row" class="form-control d-none @error('post') is-invalid @enderror" name="post" autocomplete="post" autofocus>{{$contest->post}}</textarea>
                                                 @error('post')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
