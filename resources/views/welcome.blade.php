@@ -62,27 +62,53 @@
         <hr class="d-sm-none">
      </div>
      <div class="col-sm-9">
-      <h2 class="mb-4"> Latests Contest <small><a  class="" href="{{route('contests')}}">Browse more</a></small></h2>
+      <h2 class="mb-4"> Latest Contests <small><a  class="" href="{{route('contests')}}">Browse more</a></small></h2>
+      <hr style="border-color: lightgrey">
       <div class="row">
             @forelse ($latestContests as $latestContest)
               <div class="col-sm-4">
-                <a href="{{route('contest.show',$latestContest->id)}}"class="card d-block position-absolute" style="height:240px;overflow:hidden">
+                <a href="{{route('contest.show',$latestContest->id)}}" class="border d-block">
                   @if($latestContest->file_type=='image')
-                    <i class="fa fa-image position-absolute p-2 bg-info text-white"></i>
-                    <img src="{{asset('public/storage/'.$latestContest->file)}}" class="img img-thumbnail posiiton-relative">
+                    <div class="" style="background: url({{asset('public/storage/'.$latestContest->file)}}); background-size:cover;background-position:center center;height:240px;" width="100%">
+                    </div>
+                    <h4 class="mt-1 text-white"><i class="fa fa-image p-2 bg-info text-white"></i>
                   @else
-                      <i class="fa fa-video position-absolute p-2 bg-info text-white"></i>
-                      <video src="{{asset('public/storage/'.$latestContest->file)}}" class="img img-thumbnail posiiton-relative" style="height:200px"></video>
+                    <video src="{{asset('public/storage/'.$latestContest->file)}}" style="height:240px" width="100%">
+                    </video>
+                   <h4 class="mt-1 text-white"> <i class="fa fa-video p-2 bg-info text-white"></i>
                   @endif
-                  <h4>{{Str::limit($latestContest->title,20)}}</h4>
+                  {{Str::limit($latestContest->title,20)}}</h4>
                 </a>
               </div>
             @empty
                 
             @endforelse
-        
-        </div>
-     </div>
+      </div>
+      
+
+      <h2 class="mb-4 mt-4"> Featured Contests <small><a  class="" href="{{route('contests')}}">Browse more</a></small></h2>
+      <hr style="border-color: lightgrey">
+      <div class="row">
+            @forelse ($featuredContests as $featuredContest)
+              <div class="col-sm-4">
+                <a href="{{route('contest.show',$featuredContest->id)}}" class="border d-block">
+                  @if($featuredContest->file_type=='image')
+                    <div class="" style="background: url({{asset('public/storage/'.$featuredContest->file)}}); background-size:cover;background-position:center center;height:240px;" width="100%">
+                    </div>
+                    <h4 class="mt-1 text-white"><i class="fa fa-image p-2 bg-info text-white"></i>
+                  @else
+                    <video src="{{asset('public/storage/'.$featuredContest->file)}}" style="height:240px" width="100%">
+                    </video>
+                   <h4 class="mt-1 text-white"> <i class="fa fa-video p-2 bg-info text-white"></i>
+                  @endif
+                  {{Str::limit($featuredContest->title,20)}}</h4>
+                </a>
+              </div>
+            @empty
+                
+            @endforelse
+      </div>
+    </div>
   </div>
 </div>
 

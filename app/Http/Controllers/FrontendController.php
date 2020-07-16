@@ -16,7 +16,8 @@ class FrontendController extends Controller
 {
     public function index(){
         $latestContests=Contest::where('status','open')->orderBy('id','DESC')->limit(3)->get();
-        return view('welcome',compact('latestContests'));
+        $featuredContests=Contest::where('status','open')->where('is_featured',1)->orderBy('id','DESC')->get();
+        return view('welcome',compact('latestContests','featuredContests'));
     }
 
     public function contests(){
@@ -62,6 +63,12 @@ class FrontendController extends Controller
     }
 
     public function submitContact(Request $request){
+        $request->validate([
+            'name'=>'required',
+            'email'=>'required',
+            'subject'=>'required',
+            'message'=>'required',
+        ]);
         $contact=Contact::create([
             'name'=>$request->name,
             'email'=>$request->email,
