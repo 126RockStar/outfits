@@ -52,6 +52,36 @@ class HomeController extends Controller
     public function fetchSubCategory(Request $request){
         $subCategories = SubCategory::where("category_id",$request->catID)->pluck("name","id");
         return json_encode($subCategories);
-      }
+    }
+
+    public function editProfile()
+    {
+        return view('user/profile');
+    }
+
+    public function updateProfile(Request $request){
+        $request->validate([
+            'username'=>'required',
+            'email'=>'required|email',
+            'password'=>'confirmed',
+          ]);
+          $user=User::where('id',Auth::id())->first();
+          $user->update([
+            'username'=>$request->username,
+            'email'=>$request->email
+          ]);
+        //   if($request->hasFile('profile_picture')){
+        //     $path=$request->file('profile_picture')->store('profilePicture');
+        //     $user->update(['profile_picture'=>$path]);
+        //   }
+
+        if($request->password != ''){
+            $user->update([
+            'password'=>bcrypt($request->password),
+            ]);
+            return redirect(route('home'))->with('success','Profile updated, remember your new password:'.$request->password);
+        }
+        return redirect(route('home'))->with('success','Profile updated');
+    }
  
 }

@@ -22,7 +22,8 @@ Route::get('/contests/prizes','FrontendController@prizes')->name('contests.prize
 Route::get('/games/wheel','FrontendController@wheel')->name('games.wheel');
 Auth::routes(['verify'=>true]);
 Route::get('/home', 'HomeController@index')->name('home')->middleware(['verified']);
-Route::post('/fetch-sub_category', 'HomeController@fetchSubCategory')->middleware('cors');
+Route::get('/profile/edit', 'HomeController@editProfile')->name('profile.edit');
+Route::post('/profile/update', 'HomeController@updateProfile')->name('profile.update');
 
 //pages
 Route::get('/faq','FrontendController@faq')->name('faq');
