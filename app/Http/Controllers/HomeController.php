@@ -79,9 +79,9 @@ class HomeController extends Controller
             $user->update([
             'password'=>bcrypt($request->password),
             ]);
-            return redirect(route('home'))->with('success','Profile updated, remember your new password:'.$request->password);
+            return redirect(route('index'))->with('success','Profile updated, remember your new password:'.$request->password);
         }
-        return redirect(route('home'))->with('success','Profile updated');
+        return redirect(route('index'))->with('success','Profile updated');
     }
  
 }

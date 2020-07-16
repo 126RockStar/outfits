@@ -447,6 +447,7 @@ Create Contest
                     vid.ondurationchange = function() {
                         if(this.duration>=31){
                             $("#file").val('');
+                            $('#loadingPreview').addClass('d-none');
                             alert('The video duration is greater than 30 seconds, please choose another');
                         }else{
                             $('#photoGallery').append("<video src='"+event.target.result+"'width='100%' style='border:1px solid gray' controls></video>");

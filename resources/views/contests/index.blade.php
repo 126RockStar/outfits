@@ -184,6 +184,8 @@
         <li> <a class="@if(!isset($_GET['prized']) && !isset($_GET['type']) && !isset($_GET['category'])) bg-success text-white @endif" href="{{route('contests')}}">All</a></li>
         <li><a href="#">Categories</a>
             <ul>
+                <li> <a class="@if(!isset($_GET['prized']) && !isset($_GET['type']) && !isset($_GET['category'])) bg-success text-white @endif" href="{{route('contests')}}">All</a></li>
+        
                 @forelse($categories as $key=>$category)
                     <li>
                         <a class="@if(isset($_GET['category'])) {{$category->id==$_GET['category']?'bg-success text-white ':''}} @endif" href="{{route('contests','category='.$category->id)}}" >{{$category->name}}</a>
