@@ -280,6 +280,10 @@ Create Contest
         .slider.round:before {
         border-radius: 50%;
         } 
+
+        #progressbar li[class=active]::before,#progressbar li[class=active] strong{
+            cursor: pointer;
+        }
     </style>
     <link rel="stylesheet" href="{{asset('public/vendors/select2/select2.min.css')}}">
 @endsection
@@ -317,19 +321,7 @@ Create Contest
                 //show the next fieldset
                 next_fs.show();
                 //hide the current fieldset with style
-                current_fs.animate({opacity: 0}, {
-                    step: function(now) {
-                        // for making fielset appear animation
-                        opacity = 1 - now;
-
-                        current_fs.css({
-                            'display': 'none',
-                            'position': 'relative'
-                        });
-                        next_fs.css({'opacity': opacity});
-                    },
-                    duration: 500
-                });
+                current_fs.hide();
                 setProgressBar(++current);
             }else{
                 alert("No,no,no... You need to fill out each step before moving on.");
@@ -471,7 +463,11 @@ Create Contest
             $('#loadingPreview').removeClass('d-none');
         }
     }
-
+    $(document).on("click", "#progressbar li.active" , function() {
+        var item=$(this).attr('id');
+        $('#msform').find('fieldset').hide();
+        $("#step"+item).show();
+    });
 </script>
 @endsection
 @section('content')
@@ -500,7 +496,7 @@ Create Contest
                          {{--   <div class="progress">
                                 <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
                             </div> <br> --}} 
-                            <fieldset>
+                            <fieldset id="stepone">
                                 <div class="form-card p-3">
                                     <div class="row">
                                         <div class="col-7">
@@ -527,7 +523,7 @@ Create Contest
                                 </div> <input type="button" name="next" class="next action-button mr-3" value="{{ __('Next') }}" />
                             </fieldset>
 
-                            <fieldset>
+                            <fieldset id="steptwo">
                                 <div class="form-card p-3">
                                     <div class="row">
                                         <div class="col-7">
@@ -584,7 +580,7 @@ Create Contest
                                 <input type="button" name="next" class="next action-button mr-3" value="{{ __('Next') }}" />
                                 <input type="button" name="previous" class="previous action-button-previous" value="{{ __('Previous') }}" />
                             </fieldset>
-                            <fieldset>
+                            <fieldset id="stepthree">
                                 <div class="form-card p-3">
                                     <div class="row">
                                         <div class="col-7">
@@ -613,7 +609,7 @@ Create Contest
                                     <input type="button" name="next" class="next action-button mr-3" value="{{ __('Next') }}" />
                                     <input type="button" name="previous" class="previous action-button-previous" value="{{ __('Previous') }}" />
                             </fieldset>
-                            <fieldset>
+                            <fieldset id="stepfour">
                                 <div class="form-card p-3">
                                     <div class="row">
                                         <div class="col-7">
@@ -649,7 +645,7 @@ Create Contest
                                     <input type="button" name="next" class="next action-button mr-3" value="{{ __('Next') }}" />
                                     <input type="button" name="previous" class="previous action-button-previous" value="{{ __('Previous') }}" />
                             </fieldset>
-                            <fieldset>
+                            <fieldset id="stepfive">
                                 <div class="form-card p-3">
                                     <div class="row">
                                         <div class="col-7">
@@ -683,7 +679,7 @@ Create Contest
                                     <input type="button" name="next" class="next action-button mr-3" value="{{ __('Next') }}" />
                                     <input type="button" name="previous" class="previous action-button-previous" value="{{ __('Previous') }}" />
                             </fieldset>
-                            <fieldset>
+                            <fieldset id="stepsix">
                                 <div class="form-card p-3">
                                     <div class="row">
                                         <div class="col-7">
