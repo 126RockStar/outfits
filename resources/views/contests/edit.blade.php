@@ -279,7 +279,9 @@ Edit Contest
         .slider.round:before {
         border-radius: 50%;
         } 
-
+        #progressbar li[class=active]::before,#progressbar li[class=active] strong{
+            cursor: pointer;
+        }
     </style>
     <link rel="stylesheet" href="{{asset('public/vendors/select2/select2.min.css')}}">
 @endsection
@@ -463,6 +465,11 @@ $(document).ready(function(){
             reader.readAsDataURL(event.target.files[0]);
         }
     }
+    $("#progressbar li.active").click(function(){
+        var item=$(this).attr('id');
+        $('#msform').find('fieldset').hide();
+        $("#step"+item).show();
+    });
 </script>
 @endsection
 @section('content')
@@ -483,17 +490,17 @@ $(document).ready(function(){
                             <!-- progressbar -->
                             <ul id="progressbar">
                                 <li class="active" id="one"><strong>Title</strong></li>
-                                <li id="two"><strong>Category</strong></li>
-                                <li id="three"><strong>Rules</strong></li>
-                                <li id="four"><strong>Entries</strong></li>
-                                <li id="five"><strong>Prize</strong></li>
-                                <li id="six"><strong>Upload</strong></li>
+                                <li class="active" id="two"><strong>Category</strong></li>
+                                <li class="active" id="three"><strong>Rules</strong></li>
+                                <li class="active" id="four"><strong>Entries</strong></li>
+                                <li class="active" id="five"><strong>Prize</strong></li>
+                                <li class="active" id="six"><strong>Upload</strong></li>
                             </ul>
-                         {{--   <div class="progress">
+                            {{--<div class="progress">
                                 <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
                             </div> <br> --}} 
 							<!-- fieldsets -->
-                            <fieldset>
+                            <fieldset id="stepone">
                                 <div class="form-card p-3">
                                     <div class="row">
                                         <div class="col-7">
@@ -520,7 +527,7 @@ $(document).ready(function(){
                                 </div> <input type="button" name="next" class="next action-button mr-3" value="{{ __('Next') }}" />
                             </fieldset>
 
-                            <fieldset>
+                            <fieldset id="steptwo">
                                 <div class="form-card p-3">
                                     <div class="row">
                                         <div class="col-7">
@@ -577,7 +584,7 @@ $(document).ready(function(){
                                 <input type="button" name="next" class="next action-button mr-3" value="{{ __('Next') }}" />
                                 <input type="button" name="previous" class="previous action-button-previous" value="{{ __('Previous') }}" />
                             </fieldset>
-                            <fieldset>
+                            <fieldset id="stepthree">
                                 <div class="form-card p-3">
                                     <div class="row">
                                         <div class="col-7">
@@ -606,7 +613,7 @@ $(document).ready(function(){
                                     <input type="button" name="next" class="next action-button mr-3" value="{{ __('Next') }}" />
                                     <input type="button" name="previous" class="previous action-button-previous" value="{{ __('Previous') }}" />
                             </fieldset>
-                            <fieldset>
+                            <fieldset id="stepfour">
                                 <div class="form-card p-3">
                                     <div class="row">
                                         <div class="col-7">
@@ -642,7 +649,7 @@ $(document).ready(function(){
                                     <input type="button" name="next" class="next action-button mr-3" value="{{ __('Next') }}" />
                                     <input type="button" name="previous" class="previous action-button-previous" value="{{ __('Previous') }}" />
                             </fieldset>
-                            <fieldset>
+                            <fieldset id="stepfive">
                                 <div class="form-card p-3">
                                     <div class="row">
                                         <div class="col-7">
@@ -676,7 +683,7 @@ $(document).ready(function(){
                                     <input type="button" name="next" class="next action-button mr-3" value="{{ __('Next') }}" />
                                     <input type="button" name="previous" class="previous action-button-previous" value="{{ __('Previous') }}" />
                             </fieldset>
-                            <fieldset>
+                            <fieldset id="stepsix">
                                 <div class="form-card p-3">
                                     <div class="row">
                                         <div class="col-7">
