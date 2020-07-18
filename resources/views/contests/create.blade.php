@@ -284,6 +284,53 @@ Create Contest
         #progressbar li[class=active]::before,#progressbar li[class=active] strong{
             cursor: pointer;
         }
+
+        /*Dropzone*/
+        .br_dropzone {
+            position: relative;
+            border: 1px solid rgba(#000, 0.1);
+            width: 100%;
+            height: 256px;
+            display: block;
+            border-radius: 4px;
+            box-sizing: border-box;
+            
+            background-image: linear-gradient(135deg,rgba(0,0,0,.03)25%, transparent 25%, transparent 50%, rgba(0,0,0,.03)50%, rgba(0,0,0,.03)75%, transparent 75%, transparent);
+            background-color: #FAFCFD;
+            background-size: 16px 16px;
+            }
+
+            .br_dropzone input[type=file] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            padding: 0;
+            font-size: 2rem;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            box-sizing: border-box;
+            }
+
+            .br_dropzone input[type=text] {
+            background: none;
+            border: none;
+            padding: 0.5em;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            font-size: 2rem;
+            box-sizing: border-box;
+            }
+
+            .br_dropzone.dragover {
+            background-color: #eee;
+            border: 6px dashed rgba(#000, 0.1);
+            }
+
     </style>
     <link rel="stylesheet" href="{{asset('public/vendors/select2/select2.min.css')}}">
 @endsection
@@ -468,13 +515,42 @@ Create Contest
         $('#msform').find('fieldset').hide();
         $("#step"+item).show();
     });
+
+
+
+    var onDragEnter = function (event) {
+        $(".br_dropzone").addClass("dragover");
+    },
+    
+    onDragOver = function (event) {
+        event.preventDefault();
+        if (!$(".br_dropzone").hasClass("dragover"))
+            $(".br_dropzone").addClass("dragover");
+    },
+    
+    onDragLeave = function (event) {
+        event.preventDefault();
+        $(".br_dropzone").removeClass("dragover");
+    },
+    
+    onDrop = function (event) {
+        $(".br_dropzone").removeClass("dragover");
+        $(".br_dropzone").addClass("dragdrop");
+        debugger; console.log(event.originalEvent.dataTransfer.files);
+    };
+    
+    $(".br_dropzone")
+    .on("dragenter", onDragEnter)
+    .on("dragover", onDragOver)
+    .on("dragleave", onDragLeave)
+    .on("drop", onDrop);
 </script>
 @endsection
 @section('content')
 <div class="container">
      
 
-    <div class="card">
+    <div class="card" style="min-height:80vh">
         <div class="card-body">
             <div class="row justify-content-center">
                 <div class="col-10 text-center p-0 mb-2">
@@ -694,13 +770,14 @@ Create Contest
 
                                     <div class="row">
 									{{--   <label class="col-md-4 text-dark text-right">Photo<span class="required-star text-danger">*</span></label>--}}
-                                        <div class="col-md-3">
+                                        <div class="col-md-6 offset-md-3">
                                             <i class="fas fa-spinner fa-pulse fa-8x d-none" id="loadingPreview"></i>
                                             <div id="photoGallery"> </div>
-                                            <label for="file" class="btn  {{ $errors->has('photo') ? ' is-invalid' : '' }} cursor-pointer">
-                                                <i class="fa fa-plus-circle text-info fa-8x"></i>
+                                            
+                                            <label for="file" class="br_dropzone">
+                                                <input type="file" id="file" accept="video/*|image/*" name="file" onchange="previewFile(this)" required>
+                                                <input type="text" placeholder="Drop Photo/Video to upload (or click)" readonly>
                                             </label>
-                                            <input type="file" id="file" accept="video/*|image/*" onchange="previewFile(this)" name="file" class="d-none" required>
                                             @if ($errors->has('photo'))
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('photo') }}</strong>

@@ -87,7 +87,7 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="py-4" style="min-height: 80vh">
             <div class="container text-white">
                 @if(session('success'))
                     <div class="alert bg-success alert-icon-left alert-dismissible mb-2 mt-2" role="alert">
@@ -166,9 +166,6 @@
      
        
 
-        $(document).ready(function() {
-            $('.select2').select2({width: 'resolve',theme: "classic"});
-        });
     </script>
     @yield('scripts')
 </body>
