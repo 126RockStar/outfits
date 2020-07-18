@@ -661,7 +661,7 @@ View Contest
                                                                 <div id="photoGallery"> </div>
                                                                 <label for="file" class="br_dropzone">
                                                                     <input type="file" id="file" accept="video/*|image/*" name="file" onchange="preview{{$contest->file_type}}(this)" required>
-                                                                    <input type="text" placeholder="Drop Photo/Video to upload (or click)" readonly>
+                                                                    <input type="text" placeholder="Drop {{$contest->file_type}} to upload (or click)" readonly>
                                                                 </label>
                                                                 @if ($errors->has('file'))
                                                                     <span class="invalid-feedback" role="alert">
