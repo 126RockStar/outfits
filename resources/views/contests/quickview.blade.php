@@ -4,20 +4,6 @@
 @endsection
 @section('styles') 
   <style>
-    .fakeimg {
-      height: 200px;
-      background: #aaa;
-    }
-
-    .GeneratedMarquee {
-      font-family:'Comic Sans MS';
-      font-size:1em;
-      line-height:1.3em;
-      color:white;
-      // background-color:#CCFFFF;
-      padding:1.5em;
-
-    }
 
   </style>
 @endsection

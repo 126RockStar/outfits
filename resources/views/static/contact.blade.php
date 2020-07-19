@@ -4,21 +4,12 @@
 @endsection
 @section('styles') 
   <style>
-    .fakeimg {
-      height: 200px;
-      background: #aaa;
-    }
-
-    .GeneratedMarquee {
-      font-family:'Comic Sans MS';
-      font-size:1em;
-      line-height:1.3em;
-      color:white;
-      // background-color:#CCFFFF;
-      padding:1.5em;
-
-    }
-
+.bg-success {
+    background-color: #17a2b8!important;
+}
+.alert {
+    border: 1px solid #ffffff;
+}
   </style>
 @endsection
 
@@ -30,11 +21,9 @@
   <div class="container" style="margin-top:30px;min-height:60vh">
     <!--Section: Contact v.2-->
 <section class="mb-4">
-
-  <!--Section heading-->
-  <h2 class="h1-responsive font-weight-bold text-center my-4">Contact us</h2>
+<div class="card">
+	<div class="card-header">{{ __('Contact Us') }}</div>
   <!--Section description-->
-
   <div class="row justify-content-center">
 
       <!--Grid column-->
@@ -90,15 +79,15 @@
               </div>
               <!--Grid row-->
 
-          <div class="text-center">
-              <button type="submit" class="btn btn-lg  btn-secondary">Send</button>
+          <div class="text-center mb-2">
+              <button type="submit" class="btn btn-primary">Send</button>
           </div>
           <div class="status"></div>
         </form>
       <!--Grid column-->
 
   </div>
-
+</div>
 </section>
 <!--Section: Contact v.2-->
     

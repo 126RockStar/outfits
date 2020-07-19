@@ -3,23 +3,17 @@
   FAQ
 @endsection
 @section('styles') 
-  <style>
-    .fakeimg {
-      height: 200px;
-      background: #aaa;
-    }
-
-    .GeneratedMarquee {
-      font-family:'Comic Sans MS';
-      font-size:1em;
-      line-height:1.3em;
-      color:white;
-      // background-color:#CCFFFF;
-      padding:1.5em;
-
-    }
-
-  </style>
+<style>
+ .btn-link {
+    color: #fff;
+}
+.btn-link:hover {
+    color: #17a2b8;
+}
+.card-body {
+    background-color: #17a2b8;
+}
+</style>
 @endsection
 
 @section('scripts') 

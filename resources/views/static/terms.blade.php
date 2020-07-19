@@ -4,21 +4,9 @@
 @endsection
 @section('styles') 
   <style>
-    .fakeimg {
-      height: 200px;
-      background: #aaa;
-    }
-
-    .GeneratedMarquee {
-      font-family:'Comic Sans MS';
-      font-size:1em;
-      line-height:1.3em;
-      color:white;
-      // background-color:#CCFFFF;
-      padding:1.5em;
-
-    }
-
+ ul {
+list-style:none
+ }	 
   </style>
 @endsection
 
@@ -27,8 +15,9 @@
 @endsection
 
 @section('content')
+
   <div class="container" style="margin-top:30px;min-height:60vh">
+	  <div class="card">
     {!! $details !!}
-    
   </div>
 @endsection

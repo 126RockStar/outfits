@@ -93,7 +93,7 @@ class FrontendController extends Controller
             ->notify(new Message($arr));
 
 
-        return back()->with('success','Your query is sent to admin');
+        return back()->with('success','Your message is now making it\'s way to us.');
 
     }
 

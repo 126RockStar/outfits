@@ -41,24 +41,11 @@
           <h5>Open Contests: <b>{{App\Contest::where('status','open')->get()->count()}}</b></h5>
           <h5>Image Contests: <b>{{App\Contest::where('file_type','image')->get()->count()}}</b></h5>
           <h5>Video Contests: <b>{{App\Contest::where('file_type','video')->get()->count()}}</b></h5>
+         <h5>Prizes: <b>{{App\Contest::whereNotNull('prize_description')->get()->count()}}</b></h5>		  
+		  <h5>In Judging: <b>{{App\Contest::where('status','judge')->get()->count()}}</b></h5>
            <!-- HTML Code -->
            <marquee class="GeneratedMarquee" direction="left" scrollamount="4" behavior="scroll">Dog contest... Funny hair contest... Most bestest contest... Contest for poor people</marquee>
         </div>
-        <h3>Some Links</h3>
-        <ul class="nav nav-pills flex-column">
-           <li class="nav-item">
-              <a class="nav-link active" href="#">Link</a>
-           </li>
-           <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-           </li>
-           <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-           </li>
-           <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-           </li>
-        </ul>
         <hr class="d-sm-none">
      </div>
      <div class="col-sm-9">
