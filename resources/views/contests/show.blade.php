@@ -370,7 +370,11 @@ View Contest
                 });
                 setProgressBar(++current);
             }else{
-                alert("No,no,no... You need to fill out each step before moving on.");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'No,no,no... You need to fill out each step before moving on.'
+                });
             }
         });
 
@@ -441,7 +445,11 @@ View Contest
                 }else{
                     $("#file").val('');
                     $('#loadingPreview').addClass('d-none');
-                    alert('No,no,no... You need to choose a Photo');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'No,no,no... You need to choose a Photo'
+                    });
                 }
                 
             }
@@ -454,9 +462,10 @@ View Contest
         if (input.files){
             $('#photoGallery').empty('');
             var filetype = input.files[0].type;
+            var ext = input.files[0].name.split('.').pop().toLowerCase();
             var reader = new FileReader();
             reader.onload = function (event) {
-                if(filetype.indexOf("video") > -1){
+                if(filetype.indexOf("video") > -1 && $.inArray(ext, ['mp4','webm']) > -1){
                     $("#file_type").val('video');
                    
                    // create the video element but don't add it to the page
@@ -468,7 +477,11 @@ View Contest
                         if(this.duration>=31){
                             $("#file").val('');
                             $('#loadingPreview').addClass('d-none');
-                            alert('The video duration is greater than 30 seconds, please choose another');
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'The video duration is greater than 30 seconds, please choose another'
+                            });
                         }else{
                             $('#photoGallery').append("<video src='"+event.target.result+"'width='100%' style='border:1px solid gray' controls></video>");
                             $('#loadingPreview').addClass('d-none');
@@ -477,7 +490,11 @@ View Contest
                 }else{
                     $("#file").val('');
                     $('#loadingPreview').addClass('d-none');
-                    alert('No,no,no... You need to choose a Video');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'No,no,no... You need to choose a Video(mp4,webm)'
+                    });
                 }
                 
             }
@@ -489,7 +506,11 @@ View Contest
     function checkFile(){
         var hasFile = $("#file").val();
         if(!hasFile) {
-            alert('No,no,no... You need to choose a {{$contest->file_type}}');
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'No,no,no... You need to choose a {{$contest->file_type}}'
+            });
         }else{
             $('#loadingPreview').removeClass('d-none');
         }

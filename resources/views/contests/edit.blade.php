@@ -336,8 +336,8 @@ Edit Contest
     {{-- <link rel="stylesheet" href="{{asset('public/vendors/select2/select2.min.css')}}"> --}}
 @endsection
 @section('scripts')
-<script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
-<link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
+{{-- <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
+<link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css"> --}}
 {{-- <script src="{{asset('public/vendors/select2/select2.min.js')}}"></script> --}}
 <script>
     //three steps product upload start
@@ -386,7 +386,11 @@ $(document).ready(function(){
             });
             setProgressBar(++current);
         }else{
-            alert("No,no,no... You need to fill out each step before moving on.");
+            Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'No,no,no... You need to fill out each step before moving on.'
+                    });
         }
     });
 
@@ -485,13 +489,14 @@ $(document).ready(function(){
         if (input.files){
             $('#photoGallery').empty('');
             var filetype = input.files[0].type;
+            var ext = input.files[0].name.split('.').pop().toLowerCase();
             var reader = new FileReader();
             reader.onload = function (event) {
                 if(filetype.indexOf("image") > -1){
                     $("#file_type").val('image');
                     $('#photoGallery').append("<img src='"+event.target.result+"'width='100%' style='border:1px solid gray' alt='' />");
                     $('#loadingPreview').addClass('d-none');
-                }else if(filetype.indexOf("video") > -1){
+                }else if(filetype.indexOf("video") > -1 && $.inArray(ext, ['mp4','webm']) > -1){
                     $("#file_type").val('video');
                    
                    // create the video element but don't add it to the page
@@ -503,14 +508,22 @@ $(document).ready(function(){
                         if(this.duration>=31){
                             $("#file").val('');
                             $('#loadingPreview').addClass('d-none');
-                            alert('The video duration is greater than 30 seconds, please choose another');
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'The video duration is greater than 30 seconds, please choose another'
+                            });
                         }else{
                             $('#photoGallery').append("<video src='"+event.target.result+"'width='100%' style='border:1px solid gray' controls></video>");
                             $('#loadingPreview').addClass('d-none');
                         }
                     };
                 }else{
-                    alert('No,no,no... You need to choose either Photo or Video');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'No,no,no... You need to choose either Photo or Video(mp4,webm)'
+                    });
                 }
                 
             }

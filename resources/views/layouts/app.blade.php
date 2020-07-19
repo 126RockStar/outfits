@@ -152,6 +152,7 @@
     <script src="{{asset('public/frontEnd')}}/js/jquery-3.3.1.min.js"></script>
     <script src="{{asset('public/frontEnd')}}/js/popper.min.js"></script>
     <script src="{{asset('public/frontEnd')}}/js/bootstrap.min.js"></script>
+    <script src="{{asset('public/vendors')}}/sweetalert2/sweetalert2.all.min.js"></script>
 
 
     {{-- <script>

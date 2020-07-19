@@ -371,7 +371,11 @@ Create Contest
                 current_fs.hide();
                 setProgressBar(++current);
             }else{
-                alert("No,no,no... You need to fill out each step before moving on.");
+                Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'No,no,no... You need to fill out each step before moving on.'
+                    });
             }
         });
 
@@ -469,13 +473,14 @@ Create Contest
         if (input.files){
             $('#photoGallery').empty('');
             var filetype = input.files[0].type;
+            var ext = input.files[0].name.split('.').pop().toLowerCase();
             var reader = new FileReader();
             reader.onload = function (event) {
                 if(filetype.indexOf("image") > -1){
                     $("#file_type").val('image');
                     $('#photoGallery').append("<img src='"+event.target.result+"'width='100%' style='border:1px solid gray' alt='' />");
                     $('#loadingPreview').addClass('d-none');
-                }else if(filetype.indexOf("video") > -1){
+                }else if(filetype.indexOf("video") > -1 && $.inArray(ext, ['mp4','webm']) > -1){
                     $("#file_type").val('video');
                    
                    // create the video element but don't add it to the page
@@ -487,14 +492,22 @@ Create Contest
                         if(this.duration>=31){
                             $("#file").val('');
                             $('#loadingPreview').addClass('d-none');
-                            alert('The video duration is greater than 30 seconds, please choose another');
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'The video duration is greater than 30 seconds, please choose another'
+                            });
                         }else{
                             $('#photoGallery').append("<video src='"+event.target.result+"'width='100%' style='border:1px solid gray' controls></video>");
                             $('#loadingPreview').addClass('d-none');
                         }
                     };
                 }else{
-                    alert('No,no,no... You need to choose either Photo or Video');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'No,no,no... You need to choose either Photo or Video(mp4,webm)'
+                    });
                 }
                 
             }
@@ -505,7 +518,11 @@ Create Contest
     function checkFile(){
         var hasFile = $("#file").val();
         if(!hasFile) {
-            alert('No,no,no... You need to choose either Photo or Video');
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'No,no,no... You need to choose either Photo or Video'
+            });
         }else{
             $('#loadingPreview').removeClass('d-none');
         }
