@@ -85,10 +85,13 @@ Contests
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-body">
+                    <form action="{{route('admin.contests.selected')}}" method="POST" class="card-body">
+                        @csrf
                         <div class="row mb-2">
                             <div class="col-sm-4">
                               {{-- <a href="javascript:void(0);" class="btn btn-info m-2" data-toggle="modal" data-target="#admin-add"><i class="mdi mdi-plus-circle mr-2"></i> {{__('Add Admin')}}</a> --}}
+                              <button type="submit" onclick="return confirm('Are you sure to delete the selected contests?')" class="btn btn-danger m-2 float-left" ><i class="mdi mdi-delete-sweep  mr-2"></i> Delete Selected</button>
+                            
                             </div>
                             <div class="col-sm-8">
                                 <!-- <div class="text-sm-right">
@@ -103,6 +106,7 @@ Contests
                             <table class="table table-centered table-striped dt-responsive nowrap w-100" id="myTable">
                                 <thead>
                                     <tr>
+                                        <th><input type="checkbox" name="check_all" id="check_all"> <label for="check_all">All</label></th>
                                         <th>Title</th>
                                         <th>Added By</th>
                                         <th>Featured</th>
@@ -111,12 +115,14 @@ Contests
                                         <th>Category</th>
                                         <th>Prize</th>
                                         <th>Post</th>
+                                        <th>Status</th>
                                         <th style="width: 75px;">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                   @forelse($contests as $contest)
                                     <tr>
+                                        <td><input type="checkbox" name="checked_contests[]" value="{{$contest->id}}"></td>
                                         <td class="table-user">
                                             <a href="javascript:void(0);" class="text-body font-weight-semibold">
                                             {{-- <img src="{{asset('public/storage/'.$contest->profile_picture)}}" alt="table-user" class="mr-2 rounded-circle"> --}}
@@ -142,6 +148,14 @@ Contests
                                         <td>{{$contest->post}}</td>
 
                                         <td>
+                                            @if($contest->status =='open')
+                                              <span class="badge badge-warning">Open</span>
+                                            @else
+                                              <span class="badge badge-info">Judge</span>
+                                            @endif
+                                        </td>
+
+                                        <td>
                                             <!-- <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a> -->
 
                                         
@@ -157,7 +171,7 @@ Contests
                                 </tbody>
                             </table>
                         </div>
-                    </div> <!-- end card-body-->
+                    </form> <!-- end card-body-->
                 </div> <!-- end card-->
             </div> <!-- end col -->
         </div>
@@ -234,8 +248,12 @@ Contests
    <script src="{{asset('public/admin/js/jquery.dataTables.min.js')}}"></script>
    <!-- end demo js-->
    <script>
-     $(document).ready( function () {
-       $('#myTable').DataTable();
+    $(document).ready( function () {
+       $('#myTable').DataTable({"pageLength": 50});
+     });
+
+     $("input[name=check_all]").click(function(){
+        $('input:checkbox[name="checked_contests[]"]').not(this).prop('checked', this.checked);
      });
 
      $('.feature-contest').click(function(){

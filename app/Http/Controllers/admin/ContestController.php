@@ -70,8 +70,8 @@ class ContestController extends Controller
                 ->getFrameFromSeconds(2)
                 ->export()
                 ->toDisk('local')
-                ->save($contest->file.'.png');
-                $contest->update(['thumbnail'=>$contest->file.'.png']);
+                ->save($contest->file.'.jpg');
+                $contest->update(['thumbnail'=>$contest->file.'.jpg']);
             }else{
                 $contest->update(['thumbnail'=>$contest->file]);
             }
@@ -114,6 +114,18 @@ class ContestController extends Controller
             $contest->update(['is_featured'=>0]);
         }
         return response()->json(['status'=>'done']);
+      }
+
+      public function selectedContests(Request $request){
+        $request->validate([
+          'checked_contests'=>'required'
+        ]);
+        
+          foreach($request->checked_contests as $ID){
+            Contest::where('id',$ID)->delete();
+          }
+       
+        return back()->with('success','The selected contests have been deleted');
       }
 
 }

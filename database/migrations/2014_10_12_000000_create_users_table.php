@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->integer('refered_user_id')->nullable();
+            $table->integer('max_contests')->default(5);
             $table->string('type')->default('user');
             $table->rememberToken();
             $table->timestamps();

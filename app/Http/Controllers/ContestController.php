@@ -30,8 +30,13 @@ class ContestController extends Controller
      */
     public function create()
     {
-        $categories=Category::all();
-        return view('contests/create',compact('categories'));
+        $allCreatedContests=Contest::where('user_id',Auth::id())->get();
+        if(count($allCreatedContests)<Auth::user()->max_contests){
+            $categories=Category::all();
+            return view('contests/create',compact('categories'));
+        }else{
+            return redirect(route('user.dashboard'))->with('error','You have reached the maximum limit of contest creation, please contact admin');
+        }
     }
 
     /**
@@ -42,62 +47,67 @@ class ContestController extends Controller
      */
     public function store(Request $request)
     {
-        
-        $request->validate([
-            'title'=>'required|max:50',
-            'sub_category'=>'required',
-            'description'=>'required|max:150',
-            'participants'=>'required',
-            'file'=>'required|mimes:jpg,jpeg,png,bmp,gif,svg,mp4',
-        ]);
+        $allCreatedContests=Contest::where('user_id',Auth::id())->get();
+        if(count($allCreatedContests)<Auth::user()->max_contests){
+            $request->validate([
+                'title'=>'required|max:50',
+                'sub_category'=>'required',
+                'description'=>'required|max:150',
+                'participants'=>'required',
+                'file'=>'required|mimes:jpg,jpeg,png,bmp,gif,svg,mp4,webm',
+            ]);
 
-        if(isset($request->prize)){
-            $request->validate(['prize_description'=>'required|max:50']);
+            if(isset($request->prize)){
+                $request->validate(['prize_description'=>'required|max:50']);
+            }
+
+
+            // else if(strstr($mime, "image/")){
+            //     // this code for image
+            // }
+
+            $path=$request->file('file')->store('contest');
+            $subCategory=SubCategory::where('id',$request->sub_category)->firstOrFail();
+
+            $contest=Contest::create([
+                'user_id'=>Auth::id(),
+                'title'=>$request->title,
+                'category'=>$subCategory->category_id,
+                'sub_category'=>$request->sub_category,
+                'description'=>$request->description,
+                'participants'=>$request->participants,
+                'file'=>$path,
+                'thumbnail'=>$path,
+                'file_type'=>$request->file_type,
+            ]);
+
+            $myEntry=ContestParticipant::create([
+                'user_id'=>Auth::id(),
+                'contest_id'=>$contest->id,
+                'file'=>$path,
+                'thumbnail'=>$path,
+            ]);
+
+
+            if($contest->file_type=='video'){
+                FFMpeg::open($contest->file)
+                ->getFrameFromSeconds(2)
+                ->export()
+                ->toDisk('local')
+                ->save($contest->file.'.jpg');
+                $contest->update(['thumbnail'=>$contest->file.'.jpg']);
+                $myEntry->update(['thumbnail'=>$contest->file.'.jpg']);
+            }
+
+            if(isset($request->prize)){
+                $contest->update(['prize_description'=>$request->prize_description]);
+            }
+
+            return redirect(route('user.dashboard'))->with('success','contest added successfully');
+
+        }else{
+            return redirect(route('user.dashboard'))->with('error','You have reached the maximum limit of contest creation, please contact admin');
         }
-
-
-        // else if(strstr($mime, "image/")){
-        //     // this code for image
-        // }
-
-        $path=$request->file('file')->store('contest');
-        $subCategory=SubCategory::where('id',$request->sub_category)->firstOrFail();
-
-        $contest=Contest::create([
-            'user_id'=>Auth::id(),
-            'title'=>$request->title,
-            'category'=>$subCategory->category_id,
-            'sub_category'=>$request->sub_category,
-            'description'=>$request->description,
-            'participants'=>$request->participants,
-            'file'=>$path,
-            'thumbnail'=>$path,
-            'file_type'=>$request->file_type,
-        ]);
-
-        $myEntry=ContestParticipant::create([
-            'user_id'=>Auth::id(),
-            'contest_id'=>$contest->id,
-            'file'=>$path,
-            'thumbnail'=>$path,
-        ]);
-
-
-        if($contest->file_type=='video'){
-            FFMpeg::open($contest->file)
-            ->getFrameFromSeconds(2)
-            ->export()
-            ->toDisk('local')
-            ->save($contest->file.'.png');
-            $contest->update(['thumbnail'=>$contest->file.'.png']);
-            $myEntry->update(['thumbnail'=>$contest->file.'.png']);
-        }
-
-        if(isset($request->prize)){
-            $contest->update(['prize_description'=>$request->prize_description]);
-        }
-
-        return redirect(route('user.dashboard'))->with('success','contest added successfully');
     }
 
     /**
@@ -172,8 +182,8 @@ class ContestController extends Controller
                 ->getFrameFromSeconds(2)
                 ->export()
                 ->toDisk('local')
-                ->save($contest->file.'.png');
-                $contest->update(['thumbnail'=>$contest->file.'.png']);
+                ->save($contest->file.'.jpg');
+                $contest->update(['thumbnail'=>$contest->file.'.jpg']);
             }else{
                 $contest->update(['thumbnail'=>$contest->file]);
             }
@@ -210,8 +220,8 @@ class ContestController extends Controller
             ->getFrameFromSeconds(2)
             ->export()
             ->toDisk('local')
-            ->save($entry->file.'.png');
-            $entry->update(['thumbnail'=>$entry->file.'.png']);
+            ->save($entry->file.'.jpg');
+            $entry->update(['thumbnail'=>$entry->file.'.jpg']);
         }else{
             $entry->update(['thumbnail'=>$entry->file]);
         }

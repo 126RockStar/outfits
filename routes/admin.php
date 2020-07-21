@@ -10,6 +10,7 @@ Route::middleware(['checkAdmin'])->prefix('admin/')->name('admin.')->group(funct
     Route::get('/users/block/{id}', 'UserController@blockUser')->name('users.block');
     Route::get('/users/unblock/{id}', 'UserController@unblockUser')->name('users.unblock');
     Route::get('/users/delete/{id}', 'UserController@deleteUser')->name('users.delete');
+    Route::post('/users/selected', 'UserController@selectedUsers')->name('users.selected');
 
     route::resource('/categories','CategoryController');   
     Route::post('/sub-category/update/{id}','CategoryController@updateSubCategory')->name('sub-category.update');
@@ -25,6 +26,7 @@ Route::middleware(['checkAdmin'])->prefix('admin/')->name('admin.')->group(funct
     Route::post('/contest/entry/update', 'ContestController@updateEntry')->name('contest.entry.update');
     Route::get('/contest/entry/delete/{id}', 'ContestController@deleteEntry')->name('contest.entry.delete');
     Route::post('/contest/feature', 'ContestController@feature')->name('contest.feature');
+    Route::post('/contests/selected', 'ContestController@selectedContests')->name('contests.selected');
 
 
     //contact messages
@@ -32,6 +34,7 @@ Route::middleware(['checkAdmin'])->prefix('admin/')->name('admin.')->group(funct
     Route::get('/message/seen/{id}', 'UserController@seenMessage')->name('message.seen');
     Route::get('/message/unseen/{id}', 'UserController@unseenMessage')->name('message.unseen');
     Route::get('/message/delete/{id}', 'UserController@deleteMessage')->name('message.delete');
+    Route::post('/messages/selected', 'UserController@selectedMessages')->name('messages.selected');
 
     //static page maanagement
     route::resource('/pages','PageController');

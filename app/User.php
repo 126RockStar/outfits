@@ -18,7 +18,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'email', 'password','username','refered_user_id'
+        'email', 'password','username','refered_user_id','max_contests'
     ];
 
     /**
@@ -38,4 +38,11 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getJoinedContests(){
+        return $this->hasMany('App\ContestParticipant','user_id','id');
+    }
+    public function getCreatedContests(){
+        return $this->hasMany('App\Contest','user_id','id');
+    }
 }

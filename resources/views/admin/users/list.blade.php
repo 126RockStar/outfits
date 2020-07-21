@@ -20,10 +20,13 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-body">
+                    <form action="{{route('admin.users.selected')}}" method="POST" class="card-body">
+                        @csrf
                         <div class="row mb-2">
-                            <div class="col-sm-4">
-                              {{-- <a href="javascript:void(0);" class="btn btn-info m-2" data-toggle="modal" data-target="#admin-add"><i class="mdi mdi-plus-circle mr-2"></i> {{__('Add Admin')}}</a> --}}
+                            <div class="col-md-12">
+                                <button type="button" onclick="checkUnBlock(this)" class="btn btn-success m-2 float-left" ><i class=" mdi mdi-account-multiple-plus mr-2"></i> UnBlock Selected</button>
+                                <button type="button" onclick="checkBlock(this)" class="btn btn-warning m-2 float-left" ><i class=" mdi mdi-account-multiple-minus mr-2"></i> Block Selected</button>
+                                <button type="submit" onclick="return confirm('Are you sure to delete the selected users?')" class="btn btn-danger m-2 float-left" ><i class="mdi mdi-delete-sweep  mr-2"></i> Delete Selected</button>
                             </div>
                             <div class="col-sm-8">
                                 <!-- <div class="text-sm-right">
@@ -38,10 +41,13 @@
                             <table class="table table-centered table-striped dt-responsive nowrap w-100" id="myTable">
                                 <thead>
                                     <tr>
+                                        <th><input type="checkbox" name="check_all" id="check_all"> <label for="check_all">All</label></th>
                                         <th>ID</th>
                                         <th>User</th>
                                         <th>Email</th>
-                                        <th>Joining Date</th>
+                                        <th>Joinded Contest</th>
+                                        <th>Created Contest</th>
+                                        <th>Regstered</th>
                                         <th>Status</th>
                                         <th style="width: 75px;">Action</th>
                                     </tr>
@@ -49,6 +55,7 @@
                                 <tbody>
                                   @forelse($users as $user)
                                     <tr>
+                                        <td>@if($user->id !=1)<input type="checkbox" name="checked_user[]" value="{{$user->id}}">@endif</td>
                                         <td>{{$user->id}}</td>
                                         <td class="table-user">
                                             <a href="javascript:void(0);" class="text-body font-weight-semibold">
@@ -56,6 +63,8 @@
                                             {{$user->username}}</a>
                                         </td>
                                         <td>{{$user->email}}</td>
+                                        <td>{{count($user->getJoinedContests)}}</td>
+                                        <td>{{count($user->getCreatedContests)}} of {{$user->max_contests}}</td>
                                         <td>{{$user->created_at}}</td>
                                         <td>
                                           @if($user->deleted_at != '')
@@ -90,7 +99,7 @@
                                 </tbody>
                             </table>
                         </div>
-                    </div> <!-- end card-body-->
+                    </form> <!-- end card-body-->
                 </div> <!-- end card-->
             </div> <!-- end col -->
         </div>
@@ -168,7 +177,21 @@
    <!-- end demo js-->
    <script>
      $(document).ready( function () {
-       $('#myTable').DataTable();
+       $('#myTable').DataTable({"pageLength": 50});
      });
+
+
+     $("input[name=check_all]").click(function(){
+        $('input:checkbox').not(this).prop('checked', this.checked);
+     });
+
+     function checkBlock(block){
+        $("#check_all").parent().append('<input type="hidden" name="type" value="block">');
+        block.form.submit();
+     }
+     function checkUnBlock(unblock){
+        $("#check_all").parent().append('<input type="hidden" name="type" value="unblock">');
+        unblock.form.submit();
+     }
    </script>
 @endsection

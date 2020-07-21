@@ -40,7 +40,8 @@ class HomeController extends Controller
     {
         $referredUsers=User::where('refered_user_id',Auth::id())->get();
         $contests=Contest::where('user_id',Auth::id())->where('status','open')->orderBy('id','DESC')->paginate(12);
-        return view('home',compact('referredUsers','contests'));
+        $allCreatedContests=Contest::where('user_id',Auth::id())->get();
+        return view('home',compact('referredUsers','contests','allCreatedContests'));
     }
     public function joinedContests()
     {

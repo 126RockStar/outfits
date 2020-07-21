@@ -3,7 +3,7 @@
   Dashboard
 @endsection
 @section('styles') 
-  Dashboard
+  
 @endsection
 @section('scripts') 
  <script>
@@ -31,7 +31,11 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header text-capitalize">Contests <a href="{{route('user.contests.create')}}"class="btn btn-success btn-lg float-right">Create Contest</a></div>
+                <div class="card-header text-capitalize">Contests({{count($allCreatedContests)}} of {{Auth::user()->max_contests}}) 
+                    @if(count($allCreatedContests)<Auth::user()->max_contests)
+                        <a href="{{route('user.contests.create')}}"class="btn btn-success btn-lg float-right">Create Contest</a>
+                    @endif
+                </div>
                 <div class="card-body">
                     
                     @if (session('status'))
@@ -54,7 +58,7 @@
                                     @else
                                         <i class="fa fa-video position-absolute p-2 bg-info text-white"></i>
                                      @endif
-                                     <img src="{{asset('public/storage/'.$contest->file)}}" class="img img-thumbnail posiiton-relative" style="width:100%">
+                                     <img src="{{asset('public/storage/'.$contest->thumbnail)}}" class="img img-thumbnail posiiton-relative" style="width:100%">
                                    
                                     <h2 class="text-white">{{$contest->title}}</h2>
                                     <p class="text-muted">by <b>{{$contest->getCreator->username}}</b></p>

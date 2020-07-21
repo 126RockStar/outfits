@@ -76,11 +76,13 @@ class UserController extends Controller
         $request->validate([
             'username'=>'required|unique:users,id,'.$id,
             'email'=>'required|email',
+            'max_contests'=>'required|numeric',
         ]);
 
         User::where('id',$id)->update([
             'username'=>$request->username,
             'email'=>$request->email,
+            'max_contests'=>$request->max_contests,
         ]);
 
         return redirect(route('admin.users.index'))->with('success','User updated');
@@ -126,6 +128,57 @@ class UserController extends Controller
         User::where('id',$id)->forceDelete();
         return back()->with('success','the user is deleted successfully');
     }
+
+
+    public function selectedUsers(Request $request){
+        $request->validate([
+          'checked_user'=>'required'
+        ]);
+        if(isset($request->type)){
+            if($request->type=='unblock'){
+                foreach($request->checked_user as $userID){
+                    User::where('id',$userID)->restore();
+                  }
+                  return back()->with('success','The selected users have been unblocked');
+            }else{
+                foreach($request->checked_user as $userID){
+                    User::where('id',$userID)->delete();
+                  }
+                  return back()->with('success','The selected users have been blocked');
+            }
+        }else{
+          foreach($request->checked_user as $userID){
+            User::where('id',$userID)->forceDelete();
+          }
+        }
+       
+        return back()->with('success','The selected users have been deleted');
+      }
+    public function selectedMessages(Request $request){
+        $request->validate([
+          'checked_messages'=>'required'
+        ]);
+        if(isset($request->type)){
+            if($request->type=='unread'){
+                foreach($request->checked_messages as $ID){
+                    Contact::where('id',$ID)->update(['status'=>'unseen']);
+                  }
+                  return back()->with('success','The selected users have been unblocked');
+            }else{
+                foreach($request->checked_messages as $ID){
+                    Contact::where('id',$ID)->update(['status'=>'seen']);
+                  }
+                  return back()->with('success','The selected users have been blocked');
+            }
+        }else{
+          foreach($request->checked_messages as $ID){
+            Contact::where('id',$ID)->forceDelete();
+          }
+        }
+       
+        return back()->with('success','The selected users have been deleted');
+      }
+  
 
 
 }

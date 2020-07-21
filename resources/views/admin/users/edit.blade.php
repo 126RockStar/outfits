@@ -52,6 +52,7 @@
                                             </div>
                                      </div>
                                  </div>
+
                                  <div class="list-group-item">
                                      <div class="form-group row mb-0">
                                          <label class="col-form-label col-sm-3">Email</label>
@@ -59,6 +60,21 @@
                                              <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{$user->email}}" placeholder="Your email ...">
                                              <!-- <small class="form-text text-muted">Your profile name will be used as part of your public profile URL address.</small> -->
                                              @error('email')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                            </div>
+                                     </div>
+                                 </div>
+
+                                 <div class="list-group-item">
+                                     <div class="form-group row mb-0">
+                                         <label class="col-form-label col-sm-3">Maximum Contests</label>
+                                         <div class="col-sm-9">
+                                             <input type="number" name="max_contests" class="form-control @error('max_contests') is-invalid @enderror" value="{{$user->max_contests}}" placeholder="This user can create how many contests?">
+                                             <!-- <small class="form-text text-muted">Your profile name will be used as part of your public profile URL address.</small> -->
+                                             @error('max_contests')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
