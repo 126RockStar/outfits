@@ -10,6 +10,7 @@ use App\ContestParticipant;
 use App\Http\Controllers\Controller;
 use App\SubCategory;
 use Illuminate\Http\Request;
+use FFMpeg;
 
 class ContestController extends Controller
 {
@@ -64,6 +65,16 @@ class ContestController extends Controller
         if($request->hasFile('file')){
             $path=$request->file('file')->store('contest');
             $contest->update(['file'=>$path]);
+            if($contest->file_type=='video'){
+                FFMpeg::open($contest->file)
+                ->getFrameFromSeconds(2)
+                ->export()
+                ->toDisk('local')
+                ->save($contest->file.'.png');
+                $contest->update(['thumbnail'=>$contest->file.'.png']);
+            }else{
+                $contest->update(['thumbnail'=>$contest->file]);
+            }
         }
 
         return redirect(route('admin.contests'))->with('success','contest updated successfully');

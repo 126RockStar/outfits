@@ -49,6 +49,7 @@ class FrontendController extends Controller
 
     public function viewContest($id)
     {
+        
         if(Auth::check()){
             $isParticipated=ContestParticipant::where('contest_id',$id)->where('user_id',Auth::id())->first();
         }else{
@@ -56,6 +57,8 @@ class FrontendController extends Controller
         }
         $contest=Contest::where('id',$id)->where('status','open')->firstOrFail();
         $participants=ContestParticipant::where('contest_id',$id)->get();
+
+ 
         return view('contests/show',compact('contest','participants','isParticipated'));
     }
 

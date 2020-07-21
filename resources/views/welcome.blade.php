@@ -55,20 +55,19 @@
             @forelse ($latestContests as $latestContest)
               <div class="col-sm-4">
                 <a href="{{route('contest.show',$latestContest->id)}}" class="border d-block">
+                  <div class="position-relative" style="background: url({{asset('public/storage/'.$latestContest->thumbnail)}}); background-size:cover;background-position:center center;height:240px;filter:brightness(50%)" width="100%">
+                    
+                  </div>
                   @if($latestContest->file_type=='image')
-                    <div class="" style="background: url({{asset('public/storage/'.$latestContest->file)}}); background-size:cover;background-position:center center;height:240px;" width="100%">
-                    </div>
-                    <h4 class="mt-1 text-white"><i class="fa fa-image p-2 bg-info text-white"></i>
+                      <i class="fa fa-image p-2 bg-info text-white  position-absolute" style="top:0px"></i>
                   @else
-                    <video src="{{asset('public/storage/'.$latestContest->file)}}" style="height:240px" width="100%">
-                    </video>
-                   <h4 class="mt-1 text-white"> <i class="fa fa-video p-2 bg-info text-white"></i>
+                    <i class="fa fa-video p-2 bg-info text-white position-absolute" style="top:0px"></i>
                   @endif
-                  {{Str::limit($latestContest->title,20)}}</h4>
+                  <h4 class="mt-1 text-white position-absolute" style="bottom:0px;">{{Str::limit($latestContest->title,20)}}</h4>
                 </a>
               </div>
             @empty
-                
+            <p class="text-danger">No contests found</p>
             @endforelse
       </div>
       
@@ -79,20 +78,18 @@
             @forelse ($featuredContests as $featuredContest)
               <div class="col-sm-4">
                 <a href="{{route('contest.show',$featuredContest->id)}}" class="border d-block">
+                  <div class="" style="background: url({{asset('public/storage/'.$featuredContest->thumbnail)}}); background-size:cover;background-position:center center;height:240px;" width="100%">
+                  </div>
                   @if($featuredContest->file_type=='image')
-                    <div class="" style="background: url({{asset('public/storage/'.$featuredContest->file)}}); background-size:cover;background-position:center center;height:240px;" width="100%">
-                    </div>
                     <h4 class="mt-1 text-white"><i class="fa fa-image p-2 bg-info text-white"></i>
                   @else
-                    <video src="{{asset('public/storage/'.$featuredContest->file)}}" style="height:240px" width="100%">
-                    </video>
                    <h4 class="mt-1 text-white"> <i class="fa fa-video p-2 bg-info text-white"></i>
                   @endif
                   {{Str::limit($featuredContest->title,20)}}</h4>
                 </a>
               </div>
             @empty
-                
+                <p class="text-danger">No contests found</p>
             @endforelse
       </div>
     </div>

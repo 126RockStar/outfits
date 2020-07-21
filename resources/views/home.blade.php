@@ -51,11 +51,11 @@
                                     <a href="{{route('contest.show',$contest->id)}}">
                                     @if($contest->file_type=='image')
                                         <i class="fa fa-image position-absolute p-2 bg-info text-white"></i>
-                                        <img src="{{asset('public/storage/'.$contest->file)}}" class="img img-thumbnail posiiton-relative" style="width:100%">
                                     @else
                                         <i class="fa fa-video position-absolute p-2 bg-info text-white"></i>
-                                        <video src="{{asset('public/storage/'.$contest->file)}}" class="posiiton-relative" width="100%"></video>
-                                    @endif
+                                     @endif
+                                     <img src="{{asset('public/storage/'.$contest->file)}}" class="img img-thumbnail posiiton-relative" style="width:100%">
+                                   
                                     <h2 class="text-white">{{$contest->title}}</h2>
                                     <p class="text-muted">by <b>{{$contest->getCreator->username}}</b></p>
                                     <p class="text-white">{{$contest->description}}</p>
@@ -127,7 +127,7 @@
                         <div class="modal-dialog modal-lg">
                             <form method="POST" class="modal-content" action="{{ route('user.contest.post.update') }}">
                                 @csrf
-                                <input type="hidden" name="id" value="{{$contest->id}}">
+                                <input type="hidden" name="id" value="">
                     
                             <!-- Modal Header -->
                             <div class="modal-header">
@@ -138,7 +138,7 @@
                             <!-- Modal body -->
                             <div class="modal-body">
                                     <div class="form-group">
-                                            <textarea id="post" type="text" class="form-control @error('post') is-invalid @enderror" name="post" required autocomplete="post" autofocus>{{$contest->post}}</textarea>
+                                            <textarea id="post" type="text" class="form-control @error('post') is-invalid @enderror" name="post" required autocomplete="post" autofocus></textarea>
                                             @error('post')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>

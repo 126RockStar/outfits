@@ -18,6 +18,7 @@ class CreateContestParticipantsTable extends Migration
             $table->integer('user_id');
             $table->integer('contest_id');
             $table->string('file');
+            $table->string('thumbnail');
             $table->timestamps();
         });
     }

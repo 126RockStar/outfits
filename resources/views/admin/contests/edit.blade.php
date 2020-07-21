@@ -102,7 +102,7 @@
                                              </a>
                                              <div class="media-body">
                                                 <div class="custom-file">
-                                                    <input type="file" name="photo" class="custom-file-input" id="inputGroupFile01">
+                                                    <input type="file" name="file" class="custom-file-input" id="inputGroupFile01">
                                                     <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                                                 </div>
                                              </div>
@@ -130,7 +130,7 @@
                                         <label class="col-form-label col-sm-3">Category</label>
                                         <div class="col-sm-9">
                                             <div class="form-group">
-                                                <select  style="width: 100%" class="select2 {{ $errors->has('sub_category') ? ' is-invalid' : '' }} form-control" id="contest-category" name="sub_category" title="sub_category" required>
+                                                <select  style="width: 100%" class="{{ $errors->has('sub_category') ? ' is-invalid' : '' }} form-control" id="contest-category" name="sub_category" title="sub_category" required>
                                                     <option value="">Select Category</option>
                                                     @forelse($categories as $category)
                                                     <optgroup label="{{$category->name}}">

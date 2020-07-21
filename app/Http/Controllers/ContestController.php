@@ -8,6 +8,7 @@ use App\Contest;
 use App\ContestParticipant;
 use App\SubCategory;
 use Faker\Provider\ar_JO\Company;
+use FFMpeg;
 use Illuminate\Http\Request;
 
 class ContestController extends Controller
@@ -70,14 +71,27 @@ class ContestController extends Controller
             'description'=>$request->description,
             'participants'=>$request->participants,
             'file'=>$path,
+            'thumbnail'=>$path,
             'file_type'=>$request->file_type,
         ]);
 
-        ContestParticipant::create([
+        $myEntry=ContestParticipant::create([
             'user_id'=>Auth::id(),
             'contest_id'=>$contest->id,
-            'file'=>$request->file('file')->store('entries'),
+            'file'=>$path,
+            'thumbnail'=>$path,
         ]);
+
+
+        if($contest->file_type=='video'){
+            FFMpeg::open($contest->file)
+            ->getFrameFromSeconds(2)
+            ->export()
+            ->toDisk('local')
+            ->save($contest->file.'.png');
+            $contest->update(['thumbnail'=>$contest->file.'.png']);
+            $myEntry->update(['thumbnail'=>$contest->file.'.png']);
+        }
 
         if(isset($request->prize)){
             $contest->update(['prize_description'=>$request->prize_description]);
@@ -153,6 +167,16 @@ class ContestController extends Controller
         if($request->hasFile('file')){
             $path=$request->file('file')->store('contest');
             $contest->update(['file'=>$path,'file_type'=>$request->file_type]);
+            if($contest->file_type=='video'){
+                FFMpeg::open($contest->file)
+                ->getFrameFromSeconds(2)
+                ->export()
+                ->toDisk('local')
+                ->save($contest->file.'.png');
+                $contest->update(['thumbnail'=>$contest->file.'.png']);
+            }else{
+                $contest->update(['thumbnail'=>$contest->file]);
+            }
         }
 
         return redirect(route('user.dashboard'))->with('success','contest updated successfully');
@@ -175,11 +199,24 @@ class ContestController extends Controller
 
         $contest=Contest::where('id',$request->id)->firstOrFail();
 
-        ContestParticipant::create([
+        $entry=ContestParticipant::create([
             'user_id'=>Auth::id(),
             'contest_id'=>$request->id,
             'file'=>$request->file('file')->store('entries'),
         ]);
+
+        if($contest->file_type=='video'){
+            FFMpeg::open($entry->file)
+            ->getFrameFromSeconds(2)
+            ->export()
+            ->toDisk('local')
+            ->save($entry->file.'.png');
+            $entry->update(['thumbnail'=>$entry->file.'.png']);
+        }else{
+            $entry->update(['thumbnail'=>$entry->file]);
+        }
+        
+
 
         if(count($contest->getParticipants)>=$contest->participants){
             $contest->update(['status'=>'judge']);
