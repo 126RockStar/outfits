@@ -240,7 +240,6 @@
                                         @endif
                                         <h6 class="text-white">{{$contest->title}}</h6>
                                         <p class="text-muted">by <b>{{$contest->getCreator->username}}</b></p>
-                                        <p class="text-muted">by <b>{{$contest->status}}</b></p>
 									</div>                                                      
                                 </div>
                             </div>
