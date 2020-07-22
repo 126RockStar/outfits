@@ -318,6 +318,16 @@ View Contest
             background-color: #eee;
             border: 6px dashed rgba(#000, 0.1);
             }
+
+            .mfp-title {
+                position:absolute;
+                /* other formatting */
+            }
+            .mfp-source {
+                position:absolute;
+                right:0px;
+                /* other formatting */
+            }
     </style>
     <link rel="stylesheet" href="{{asset('public/vendors/magnific-popup/magnific-popup.css')}}">
 @endsection
@@ -500,7 +510,7 @@ View Contest
             }
             reader.readAsDataURL(event.target.files[0]);
         }
-    }
+}
 
 
     function checkFile(){
@@ -515,17 +525,6 @@ View Contest
             $('#loadingPreview').removeClass('d-none');
         }
     }
-
-    $('.parent-container').magnificPopup({
-        delegate: 'div', // child items selector, by clicking on it popup will open
-        type: 'image',
-        gallery:{
-            enabled:true
-        }
-        // other options
-    });
-
-    
 
     var onDragEnter = function (event) {
         $(".br_dropzone").addClass("dragover");
@@ -553,6 +552,48 @@ View Contest
     .on("dragover", onDragOver)
     .on("dragleave", onDragLeave)
     .on("drop", onDrop);
+
+
+
+    @if($contest->file_type=='image')
+        $('.parent-container').magnificPopup({
+            delegate: 'div', // child items selector, by clicking on it popup will open
+            type: 'image',
+            gallery:{
+                enabled:true
+            },
+            image: {
+                verticalFit: true,
+                titleSrc: function(item) {
+                    return item.el.attr('title') + ' &middot; <a class="image-source-link float-right" href="'+item.el.attr('data-source')+'" target="_blank">Report</a>';
+                }
+            }
+            // other options
+        });
+    @else
+        $('.parent-container').magnificPopup({
+            delegate: 'div', // child items selector, by clicking on it popup will open
+            type: 'irame',
+            gallery:{
+                enabled:true
+            },
+            iframe: {
+                markup: '<div class="mfp-iframe-scaler">'+
+                            '<div class="mfp-close"></div>'+
+                            '<iframe class="mfp-iframe" frameborder="0" allowfullscreen></iframe>'+
+                            '<div class="mfp-title">Some caption</div>'+
+                            '<div class="mfp-source">Some caption</div>'+
+                        '</div>'
+            },
+            callbacks: {
+                markupParse: function(template, values, item) {
+                values.title = item.el.attr('title');
+                values.source = ' &middot; <a class="image-source-link float-right mt-1" href="'+item.el.attr('data-source')+'" target="_blank">Report</a>';
+                }
+            },
+            // other options
+        });
+    @endif
 </script>
 @endsection
 @section('content')
@@ -855,7 +896,7 @@ View Contest
 		   <h6>Participants:  {{count($contest->getParticipants)}} of {{$contest->participants}}</h6>
 			<div class="parent-container">
 				@forelse($participants as $participant)
-				<div href="{{asset('public/storage/'.$participant->file)}}" class="{{$contest->file_type=='video'?'mfp-iframe':''}}" style="cursor: pointer">
+				<div href="{{asset('public/storage/'.$participant->file)}}" title="{{$participant->getParticipant->username}}" data-source="{{route('contest.report',$participant->id)}}" class="{{$contest->file_type=='video'?'mfp-iframe':''}}" style="cursor: pointer">
                     @if($contest->file_type=='image')
                         <img src="{{asset('public/storage/'.$participant->file)}}"  height="120px" title="{{$participant->getParticipant->username}}">
                     @else
