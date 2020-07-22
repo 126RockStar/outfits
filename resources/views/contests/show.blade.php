@@ -517,7 +517,7 @@ View Contest
     }
 
     $('.parent-container').magnificPopup({
-        delegate: 'a', // child items selector, by clicking on it popup will open
+        delegate: 'div', // child items selector, by clicking on it popup will open
         type: 'image',
         gallery:{
             enabled:true
@@ -855,15 +855,15 @@ View Contest
 		   <h6>Participants:  {{count($contest->getParticipants)}} of {{$contest->participants}}</h6>
 			<div class="parent-container">
 				@forelse($participants as $participant)
-				<a href="{{asset('public/storage/'.$participant->file)}}" class="{{$contest->file_type=='video'?'mfp-iframe':''}}">
-				@if($contest->file_type=='image')
-					<img src="{{asset('public/storage/'.$participant->file)}}"  height="120px" title="{{$participant->getParticipant->username}}">
-				@else
-					<video src="{{asset('public/storage/'.$participant->file)}}"  height="120px" title="{{$participant->getParticipant->username}}"></video>
-				@endif
-				@empty 
-				@endforelse
-				</a>
+				<div href="{{asset('public/storage/'.$participant->file)}}" class="{{$contest->file_type=='video'?'mfp-iframe':''}}" style="cursor: pointer">
+                    @if($contest->file_type=='image')
+                        <img src="{{asset('public/storage/'.$participant->file)}}"  height="120px" title="{{$participant->getParticipant->username}}">
+                    @else
+                        <video src="{{asset('public/storage/'.$participant->file)}}"  height="120px" title="{{$participant->getParticipant->username}}"></video>
+                    @endif
+                    @empty 
+                </div>
+                @endforelse
 			</div>
         </div>				
     </div>   

@@ -482,7 +482,11 @@ $(document).ready(function(){
             $("#prize_description").removeAttr('required');
         }
   });
-
+  $('.custom-control-input').click(function(){
+        var data=$(this).val();
+        $("#prize_description").val(data);
+        
+  });
 
   function previewFile(input){
             $('#loadingPreview').removeClass('d-none');
@@ -763,6 +767,35 @@ $(document).ready(function(){
                                     </div>
                                     <div class="row {{empty($contest->prize_description)?'d-none':''}}" id="prize-description-row">
 										{{--   <label  class="col-md-4 text-dark text-right">Prize Description <span class="required-star text-danger">*</span></label>--}}
+                                        <div class="col-md-6 text-center">
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" id="customRadio1" name="dummy_prize" value="Prize Option 1"{{$contest->prize_description=='Prize Option 1'?'checked':''}}>
+                                                <label class="custom-control-label" for="customRadio1">Prize Option 1</label>
+                                              </div>
+                                              <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" id="customRadio2" name="dummy_prize" value="Prize Option 2"{{$contest->prize_description=='Prize Option 2'?'checked':''}}>
+                                                <label class="custom-control-label" for="customRadio2">Prize Option 2</label>
+                                              </div>
+                                              <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" id="customRadio3" name="dummy_prize" value="Prize Option 3"{{$contest->prize_description=='Prize Option 3'?'checked':''}}>
+                                                <label class="custom-control-label" for="customRadio3">Prize Option 3</label>
+                                              </div>
+                                        </div>
+                                        <div class="col-md-6 text-center">
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" id="customRadio4" name="dummy_prize" value="Prize Option 4"{{$contest->prize_description=='Prize Option 4'?'checked':''}}>
+                                                <label class="custom-control-label" for="customRadio4">Prize Option 4</label>
+                                              </div>
+                                              <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" id="customRadio5" name="dummy_prize" value="Prize Option 5"{{$contest->prize_description=='Prize Option 5'?'checked':''}}>
+                                                <label class="custom-control-label" for="customRadio5">Prize Option 5</label>
+                                              </div>
+                                              <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" id="customRadio6" name="dummy_prize" value="Prize Option 6"{{$contest->prize_description=='Prize Option 6'?'checked':''}}>
+                                                <label class="custom-control-label" for="customRadio6">Prize Option 6</label>
+                                              </div>
+                                        </div>
+                                        
                                         <div class="col-md-8">
                                             <textarea id="prize_description" class="form-control mb-3 {{ $errors->has('prize_description') ? ' is-invalid' : '' }}" name="prize_description" maxlength="50" placeholder="Description of contest prize">{{$contest->prize_description}}</textarea>
                                             @if ($errors->has('prize_description'))

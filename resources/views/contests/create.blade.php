@@ -457,8 +457,7 @@ Create Contest
 //       }
 //   });
 
-  $('#check-pirze').click(function(){
-        var product=$(this).attr('data');
+  $('#check-prize').click(function(){
         if($(this).prop('checked')){
             $("#prize-description-row").removeClass('d-none');
             $("#prize_description").attr('required','');
@@ -466,6 +465,11 @@ Create Contest
             $("#prize-description-row").addClass('d-none');
             $("#prize_description").removeAttr('required');
         }
+  });
+  $('.custom-control-input').click(function(){
+        var data=$(this).val();
+        $("#prize_description").val(data);
+        
   });
 
   function previewFile(input){
@@ -746,18 +750,44 @@ Create Contest
                                             <p class="text-muted">Keep in mind that you will be paying the winner.If you win, we will pay you. This will come with perks in the future.</p>
                                     
                                             <label class="switch">
-                                                <input type="checkbox" name="prize" id="check-pirze">
+                                                <input type="checkbox" name="prize" id="check-prize">
                                                 <span class="slider round"></span>
                                             </label>   
                                         </div>
                                         <div class="col-5">
                                             <h2 class="steps">{{ __('Step') }} 5 - 6</h2>
                                         </div>
-                                       
-
                                     </div>
                                     <div class="row d-none" id="prize-description-row">
-									{{--  <label  class="col-md-4 text-dark text-right">Prize Description <span class="required-star text-danger">*</span></label> --}}
+									    {{--  <label  class="col-md-4 text-dark text-right">Prize Description <span class="required-star text-danger">*</span></label> --}}
+                                        <div class="col-md-6 text-center">
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" id="customRadio1" name="dummy_prize" value="Prize Option 1">
+                                                <label class="custom-control-label" for="customRadio1">Prize Option 1</label>
+                                              </div>
+                                              <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" id="customRadio2" name="dummy_prize" value="Prize Option 2">
+                                                <label class="custom-control-label" for="customRadio2">Prize Option 2</label>
+                                              </div>
+                                              <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" id="customRadio3" name="dummy_prize" value="Prize Option 3">
+                                                <label class="custom-control-label" for="customRadio3">Prize Option 3</label>
+                                              </div>
+                                        </div>
+                                        <div class="col-md-6 text-center">
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" id="customRadio4" name="dummy_prize" value="Prize Option 4">
+                                                <label class="custom-control-label" for="customRadio4">Prize Option 4</label>
+                                              </div>
+                                              <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" id="customRadio5" name="dummy_prize" value="Prize Option 5">
+                                                <label class="custom-control-label" for="customRadio5">Prize Option 5</label>
+                                              </div>
+                                              <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" id="customRadio6" name="dummy_prize" value="Prize Option 6">
+                                                <label class="custom-control-label" for="customRadio6">Prize Option 6</label>
+                                              </div>
+                                        </div>
                                         <div class="col-md-8">
                                             <textarea id="prize_description" class="form-control mb-3 {{ $errors->has('prize_description') ? ' is-invalid' : '' }}" name="prize_description" maxlength="50" placeholder="Description of contest prize">{{old('prize_description')}}</textarea>
                                             @if ($errors->has('prize_description'))
@@ -767,10 +797,9 @@ Create Contest
                                             @endif
                                         </div>
                                     </div>
-                                
-                                    </div>
-                                    <input type="button" name="next" class="next action-button mr-3" value="{{ __('Next') }}" />
-                                    <input type="button" name="previous" class="previous action-button-previous" value="{{ __('Previous') }}" />
+                                </div>
+                                <input type="button" name="next" class="next action-button mr-3" value="{{ __('Next') }}" />
+                                <input type="button" name="previous" class="previous action-button-previous" value="{{ __('Previous') }}" />
                             </fieldset>
                             <fieldset id="stepsix">
                                 <div class="form-card p-3">
