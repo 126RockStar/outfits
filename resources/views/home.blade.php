@@ -3,7 +3,32 @@
   Dashboard
 @endsection
 @section('styles') 
-  
+<style>
+.btn {
+    padding: .05rem .5rem;
+    border-radius: 1rem;
+}
+.btn-primary {
+    width: 37%;
+	margin-bottom: .5rem;
+}
+.card-body {
+    padding: .75rem;
+}
+.card-footer {
+    padding: 0;
+}
+.nav-tabs {
+    border-bottom: none;
+}
+.text-info {
+    color: #ffffff!important;
+}
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    background-color: #17a2b8;
+    border:none;
+}
+</style>
 @endsection
 @section('scripts') 
  <script>
@@ -18,11 +43,15 @@
 @endsection
 @section('content')
 <div class="container">
-    <h1 class="text-center">Welcome <b>{{Auth::user()->username}}</b></h1>
+                  <div class="float-right">Contests({{count($allCreatedContests)}} of {{Auth::user()->max_contests}}) 
+                    @if(count($allCreatedContests)<Auth::user()->max_contests) 
+                        <a href="{{route('user.contests.create')}}"class="btn btn-primary float-right" style="width:8rem;margin-left: 1rem;"> Create Contest</a>
+                    @endif
+                </div> 
 
     <ul class="nav nav-tabs">
         <li class="nav-item">
-          <a class="nav-link text-info active" href="{{route('user.dashboard')}}">My Created</a>
+          <a class="nav-link text-info active" href="{{route('user.dashboard')}}">Created</a>
         </li>
         <li class="nav-item">
           <a class="nav-link text-info" href="{{route('user.contests.joinded')}}">Joined</a>
@@ -30,13 +59,7 @@
     </ul> 
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <div class="card">
-                <div class="card-header text-capitalize">Contests({{count($allCreatedContests)}} of {{Auth::user()->max_contests}}) 
-                    @if(count($allCreatedContests)<Auth::user()->max_contests)
-                        <a href="{{route('user.contests.create')}}"class="btn btn-success btn-lg float-right">Create Contest</a>
-                    @endif
-                </div>
-                <div class="card-body">
+ 
                     
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
@@ -45,46 +68,56 @@
                     @endif
                     <div class="row">
                         @forelse($contests as $contest)
-                        <div class="col-md-4">
-                            <div class="card">
-                            <div class="card-header text-capitalize">{{$contest->getCategory->name}} 
-                                {{!empty($contest->getSubCategory)? ' > '.$contest->getSubCategory->name :''}}
-                                ({{count($contest->getParticipants)}} of {{$contest->participants}} participants)
+                        <div class=" col-md-4">
+                            <div class="card mb-3" style="min-height:8.5rem">
+                                      <!-- Button to Open the Modal -->			
+                            <div class="card-header text-center pt-1 pb-1"><h5>{{count($contest->getParticipants)}} of {{$contest->participants}} players</h5>
                             </div>
-                                <div class="card-body">
-                                    <a href="{{route('contest.show',$contest->id)}}">
+                                <div class="card-body pb-0">
+								
+<!--                                    <a href="{{route('contest.show',$contest->id)}}">
                                     @if($contest->file_type=='image')
                                         <i class="fa fa-image position-absolute p-2 bg-info text-white"></i>
+                                        <img src="{{asset('public/storage/'.$contest->file)}}" class="img img-thumbnail posiiton-relative" style="width:100%">
                                     @else
                                         <i class="fa fa-video position-absolute p-2 bg-info text-white"></i>
-                                     @endif
-                                     <img src="{{asset('public/storage/'.$contest->thumbnail)}}" class="img img-thumbnail posiiton-relative" style="width:100%">
-                                   
-                                    <h2 class="text-white">{{$contest->title}}</h2>
-                                    <p class="text-muted">by <b>{{$contest->getCreator->username}}</b></p>
-                                    <p class="text-white">{{$contest->description}}</p>
-                                    @if(empty($contest->prize_description))
+                                        <video src="{{asset('public/storage/'.$contest->file)}}" class="posiiton-relative" width="100%"></video>
+                                    @endif
+-->									
+                                
+                                    <h6 class="text-white text-center" style="min-height:43px">{{$contest->title}}</h6>
+ <!--                                   @if(empty($contest->prize_description))
                                         <p class="text-warning">no prize for this contest</p>
                                     @else
                                         <p class="text-white">{{$contest->prize_description}}</p>
-                                    @endif
-                                    </a>
-                                    <hr>
+                                    @endif -->
+<!--                                    </a>  -->
+                                    <div class="card-footer">
                                     @if(count($contest->getParticipants)<2)
                                         <a href="{{route('user.contests.edit',$contest->id)}}" class="btn btn-info float-right"><i class="fa fa-edit"></i></a>
                                         <form action="{{route('user.contests.destroy',$contest->id)}}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" onclick="return confirm('Are you sure to delete the contest')" class="btn btn-danger"><i class="fa fa-trash"></i></button>
-                                        </form>
-                                    @else
-                                        <p class="text-danger">Contest can't modifed as users participated</p>
+											 </form>
+											 @else
+                                        <span class="text-danger">No Edit</span>
                                     @endif
-
-                                      <!-- Button to Open the Modal -->
-                                    <button type="button" class="btn btn-primary editPost" data-id="{{$contest->id}}" data-post="{{$contest->post}}" data-toggle="modal" data-target="#editPost">
+									@if(count($contest->getParticipants)<2)
+										
+                                            <button type="submit" onclick="return confirm('Are you sure to delete the contest')" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+											
+											 @else
+                                        
+                                    @endif
+											<button type="button" class="btn btn-primary editPost" data-id="{{$contest->id}}" data-post="{{$contest->post}}" data-toggle="modal" data-target="#editPost">
                                         Post
                                     </button>
+									<a href="{{route('contest.show',$contest->id)}}" class="btn btn-primary">
+                                        View
+                                    </a>
+                                        
+
+									</div>
                                 </div>
                             </div>
                         </div>
@@ -131,7 +164,7 @@
                         <div class="modal-dialog modal-lg">
                             <form method="POST" class="modal-content" action="{{ route('user.contest.post.update') }}">
                                 @csrf
-                                <input type="hidden" name="id" value="">
+                                <input type="hidden" name="id" value="{{$contest->id}}">
                     
                             <!-- Modal Header -->
                             <div class="modal-header">
@@ -142,7 +175,7 @@
                             <!-- Modal body -->
                             <div class="modal-body">
                                     <div class="form-group">
-                                            <textarea id="post" type="text" class="form-control @error('post') is-invalid @enderror" name="post" required autocomplete="post" autofocus></textarea>
+                                            <textarea id="post" type="text" class="form-control @error('post') is-invalid @enderror" name="post" required autocomplete="post" autofocus>{{$contest->post}}</textarea>
                                             @error('post')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -160,9 +193,6 @@
                         </form>
                         </div>
                     </div>
-			
-                </div>
-            </div>
         </div>
     </div>
  
