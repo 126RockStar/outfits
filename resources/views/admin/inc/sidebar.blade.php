@@ -29,6 +29,7 @@
                     <span> Categories </span>
                 </a>
             </li>
+
             <li class="side-nav-item {{Request::is('/admin/users*')? 'active' : ''}}">
                 <a href="{{route('admin.users.index')}}" class="side-nav-link">
                     <i class="mdi mdi-account-multiple"></i>
@@ -42,6 +43,14 @@
                     <span> Contests </span>
                 </a>
             </li>
+
+            <li class="side-nav-item {{Request::is('/admin/reports*')? 'active' : ''}}">
+                <a href="{{route('admin.reports')}}" class="side-nav-link">
+                    <i class="mdi mdi-alert"></i>
+                    <span>Reports</span>
+                </a>
+            </li>
+
             <li class="side-nav-item {{Request::is('/admin/messages*')? 'active' : ''}}">
                 <a href="{{route('admin.messages')}}" class="side-nav-link">
                     <i class="mdi mdi-message-reply-text"></i>

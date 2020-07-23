@@ -36,6 +36,13 @@ Route::middleware(['checkAdmin'])->prefix('admin/')->name('admin.')->group(funct
     Route::get('/message/delete/{id}', 'UserController@deleteMessage')->name('message.delete');
     Route::post('/messages/selected', 'UserController@selectedMessages')->name('messages.selected');
 
+    //Reports
+    Route::get('/reports', 'ReportController@reports')->name('reports');
+    Route::get('/report/seen/{id}', 'ReportController@seenReport')->name('report.seen');
+    Route::get('/report/unseen/{id}', 'ReportController@unseenReport')->name('report.unseen');
+    Route::get('/report/delete/{id}', 'ReportController@deleteReport')->name('report.delete');
+    Route::post('/reports/selected', 'ReportController@selectedReports')->name('reports.selected');
+
     //static page maanagement
     route::resource('/pages','PageController');
     

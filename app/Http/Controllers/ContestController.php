@@ -272,6 +272,7 @@ class ContestController extends Controller
             'entry_id'=>$request->entry_id,
             'reason'=>$request->reason
         ]);
+        
         if($request->hasFile('attachment')){
             $path=$request->file('attachment')->store('reports');
             $entry->update(['attachment'=>$path]);

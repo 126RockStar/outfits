@@ -56,7 +56,7 @@
                                 </thead>
                                 <tbody>
                                   @forelse($messages as $message)
-                                    <tr class="@if($message->status == 'unseen') bg-warning @endif">
+                                    <tr class="@if($message->status == 'unseen') bg-light @endif">
                                         <td><input type="checkbox" name="checked_messages[]" value="{{$message->id}}"></td>
                                         
                                         <td>{{$message->id}}</td>

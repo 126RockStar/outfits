@@ -20,6 +20,7 @@ class CreateReportsTable extends Migration
             $table->integer('entry_id');
             $table->longText('reason');
             $table->string('attachment')->nullable();
+            $table->string('status')->default('unseen');
             $table->timestamps();
         });
     }
