@@ -17,7 +17,6 @@ Route::get('/','FrontendController@index')->name('index');
 Route::post('/login/continue','Auth\LoginController@continueLogin')->name('login.continue');
 Route::get('/contests','FrontendController@contests')->name('contests');
 Route::get('/contest/{id}','FrontendController@viewContest')->name('contest.show');
-Route::get('/contest/report/{id}','FrontendController@viewContest')->name('contest.report');
 Route::get('/contests/quickview','FrontendController@quickview')->name('contests.quickview');
 Route::get('/contests/prizes','FrontendController@prizes')->name('contests.prizes');
 Route::get('/games/wheel','FrontendController@wheel')->name('games.wheel');
@@ -41,6 +40,8 @@ Route::middleware(['checkUser','verified'])->prefix('user/')->name('user.')->gro
     route::get('/contest/unjoin/{id}','ContestController@unjoinContest')->name('contest.unjoin');
     Route::post('/contest/post/update', 'ContestController@updatePost')->name('contest.post.update');
     Route::get('/contest/post/delete/{id}', 'ContestController@deletePost')->name('contest.post.delete');
+    Route::get('/contest/report/{id}','ContestController@reportContest')->name('contest.report');
+    Route::post('/contest/entry/report','ContestController@storereportContest')->name('contest.entry.report');
 
 
 

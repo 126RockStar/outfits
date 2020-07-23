@@ -11,4 +11,7 @@ class ContestParticipant extends Model
     public function getParticipant(){
         return $this->hasOne('App\User','id','user_id');
     }
+    public function getContest(){
+        return $this->hasOne('App\Contest','id','contest_id');
+    }
 }

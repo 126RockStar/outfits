@@ -328,6 +328,12 @@ View Contest
                 right:0px;
                 /* other formatting */
             }
+            .image-source-link {
+                position: absolute;
+                right:0px;
+                /* other formatting */
+            }
+
     </style>
     <link rel="stylesheet" href="{{asset('public/vendors/magnific-popup/magnific-popup.css')}}">
 @endsection
@@ -563,10 +569,12 @@ View Contest
                 enabled:true
             },
             image: {
-                verticalFit: true,
-                titleSrc: function(item) {
-                    return item.el.attr('title') + ' &middot; <a class="image-source-link float-right" href="'+item.el.attr('data-source')+'" target="_blank">Report</a>';
-                }
+                verticalFit: true 
+                @auth ,
+                    titleSrc: function(item) {
+                        return item.el.attr('title') + '&nbsp; | &nbsp;  <a target="_blank" class=" btn btn-sm float-right btn-danger" style="right:0px" href="'+item.el.attr('data-source')+'">Report</a></div>';
+                    }
+                @endauth
             }
             // other options
         });
@@ -582,18 +590,59 @@ View Contest
                             '<div class="mfp-close"></div>'+
                             '<iframe class="mfp-iframe" frameborder="0" allowfullscreen></iframe>'+
                             '<div class="mfp-title">Some caption</div>'+
-                            '<div class="mfp-source">Some caption</div>'+
+                            '<div class="mfp-source"></div>'+
                         '</div>'
             },
             callbacks: {
                 markupParse: function(template, values, item) {
                 values.title = item.el.attr('title');
-                values.source = ' &middot; <a class="image-source-link float-right mt-1" href="'+item.el.attr('data-source')+'" target="_blank">Report</a>';
+                @auth
+                    values.source = '&nbsp; | &nbsp;<a target="_blank" class=" btn btn-sm mt-2 btn-danger" href="'+item.el.attr('data-source')+'">Report</a>';
+                @endauth
                 }
             },
             // other options
         });
     @endif
+    @auth 
+       function reportEntry(){
+        Swal.fire({
+            title: 'Reason',
+            inputValue: 'hi',
+            showCancelButton: true,
+            inputValidator: (value) => {
+                if (!value) {
+                return 'You need to write something!'
+                }
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Report',
+            showLoaderOnConfirm: true,
+            preConfirm: (login) => {
+                return fetch(`//api.github.com/users/${login}`)
+                .then(response => {
+                    if (!response.ok) {
+                    throw new Error(response.statusText)
+                    }
+                    return response.json()
+                })
+                .catch(error => {
+                    Swal.showValidationMessage(
+                    `Request failed: ${error}`
+                    )
+                })
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+            }).then((result) => {
+            if (result.value) {
+                Swal.fire({
+                title: `${result.value.login}'s avatar`,
+                imageUrl: result.value.avatar_url
+                })
+            }
+            })
+        }
+    @endauth
 </script>
 @endsection
 @section('content')
@@ -896,7 +945,7 @@ View Contest
 		   <h6>Participants:  {{count($contest->getParticipants)}} of {{$contest->participants}}</h6>
 			<div class="parent-container">
 				@forelse($participants as $participant)
-				<div href="{{asset('public/storage/'.$participant->file)}}" title="{{$participant->getParticipant->username}}" data-source="{{route('contest.report',$participant->id)}}" class="{{$contest->file_type=='video'?'mfp-iframe':''}}" style="cursor: pointer">
+				<div href="{{asset('public/storage/'.$participant->file)}}" title="{{$participant->getParticipant->username}}" data-source="{{route('user.contest.report',$participant->id)}}" class="{{$contest->file_type=='video'?'mfp-iframe':''}}" style="cursor: pointer">
                     @if($contest->file_type=='image')
                         <img src="{{asset('public/storage/'.$participant->file)}}"  height="120px" title="{{$participant->getParticipant->username}}">
                     @else

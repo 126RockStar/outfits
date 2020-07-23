@@ -6,6 +6,7 @@ use Auth;
 use App\Category;
 use App\Contest;
 use App\ContestParticipant;
+use App\Report;
 use App\SubCategory;
 use Faker\Provider\ar_JO\Company;
 use FFMpeg;
@@ -252,6 +253,30 @@ class ContestController extends Controller
         $entry=Contest::where('id',$id)->where('user_id',Auth::id())->firstOrFail();
         $entry->update(['post'=>NULL]);
         return back()->with('success','Your contest post is deleted successfully');
+    }
+
+    public function reportContest($id){
+        $entry=ContestParticipant::where('id',$id)->firstOrFail();
+        return view('contests/report',compact('entry'));
+    }
+    public function storereportContest(Request $request){
+        $request->validate([
+            'contest_id'=>'required',
+            'entry_id'=>'required',
+            'reason'=>'required',
+        ]);
+
+        $entry=Report::create([
+            'user_id'=>Auth::id(),
+            'contest_id'=>$request->contest_id,
+            'entry_id'=>$request->entry_id,
+            'reason'=>$request->reason
+        ]);
+        if($request->hasFile('attachment')){
+            $path=$request->file('attachment')->store('reports');
+            $entry->update(['attachment'=>$path]);
+        }
+        return redirect(route('contest.show',$request->contest_id))->with('success','The contest entry is reported successfully');
     }
   
 }
