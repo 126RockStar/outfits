@@ -27,6 +27,7 @@ class CreateContestsTable extends Migration
             $table->string('file_type');
             $table->longText('post')->nullable();
             $table->integer('is_featured')->default(0);
+            $table->integer('is_prize_featured')->default(0);
             $table->string('status')->default('open');
             $table->timestamps();
         });

@@ -26,6 +26,7 @@ Route::middleware(['checkAdmin'])->prefix('admin/')->name('admin.')->group(funct
     Route::post('/contest/entry/update', 'ContestController@updateEntry')->name('contest.entry.update');
     Route::get('/contest/entry/delete/{id}', 'ContestController@deleteEntry')->name('contest.entry.delete');
     Route::post('/contest/feature', 'ContestController@feature')->name('contest.feature');
+    Route::post('/prize/feature', 'ContestController@featurePrize')->name('prize.feature');
     Route::post('/contests/selected', 'ContestController@selectedContests')->name('contests.selected');
 
 

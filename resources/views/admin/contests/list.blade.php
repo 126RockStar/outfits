@@ -114,6 +114,7 @@ Contests
                                         <th>Description</th>
                                         <th>Category</th>
                                         <th>Prize</th>
+                                        <th>Prize Featured?</th>
                                         <th>Post</th>
                                         <th>Status</th>
                                         <th style="width: 75px;">Action</th>
@@ -144,7 +145,17 @@ Contests
                                             {{$contest->getCategory->name}} 
                                             {{!empty($contest->getSubCategory)? ' > '.$contest->getSubCategory->name :''}}
                                         </td>
-                                        <td>{{$contest->prize_description}}</td>
+                                        <td>
+                                            {{$contest->prize_description}}
+                                        </td>
+                                        <td>
+                                            @if(!empty($contest->prize_description))
+                                                <label class="switch">
+                                                    <input type="checkbox" class="feature-prize" data="{{$contest->id}}"{{$contest->is_prize_featured==1?'checked':''}}>
+                                                    <span class="slider round"></span>
+                                                </label>
+                                            @endif
+                                        </td>
                                         <td>{{$contest->post}}</td>
 
                                         <td>
@@ -257,19 +268,34 @@ Contests
      });
 
      $('.feature-contest').click(function(){
-              var contest=$(this).attr('data');
-            
-              var _token=$('meta[name="csrf-token"]').attr('content');
+        var contest=$(this).attr('data');
+    
+        var _token=$('meta[name="csrf-token"]').attr('content');
 
-              $.ajax({
-                  url: '{{url("/admin/contest/feature")}}',
-                  type:"POST",
-                  data:{contest:contest,_token:_token},
-                  success:function(data) {
-                    alert('done');
-                  }
+        $.ajax({
+            url: '{{url("/admin/contest/feature")}}',
+            type:"POST",
+            data:{contest:contest,_token:_token},
+            success:function(data) {
+                alert('done');
+            }
 
-              });
-          });
+        });
+    });
+     $('.feature-prize').click(function(){
+        var contest=$(this).attr('data');
+    
+        var _token=$('meta[name="csrf-token"]').attr('content');
+
+        $.ajax({
+            url: '{{url("/admin/prize/feature")}}',
+            type:"POST",
+            data:{contest:contest,_token:_token},
+            success:function(data) {
+                alert('done');
+            }
+
+        });
+    });
    </script>
 @endsection

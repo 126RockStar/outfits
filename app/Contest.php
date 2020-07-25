@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Contest extends Model
 {
     
-    protected $fillable=['user_id','title','category','sub_category','description','participants','prize_description','file','thumbnail','file_type','post','status','is_featured'];
+    protected $fillable=['user_id','title','category','sub_category','description','participants','prize_description','is_prize_featured','file','thumbnail','file_type','post','status','is_featured'];
 
     public function getCategory(){
         return $this->hasOne('App\Category','id','category');

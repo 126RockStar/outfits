@@ -116,6 +116,16 @@ class ContestController extends Controller
         return response()->json(['status'=>'done']);
       }
 
+    public function featurePrize(Request $request){
+        $contest=Contest::where('id',$request->contest)->firstOrFail();
+        if($contest->is_prize_featured==0){
+            $contest->update(['is_prize_featured'=>1]);
+        }else{
+            $contest->update(['is_prize_featured'=>0]);
+        }
+        return response()->json(['status'=>'done']);
+      }
+
       public function selectedContests(Request $request){
         $request->validate([
           'checked_contests'=>'required'

@@ -41,7 +41,8 @@ class FrontendController extends Controller
         return view('contests/quickview');
     }
     public function prizes(){
-        return view('contests/prizes');
+        $prizedContests=Contest::whereNotNull('prize_description')->paginate(12);
+        return view('contests/prizes',compact('prizedContests'));
     }
     public function wheel(){
         return view('games/wheel');
