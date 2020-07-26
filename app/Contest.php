@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Auth;
 use Illuminate\Database\Eloquent\Model;
 
 class Contest extends Model
@@ -23,5 +24,8 @@ class Contest extends Model
 
     public function getParticipants(){
         return $this->hasMany('App\ContestParticipant','contest_id','id');
+    }
+    public function amIjoined(){
+        return $this->hasOne('App\ContestParticipant','contest_id','id')->where('user_id',Auth::id());
     }
 }

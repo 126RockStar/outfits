@@ -40,7 +40,7 @@
                         </div>
 
                         <div class="table-responsive">
-                            <table class="table table-centered table-striped dt-responsive nowrap w-100" id="myTable">
+                            <table class="table table-centered dt-responsive nowrap w-100" id="myTable">
                                 <thead>
                                     <tr>
                                         <th><input type="checkbox" name="check_all" id="check_all"> <label for="check_all">All</label></th>

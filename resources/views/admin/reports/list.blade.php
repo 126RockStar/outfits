@@ -65,7 +65,7 @@
 
                                         <td>
                                             @if(!empty($report->attachment))
-                                                <a href="#" class="show-preview" data-toggle="modal" data-target="#show-preview-modal"  data-type="{{$report->getContest->file_type}}" data-source="{{asset('public/storage/'.$report->attachment)}}">See Attachment</a>
+                                                <a href="{{asset('public/storage/'.$report->attachment)}}" class="show-preview" target="_blank">See Attachment</a>
                                             @endif
                                         </td>
 
