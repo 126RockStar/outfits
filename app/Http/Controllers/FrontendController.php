@@ -38,7 +38,11 @@ class FrontendController extends Controller
     }
 
     public function quickview(){
-        return view('contests/quickview');
+        $quickViewContests = Contest::with('getParticipants')->get()->sortBy(function($quickViewContests)
+            {
+                return $quickViewContests->participants-$quickViewContests->getParticipants->count();
+            });
+        return view('contests/quickview',compact('quickViewContests'));
     }
     public function prizes(){
         $prizedContests=Contest::whereNotNull('prize_description')->paginate(12);

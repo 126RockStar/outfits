@@ -29,12 +29,8 @@
                                 
                                 <button type="submit" onclick="return confirm('Are you sure to delete the selected messages?')" class="btn btn-danger m-2 float-left" ><i class="mdi mdi-delete-sweep  mr-2"></i> Delete Selected</button>
                             </div>
-                            {{-- <div class="col-sm-8">
-                                <!-- <div class="text-sm-right">
-                                    <button type="button" class="btn btn-success mb-2 mr-1"><i class="mdi mdi-settings"></i></button>
-                                    <button type="button" class="btn btn-light mb-2 mr-1">Edit Roles</button>
-                                    <button type="button" class="btn btn-light mb-2">Edit Permissions</button>
-                                </div> -->
+                            {{-- <div class="col-sm-3">
+
                             </div><!-- end col--> --}}
                         </div>
 
@@ -61,15 +57,15 @@
                                         
                                         <td>{{$report->id}}</td>
                                         <td>{{$report->getCreator->username}}</td>
-                                        <td><a href="{{route('contest.show',$report->contest_id)}}" target="_blanke">{{$report->getContest->title}}</a></td>
+                                        <td><a href="{{route('contest.show',$report->contest_id)}}" target="_blank">{{$report->getContest->title}}</a></td>
                                         <td>
-                                            <a href="{{asset('public/storage/'.$report->file)}}" target="_blank">See Reported Entry</a>
+                                            <a href="#" class="show-preview" data-toggle="modal" data-target="#show-preview-modal" data-type="{{$report->getContest->file_type}}" data-source="{{asset('public/storage/'.$report->getEntry->file)}}">See Reported Entry</a>
                                         </td>
                                         <td>{{$report->reason}}</td>
 
                                         <td>
                                             @if(!empty($report->attachment))
-                                                <a href="{{asset('public/storage/'.$report->file)}}" target="_blank">See Attachment</a>
+                                                <a href="#" class="show-preview" data-toggle="modal" data-target="#show-preview-modal"  data-type="{{$report->getContest->file_type}}" data-source="{{asset('public/storage/'.$report->attachment)}}">See Attachment</a>
                                             @endif
                                         </td>
 
@@ -109,6 +105,18 @@
 
     </div> <!-- content -->
 
+
+<!-- show preview modal -->
+<div id="show-preview-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body" id="showPrivew">
+
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 @endsection
 @section('extra-scripts')
 
@@ -133,5 +141,15 @@
         $("#check_all").parent().append('<input type="hidden" name="type" value="unread">');
         unread.form.submit();
      }
+
+     $('.show-preview').click(function(){
+        var type=$(this).attr('data-type');
+        var source=$(this).attr('data-source');
+        if(type=='image'){
+            $("#showPrivew").html("<img src='"+source+"' style='width:100%' class='img-thumbnail'>");
+        }else{
+            $("#showPrivew").html("<video src='"+source+"' width='100%' class='img-thumbnail'></video>");
+        }
+     });
    </script>
 @endsection
