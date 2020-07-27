@@ -22,6 +22,12 @@
                     <span> Dashboard </span>
                 </a>
             </li>
+            <li class="side-nav-item {{Request::is('/admin/inbox')? 'active' : ''}}">
+                <a href="{{route('admin.inbox.index')}}" class="side-nav-link">
+                    <i class="mdi mdi-message-reply-text"></i>
+                    <span> Inbox </span>
+                </a>
+            </li>
 
             <li class="side-nav-item {{Request::is('/admin/categories')? 'active' : ''}}">
                 <a href="{{route('admin.categories.index')}}" class="side-nav-link">
@@ -53,8 +59,8 @@
 
             <li class="side-nav-item {{Request::is('/admin/messages*')? 'active' : ''}}">
                 <a href="{{route('admin.messages')}}" class="side-nav-link">
-                    <i class="mdi mdi-message-reply-text"></i>
-                    <span> Messages </span>
+                    <i class="mdi mdi-message-alert"></i>
+                    <span>Contact Messages </span>
                 </a>
             </li>
 

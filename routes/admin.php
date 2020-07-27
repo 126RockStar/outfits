@@ -29,6 +29,8 @@ Route::middleware(['checkAdmin'])->prefix('admin/')->name('admin.')->group(funct
     Route::post('/prize/feature', 'ContestController@featurePrize')->name('prize.feature');
     Route::post('/contests/selected', 'ContestController@selectedContests')->name('contests.selected');
 
+    //messages
+    route::resource('/inbox','MessageController');
 
     //contact messages
     Route::get('/messages', 'UserController@messages')->name('messages');
