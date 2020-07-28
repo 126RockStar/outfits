@@ -177,15 +177,15 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
-  <div class="row">
-        <div class="col-sm-3 col-1" style="height: 80vh;overflow-y:scroll">
+  {{-- <div class="row">
+        <div class="col-sm-3 col-2 border" style="height: 80vh;overflow-y:scroll">
            
             @forelse($messageUsers as $msg)
                 @php 
                     $message=App\Message::where('receivers',$msg->receivers)->orderBy('id','DESC')->first();
                 @endphp
-                <div class="media border p-2">
-                {{-- <img src="img_avatar3.png" alt="John Doe" class="mr-3 mt-3 rounded-circle" style="width:60px;"> --}}
+                <div class="media border p-2 {{$msg->receivers==$messageDetails->receivers?'bg-light':''}}">
+                <img src="img_avatar3.png" alt="John Doe" class="mr-3 mt-3 rounded-circle" style="width:60px;">
                 <div class="media-body">
                     @if(count(json_decode($msg->receivers))==1)
                         @foreach (json_decode($msg->receivers) as $userID)
@@ -207,86 +207,56 @@
 
             @endforelse
         </div>
-        <div class="col-sm-9 col-11">
+        <div class="col-sm-9 col-10">
             <div class="card">
                 <div class="card-header text-center">
-                    <span>Chat Box</span>
+                    @foreach (json_decode($messageDetails->receivers) as $key=>$receiverID)
+                        @php 
+                            $receiverDetails=App\User::where('id',$receiverID)->first();
+                        @endphp
+                        <span>{{$key==0?'':','}}{{$receiverDetails->username}}</span>
+                    @endforeach
+
                 </div>
                 <div class="card-body chat-care">
                     <ul class="chat">
-                        <li class="agent clearfix">
-                            <span class="chat-img left clearfix mx-2">
+                        @forelse ($allMessageDetails as $thisMessageDetails)
+                        <li class="{{$thisMessageDetails->sender==Auth::id()?'admin':'agent'}} clearfix">
+                            <span class="chat-img {{$thisMessageDetails->sender==Auth::id()?'left':'right'}} clearfix mx-2">
                                 <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="Agent" class="img-circle" />
+
                             </span>
                             <div class="chat-body clearfix">
                                 <div class="header clearfix">
-                                    <strong class="primary-font">Jack Sparrow</strong> <small class="right text-muted">
-                                        <span class="glyphicon glyphicon-time"></span>12 mins ago</small>
+                                    <strong class="primary-font">{{$thisMessageDetails->sender==Auth::id()?'Me':$thisMessageDetails->getSender->username}}</strong> <small class="right text-muted">
+                                        <span class="glyphicon glyphicon-time"></span>{{$thisMessageDetails->created_at->diffForHumans()}}</small>
                                 </div>
                                 <p>
-                                    Lorem ipsum dolor sit amet.
+                                    {{$thisMessageDetails->message}}
                                 </p>
                             </div>
                         </li>
-                        <li class="admin clearfix">
-                            <span class="chat-img right clearfix  mx-2">
-                                <img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="Admin" class="img-circle" />
-                            </span>
-                            <div class="chat-body clearfix">
-                                <div class="header clearfix">
-                                    <small class="left text-muted"><span class="glyphicon glyphicon-time"></span>13 mins ago</small>
-                                    <strong class="right primary-font">Bhaumik Patel</strong>
-                                </div>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                                    dolor, quis ullamcorper ligula sodales.
-                                </p>
-                            </div>
-                        </li>
-                        <li class="agent clearfix">
-                            <span class="chat-img left clearfix mx-2">
-                                <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="Agent" class="img-circle" />
-                            </span>
-                            <div class="chat-body clearfix">
-                                <div class="header clearfix">
-                                    <strong class="primary-font">Jack Sparrow</strong> <small class="right text-muted">
-                                        <span class="glyphicon glyphicon-time"></span>14 mins ago</small>
-                                </div>
-                                <p>
-                                    Lorem ipsum dolor sit amet.
-                                </p>
-                            </div>
-                        </li>
-                        <li class="admin clearfix">
-                            <span class="chat-img right clearfix  mx-2">
-                                <img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="Admin" class="img-circle" />
-                            </span>
-                            <div class="chat-body clearfix">
-                                <div class="header clearfix">
-                                    <small class="left text-muted"><span class="glyphicon glyphicon-time"></span>15 mins ago</small>
-                                    <strong class="right primary-font">Bhaumik Patel</strong>
-                                </div>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                                    dolor.
-                                </p>
-                            </div>
-                        </li>
+                        @empty
+                            
+                        @endforelse
+
                     </ul>
                 </div>
-                <div class="card-footer">
+                <form action="{{route('admin.inbox.update',$thisMessageDetails->id)}}" method="POST" class="card-footer">
+                    @csrf 
+                    @method('PUT')
                     <div class="input-group">
-                        <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
+                        <input id="btn-input" type="text" name="message" class="form-control input-sm" placeholder="Type your message here..." required />
                         <span class="input-group-btn">
-                            <button class="btn btn-primary" id="btn-chat">
+                            <button type="submit" class="btn btn-primary" id="btn-chat">
                                 Send</button>
                         </span>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
-</div>
+</div> --}}
     </div> <!-- content -->
 
 

@@ -18,8 +18,9 @@ class MessageController extends Controller
     public function index()
     {
         $users=User::where('type','!=','admin')->get();
-        $messageUsers=Message::select('receivers')->distinct()->get();
-       return view('admin/inbox/index',compact('messageUsers','users'));
+        // $messageUsers=Message::select('receivers')->distinct()->get()->reverse();
+        $messages=Message::orderBy('id','DESC')->get();
+       return view('admin/inbox/index',compact('messages','users'));
     }
 
     /**
@@ -73,7 +74,11 @@ class MessageController extends Controller
      */
     public function show($id)
     {
-        //
+        $users=User::where('type','!=','admin')->get();
+        $messageUsers=Message::select('receivers')->distinct()->get()->reverse();
+        $messageDetails=Message::where('id',$id)->first();
+        $allMessageDetails=Message::where('receivers',$messageDetails->receivers)->get();
+       return view('admin/inbox/show',compact('messageUsers','users','messageDetails','allMessageDetails'));
     }
 
     /**
@@ -96,7 +101,16 @@ class MessageController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate(['message'=>'required']);
+        $messageDetails=Message::where('id',$id)->first();
+        Message::create([
+            'sender'=>Auth::id(),
+            'receivers'=>$messageDetails->receivers,
+            'message'=>$request->message,
+            'seen'=>json_encode(array()),
+            'deleted'=>json_encode(array()),
+        ]);
+        return back()->with('success','Message sent successfully');
     }
 
     /**
@@ -109,4 +123,21 @@ class MessageController extends Controller
     {
         //
     }
+
+    public function delete($id){
+        Message::where('id',$id)->delete();
+        return back()->with('success','message deleted successfully');
+    }
+
+    public function selectedMessages(Request $request){
+        $request->validate([
+          'checked_messages'=>'required'
+        ]);
+        
+          foreach($request->checked_messages as $ID){
+            Message::where('id',$ID)->delete();
+          }
+       
+        return back()->with('success','The selected messages have been deleted');
+      }
 }
