@@ -54,11 +54,6 @@
         border-color: #305893;
     }
 
-    section
-    {
-        padding: 60px 0;
-    }
-
         section .section-title
         {
             text-align: center;
