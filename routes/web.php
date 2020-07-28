@@ -34,6 +34,7 @@ Route::post('/contact','FrontendController@submitContact')->name('contact');
 Route::middleware(['checkUser','verified'])->prefix('user/')->name('user.')->group(function(){
 
     Route::get('/dashboard', 'HomeController@userDashboard')->name('dashboard');
+    Route::get('/contests/created', 'HomeController@createdContests')->name('contests.created');
     Route::get('/contests/joined', 'HomeController@joinedContests')->name('contests.joinded');
     route::resource('/contests','ContestController');
     route::post('/contest/participate','ContestController@participateContest')->name('contest.participate');
