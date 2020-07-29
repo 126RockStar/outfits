@@ -22,10 +22,10 @@
                     <span> Dashboard </span>
                 </a>
             </li>
-            <li class="side-nav-item {{Request::is('/admin/inbox')? 'active' : ''}}">
-                <a href="{{route('admin.inbox.index')}}" class="side-nav-link">
+            <li class="side-nav-item {{Request::is('/admin/outbox')? 'active' : ''}}">
+                <a href="{{route('admin.outbox.index')}}" class="side-nav-link">
                     <i class="mdi mdi-message-reply-text"></i>
-                    <span> Inbox </span>
+                    <span> Outbox </span>
                 </a>
             </li>
 

@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Contest;
+use App\ContestParticipant;
 use App\Http\Controllers\Controller;
 use App\Report;
 use Illuminate\Http\Request;
+use App\Notifications\report as Message;
+use Notification;
 
 class ReportController extends Controller
 {
@@ -53,12 +57,20 @@ class ReportController extends Controller
             Report::where('id',$ID)->forceDelete();
           }
         }
-       
         return back()->with('success','The selected users have been deleted');
       }
 
-      public function mailReport(){
-        
+      public function mailReport($id){
+        $report=Report::where('id',$id)->firstOrFail();
+        $contest=Contest::where('id',$report->contest_id)->firstOrFail();
+        $entry=ContestParticipant::where('id',$report->entry_id)->firstOrFail();
+        $entryCreator=$entry->getParticipant;
+        $reportCreator=$report->getCreator;
+        $arr=['report'=>$report,'contest'=>$contest,'entry'=>$entry,'entryCreator'=>$entryCreator,'reportCreator'=>$reportCreator];
+
+        Notification::route('mail', $entry->getParticipant->email)->notify(new Message($arr));
+
+        return back()->with('success','The report details is sent to the mail of entry creator');
       }
 
 }

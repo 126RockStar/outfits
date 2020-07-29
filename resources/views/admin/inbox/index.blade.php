@@ -1,10 +1,10 @@
 @extends('admin.master')
 
 @section('title')
-  Inbox
+    Outbox
 @endsection
 @section('breadcrumb')
-  <li class="breadcrumb-item active">Inbox</li>
+  <li class="breadcrumb-item active">Outbox</li>
 @endsection
 
 @section('extra-css')
@@ -32,6 +32,7 @@
                     <th>To</th>
                     <th>Message</th>
                     <th>Seen By</th>
+                    <th>Deleted By</th>
                     <th style="width: 75px;">Action</th>
                 </tr>
             </thead>
@@ -68,6 +69,9 @@
                             <span class="text-danger">No Users</span>
                         @endforelse --}}
                         {{App\User::where('type','!=','admin')->get()->count()==count(json_decode($message->seen))?'All':count(json_decode($message->seen))}} Users
+                    </td>
+                    <td>
+                        {{App\User::where('type','!=','admin')->get()->count()==count(json_decode($message->deleted))?'All':count(json_decode($message->deleted))}} Users
                     </td>
 
                     <td>
@@ -123,7 +127,7 @@
         <div class="modal-content">
             <div class="modal-body">
 
-                <form action="{{ route('admin.inbox.store')}}" method="post" class="pl-3 pr-3">
+                <form action="{{ route('admin.outbox.store')}}" method="post" class="pl-3 pr-3">
                     @csrf
                     <div class="custom-control custom-checkbox float-right">
                         <input type="checkbox" class="custom-control-input" name="all_users" value="all" id="allUsers">

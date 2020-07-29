@@ -30,7 +30,7 @@ Route::middleware(['checkAdmin'])->prefix('admin/')->name('admin.')->group(funct
     Route::post('/contests/selected', 'ContestController@selectedContests')->name('contests.selected');
     
     //messages
-    route::resource('/inbox','MessageController');
+    route::resource('/outbox','MessageController');
     Route::get('/inbox/delete/{id}', 'MessageController@delete')->name('message.delete');
     Route::post('/inbox/selected', 'MessageController@selectedMessages')->name('messages.selected');
 
