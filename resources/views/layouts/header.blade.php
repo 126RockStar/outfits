@@ -1,9 +1,7 @@
-  <link rel="stylesheet" href="{{asset('public/frontEnd')}}/css/bootstrap.min.css?v=1a04">
+
   <link rel="stylesheet" href="{{asset('public/frontEnd')}}/templatetry/css/ionicons.min.css">
-  <link rel="stylesheet" href="{{asset('public/frontEnd')}}/templatetry/css/owl.carousel.css">
-  <link rel="stylesheet" href="{{asset('public/frontEnd')}}/templatetry/css/owl.theme.css">
   <link rel="stylesheet" href="{{asset('public/frontEnd')}}/templatetry/css/animate.css">
-  <link rel="stylesheet" href="{{asset('public/frontEnd')}}/templatetry/css/style.css?v=2g47">
+  <link rel="stylesheet" href="{{asset('public/frontEnd')}}/templatetry/css/style.css?v=7d27a">
 
 <style>
 .nav-link {
@@ -17,6 +15,7 @@
     background-color: #00ceb8;
     border-color: #00ceb8;
 }
+body {margin-top:80px}
 </style>
 
 	<!-- ****************************** Sidebar ************************** -->
@@ -36,7 +35,6 @@
 	</nav>
 
 	<!-- ****************************** Header ************************** -->
-
 	<header class="sticky" id="header">
 		<section class="container">
 			<section class="row">
@@ -82,9 +80,6 @@
 			</section>
 		</section>
 	</header>
-
     <script src="{{asset('public/frontEnd')}}/templatetry/js/jquery-2.1.3.min.js"></script>
-    <script src="{{asset('public/frontEnd')}}/templatetry/js/bootstrap.min.js"></script>
-	<script src="{{asset('public/frontEnd')}}/templatetry/js/modernizr.custom.js"></script>
     <script src="{{asset('public/frontEnd')}}/templatetry/js/wow.min.js"></script>
 	<script src="{{asset('public/frontEnd')}}/templatetry/js/script.js"></script>

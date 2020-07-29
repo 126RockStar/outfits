@@ -27,10 +27,11 @@
         a{text-decoration: none!important;}
      </style>
      @yield('styles')
+ 
 </head>
 
 <body>
-@include('layouts.header')
+
 
  @yield('content')
     <!-- Scripts -->

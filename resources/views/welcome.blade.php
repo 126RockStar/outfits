@@ -30,8 +30,8 @@
 
 
 
-<div class="card" style="margin-bottom:0">
-  <div class="text-center" style="font-size:30px">Character Fashion Contests and more!</div>
+<div>
+ 
 </div>
 <div class="container" style="margin-top:30px">
   <div class="row">
