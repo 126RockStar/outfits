@@ -80,6 +80,7 @@
                                         </td>
 
                                         <td>
+                                            <a href="{{route('admin.report.mail',$report->id)}}"  class="btn btn-info btn-sm">Send Email to User </a>
                                             @if($report->status == 'seen')
                                                 <a href="{{route('admin.report.unseen',$report->id)}}"  class="btn btn-warning btn-sm"> <i class="fa fa-eye-slash"></i></a>
                                             @else

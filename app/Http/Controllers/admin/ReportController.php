@@ -57,4 +57,8 @@ class ReportController extends Controller
         return back()->with('success','The selected users have been deleted');
       }
 
+      public function mailReport(){
+        
+      }
+
 }

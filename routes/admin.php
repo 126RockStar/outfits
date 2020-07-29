@@ -43,6 +43,7 @@ Route::middleware(['checkAdmin'])->prefix('admin/')->name('admin.')->group(funct
 
     //Reports
     Route::get('/reports', 'ReportController@reports')->name('reports');
+    Route::get('/report/mail/{id}', 'ReportController@mailReport')->name('report.mail');
     Route::get('/report/seen/{id}', 'ReportController@seenReport')->name('report.seen');
     Route::get('/report/unseen/{id}', 'ReportController@unseenReport')->name('report.unseen');
     Route::get('/report/delete/{id}', 'ReportController@deleteReport')->name('report.delete');
