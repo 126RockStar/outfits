@@ -51,7 +51,7 @@
 
     <ul class="nav nav-tabs">
         <li class="nav-item">
-            <a class="nav-link text-info active" href="{{route('user.messages')}}">Message</a>
+            <a class="nav-link text-info active" href="{{route('user.dashboard')}}">Message</a>
         </li>
         <li class="nav-item">
         <a class="nav-link text-info" href="{{route('user.contests.created')}}">Created</a>

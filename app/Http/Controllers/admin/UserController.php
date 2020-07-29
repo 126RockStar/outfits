@@ -124,11 +124,6 @@ class UserController extends Controller
         Contact::where('id',$id)->update(['status'=>'unseen']);
         return back()->with('success','the message is marked as unseen successfully');
     }
-    public function deleteMessage($id){
-        User::where('id',$id)->forceDelete();
-        return back()->with('success','the user is deleted successfully');
-    }
-
 
     public function selectedUsers(Request $request){
         $request->validate([
@@ -154,6 +149,12 @@ class UserController extends Controller
        
         return back()->with('success','The selected users have been deleted');
       }
+
+    public function deleteMessage($id){
+        Contact::where('id',$id)->delete();
+        return back()->with('success','the contact message is deleted successfully');
+    }
+
     public function selectedMessages(Request $request){
         $request->validate([
           'checked_messages'=>'required'

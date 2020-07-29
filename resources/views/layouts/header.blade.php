@@ -79,7 +79,52 @@ body {margin-top:80px}
 				</section> 
 			</section>
 		</section>
-	</header>
+    </header>
+    
+    
     <script src="{{asset('public/frontEnd')}}/templatetry/js/jquery-2.1.3.min.js"></script>
     <script src="{{asset('public/frontEnd')}}/templatetry/js/wow.min.js"></script>
-	<script src="{{asset('public/frontEnd')}}/templatetry/js/script.js"></script>
+    <script src="{{asset('public/frontEnd')}}/templatetry/js/script.js"></script>
+    
+    <script src="{{asset('public/vendors')}}/sweetalert2/sweetalert2.all.min.js"></script>
+
+ @if(session('success'))
+ <script>
+    Swal.fire({
+        position: 'bottom-end',
+        icon: 'success',
+        title: '{{ session("success") }}',
+        showConfirmButton: false,
+        timer: 5500
+    });
+ </script>
+
+@endif
+
+@if(session('error'))
+<script>
+    Swal.fire({
+        position: 'top-end',
+        icon: 'error',
+        title: '{{ session('error') }}',
+        showConfirmButton: false,
+        timer: 5500
+    });
+
+
+ </script>
+@endif
+
+@if ($errors->any())
+    @foreach ($errors->all() as $error)
+    <script>
+        Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: '{{ $error }}',
+            showConfirmButton: false,
+            timer: 5500
+        });
+     </script>
+    @endforeach
+@endif

@@ -82,7 +82,6 @@
                                                 <a href="{{route('admin.message.seen',$message->id)}}" class="btn btn-success btn-sm"> <i class="fa fa-eye"></i></a>
                                             @endif
                                             <a href="{{route('admin.message.delete',$message->id)}}" onclick="return confirm('Are you sure to delete the message?')" class="btn btn-danger btn-sm"> <i class="mdi mdi-delete"></i></a>
-                                        
                                         </td>
                                     </tr>
                                     @empty
