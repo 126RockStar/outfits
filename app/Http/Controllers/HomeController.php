@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contest;
 use App\ContestParticipant;
+use App\Message;
 use App\SubCategory;
 use Auth;
 use App\User;
@@ -41,14 +42,27 @@ class HomeController extends Controller
         $referredUsers=User::where('refered_user_id',Auth::id())->get();
         $contests=Contest::where('user_id',Auth::id())->where('status','open')->orderBy('id','DESC')->paginate(12);
         $allCreatedContests=Contest::where('user_id',Auth::id())->get();
-        return view('home',compact('referredUsers','contests','allCreatedContests'));
+        return view('contests/created',compact('referredUsers','contests','allCreatedContests'));
     }
+
+    public function deleteMessage($id){
+        $message=Message::where('id',$id)->whereRaw('JSON_CONTAINS(receivers, \'["' . Auth::id() . '"]\')')->firstOrFail();
+        $deleteList=json_decode($message->deleted);
+        array_push($deleteList,Auth::id());
+        $message->deleted=json_encode($deleteList);
+        $message->save();
+        return back()->with('success','message deleted');
+    }
+
     public function userDashboard()
     {
+        $messages=Message::whereRaw('JSON_CONTAINS(receivers, \'["' . Auth::id() . '"]\')')->whereRaw('not JSON_CONTAINS(deleted, \'[' . Auth::id() . ']\')')
+          ->orderBy('id','desc')->paginate(20);
+
         $referredUsers=User::where('refered_user_id',Auth::id())->get();
         $contests=Contest::where('user_id',Auth::id())->where('status','open')->orderBy('id','DESC')->paginate(12);
         $allCreatedContests=Contest::where('user_id',Auth::id())->get();
-        return view('home',compact('referredUsers','contests','allCreatedContests'));
+        return view('home',compact('referredUsers','contests','allCreatedContests','messages'));
     }
 
     public function joinedContests()

@@ -47,7 +47,7 @@ class MessageController extends Controller
             $users=User::where('type','!=','admin')->pluck('id');
             Message::create([
                 'sender'=>Auth::id(),
-                'receivers'=>json_encode($users),
+                'receivers'=>json_encode(($users)),
                 'message'=>$request->message,
                 'seen'=>json_encode(array()),
                 'deleted'=>json_encode(array()),

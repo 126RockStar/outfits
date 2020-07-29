@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title') 
-  Joined Contests
+  Created Contests
 @endsection
 @section('content')
 <div class="container">
@@ -11,10 +11,10 @@
             <a class="nav-link text-info" href="{{route('user.dashboard')}}">Message</a>
           </li>
         <li class="nav-item">
-          <a class="nav-link text-info" href="{{route('user.contests.created')}}">My Created</a>
+          <a class="nav-link text-info active" href="{{route('user.contests.created')}}">My Created</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-info active" href="{{route('user.contests.joined')}}">Joined</a>
+          <a class="nav-link text-info " href="{{route('user.contests.joined')}}">Joined</a>
         </li>
       </ul> 
     <div class="row justify-content-center">
