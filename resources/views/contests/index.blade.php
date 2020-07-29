@@ -228,11 +228,10 @@
 								      <div class="view">
                                         @if($contest->file_type=='image')
                                             <i class="fa fa-image position-absolute p-2 bg-info text-white"></i>
-                                            <img src="{{asset('public/storage/'.$contest->file)}}" class="img img-thumbnail posiiton-relative">
                                         @else
                                             <i class="fa fa-video position-absolute p-2 bg-info text-white"></i>
-                                            <video src="{{asset('public/storage/'.$contest->file)}}" class="posiiton-relative" style="height:200px"></video>
                                         @endif
+                                        <img src="{{asset('public/storage/'.$contest->thumbnail)}}" class="img img-thumbnail posiiton-relative">
                                         <h6 class="text-white">{{$contest->title}}</h6>
                                         <p class="text-muted">by <b>{{$contest->getCreator->username}}</b></p>
 									</div>                                                      
@@ -251,8 +250,16 @@
 											<p class="text-white">{{$contest->prize_description}}</p>
 										@endif</h6></li>
 										<li class="list-group-item"><h6>CATEGORY:<br>{{$contest->getCategory->name}} 
-									{{!empty($contest->getSubCategory)? ' > '.$contest->getSubCategory->name :''}}</h6></li>
-										<li class="list-group-item"><h6>{{count($contest->getParticipants)}} of {{$contest->participants}} contestants</h6></li>
+									        {{!empty($contest->getSubCategory)? ' > '.$contest->getSubCategory->name :''}}</h6></li>
+										<li class="list-group-item">
+                                            <h6>
+                                                @if($contest->status=='open')
+                                                    {{count($contest->getParticipants)}} of {{$contest->participants}} contestants
+                                                @else 
+                                                    contest is filled now
+                                                @endif
+                                            </h6>
+                                        </li>
 									  </ul>
                                 </div>
                                 <a href="{{route('contest.show',$contest->id)}}" class="btn btn-success btn-block">Details</a>
