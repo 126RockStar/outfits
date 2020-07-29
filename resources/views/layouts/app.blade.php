@@ -27,7 +27,7 @@
         a{text-decoration: none!important;}
      </style>
      @yield('styles')
- 
+@include('layouts.header')	 
 </head>
 
 <body>
