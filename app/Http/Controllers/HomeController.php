@@ -40,7 +40,7 @@ class HomeController extends Controller
     
     public function userDashboard()
     {
-        $messages=Message::whereRaw('JSON_CONTAINS(receivers, \'["' . Auth::id() . '"]\')')->whereRaw('not JSON_CONTAINS(deleted, \'[' . Auth::id() . ']\')')
+        $messages=Message::whereRaw('JSON_CONTAINS(receivers, \'[' . Auth::id() . ']\')')->whereRaw('not JSON_CONTAINS(deleted, \'[' . Auth::id() . ']\')')
           ->orderBy('id','desc')->paginate(20);
 
         $referredUsers=User::where('refered_user_id',Auth::id())->get();
@@ -65,7 +65,7 @@ class HomeController extends Controller
     }
 
     public function deleteMessage($id){
-        $message=Message::where('id',$id)->whereRaw('JSON_CONTAINS(receivers, \'["' . Auth::id() . '"]\')')->firstOrFail();
+        $message=Message::where('id',$id)->whereRaw('JSON_CONTAINS(receivers, \'[' . Auth::id() . ']\')')->firstOrFail();
         $deleteList=json_decode($message->deleted);
         array_push($deleteList,Auth::id());
         $message->deleted=json_encode($deleteList);

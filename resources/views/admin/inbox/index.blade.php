@@ -19,7 +19,7 @@
 
 @section('contents')
 <div class="content">
-<form method="POST" action="{{route('admin.messages.selected')}}" class="container">
+<form method="POST" action="{{route('admin.outbox.selected')}}" class="container">
     @csrf
     <a href="javascript:void(0);" class="btn btn-info m-2" data-toggle="modal" data-target="#new-message"><i class="mdi mdi-plus-circle mr-2"></i> New Message</a>
     <button type="submit" onclick="return confirm('Are you sure to delete the selected contests?')" class="btn btn-danger m-2 float-left" ><i class="mdi mdi-delete-sweep  mr-2"></i> Delete Selected</button>
@@ -75,7 +75,7 @@
                     </td>
 
                     <td>
-                        <a href="{{route('admin.message.delete',$message->id)}}" onclick="return confirm('Are you sure to delete the message?')" class="btn btn-danger btn-sm"> <i class="mdi mdi-delete"></i></a>
+                        <a href="{{route('admin.outbox.delete',$message->id)}}" onclick="return confirm('Are you sure to delete the message?')" class="btn btn-danger btn-sm"> <i class="mdi mdi-delete"></i></a>
                     </td>
                 </tr>
                 @empty

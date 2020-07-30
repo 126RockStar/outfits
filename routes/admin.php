@@ -31,8 +31,8 @@ Route::middleware(['checkAdmin'])->prefix('admin/')->name('admin.')->group(funct
     
     //messages
     route::resource('/outbox','MessageController');
-    Route::get('/inbox/delete/{id}', 'MessageController@delete')->name('message.delete');
-    Route::post('/inbox/selected', 'MessageController@selectedMessages')->name('messages.selected');
+    Route::get('/outbox/delete/{id}', 'MessageController@delete')->name('outbox.delete');
+    Route::post('/outbox/selected', 'MessageController@selectedMessages')->name('outbox.selected');
 
     //contact messages
     Route::get('/messages', 'UserController@messages')->name('messages');
