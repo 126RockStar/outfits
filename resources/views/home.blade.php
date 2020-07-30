@@ -43,18 +43,22 @@
     
 
     <ul class="nav nav-pills">
-        <li class="bg-success mr-2 p-1 border">
-            <a class="text-white" href="{{route('user.dashboard')}}">Messages</a>
-        </li>
+
         <li class="mr-2 p-1 border">
             <a class="text-white" href="{{route('user.contests.created')}}">Created Contests</a>
         </li>
         <li class="border p-1">
             <a class="text-white" href="{{route('user.contests.joined')}}">Joined Contests</a>
         </li>
+        <li class="bg-success mr-2 p-1 border">
+            <a class="text-white" href="{{route('user.dashboard')}}">Messages</a>
+        </li>		
     </ul><br><br>
     <div class="row justify-content-center">
         <div class="col-md-12">
+		   <div class="card">
+                <div class="card-header text-capitalize">Messages</div>
+					<div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
@@ -146,8 +150,10 @@
                         </form>
                         </div>
                     </div> --}}
-        </div>
+					</div>
+				</div>
+			</div>
+         </div>
     </div>
- 
 </div>
 @endsection

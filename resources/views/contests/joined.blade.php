@@ -6,21 +6,22 @@
 <div class="container">
         
         <ul class="nav nav-pills">
-            <li class="mr-2 p-1 border">
-                <a class="text-white" href="{{route('user.dashboard')}}">Messages</a>
-            </li>
+
             <li class="mr-2 p-1 border">
                 <a class="text-white" href="{{route('user.contests.created')}}">Created Contests</a>
             </li>
             <li class="bg-success border p-1">
                 <a class="text-white" href="{{route('user.contests.joined')}}">Joined Contests</a>
             </li>
+            <li class="mr-2 p-1 border">
+                <a class="text-white" href="{{route('user.dashboard')}}">Messages</a>
+            </li>			
         </ul><br><br>
 
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header text-capitalize">Contests <a href="{{route('user.contests.create')}}"class="btn btn-success btn-lg float-right">Create Contest</a></div>
+                <div class="card-header text-capitalize">Joined Contests</div>
                 <div class="card-body">
                     
                     @if (session('status'))

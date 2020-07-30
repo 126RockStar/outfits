@@ -945,14 +945,16 @@ View Contest
 		   <h6>Participants:  {{count($contest->getParticipants)}} of {{$contest->participants}}</h6>
 			<div class="parent-container">
 				@forelse($participants as $participant)
-				<div href="{{asset('public/storage/'.$participant->file)}}" title="{{$participant->getParticipant->username}}" data-source="{{route('user.contest.report',$participant->id)}}" class="{{$contest->file_type=='video'?'mfp-iframe':''}}" style="cursor: pointer">
+<!--  below code I only changed the div href to an a href -->				
+				<a href="{{asset('public/storage/'.$participant->file)}}" title="{{$participant->getParticipant->username}}" data-source="{{route('user.contest.report',$participant->id)}}" class="{{$contest->file_type=='video'?'mfp-iframe':''}}" style="cursor: pointer">
                     @if($contest->file_type=='image')
                         <img src="{{asset('public/storage/'.$participant->file)}}"  height="120px" title="{{$participant->getParticipant->username}}">
                     @else
                         <video src="{{asset('public/storage/'.$participant->file)}}"  height="120px" title="{{$participant->getParticipant->username}}"></video>
                     @endif
                     @empty 
-                </div>
+                </a>
+				
                 @endforelse
 			</div>
         </div>				

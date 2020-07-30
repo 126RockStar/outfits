@@ -50,18 +50,22 @@
                 </div> 
 
     <ul class="nav nav-tabs">
-        <li class="nav-item">
-            <a class="nav-link text-info active" href="{{route('user.messages')}}">Message</a>
-          </li>
+
         <li class="nav-item">
           <a class="nav-link text-info " href="{{route('user.dashboard')}}">Created</a>
         </li>
         <li class="nav-item">
           <a class="nav-link text-info" href="{{route('user.contests.joinded')}}">Joined</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link text-info active" href="{{route('user.messages')}}">Message</a>
+          </li>		
     </ul> 
     <div class="row justify-content-center">
         <div class="col-md-12">
+            <div class="card">
+                <div class="card-header text-capitalize">Joined Contests</div>
+                <div class="card-body">
  
                     
                     @if (session('status'))
@@ -196,8 +200,10 @@
                         </form>
                         </div>
                     </div>
+				</div>
+			</div>	
         </div>
     </div>
- 
+ </div>
 </div>
 @endsection
