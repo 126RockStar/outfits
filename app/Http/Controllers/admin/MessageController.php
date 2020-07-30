@@ -56,7 +56,7 @@ class MessageController extends Controller
             $request->validate(['users'=>'required']);
             Message::create([
                 'sender'=>Auth::id(),
-                'receivers'=>json_encode($request->users),
+                'receivers'=>json_encode($request->users,JSON_NUMERIC_CHECK),
                 'message'=>$request->message,
                 'seen'=>json_encode(array()),
                 'deleted'=>json_encode(array()),

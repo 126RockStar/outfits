@@ -21,9 +21,6 @@
 .nav-tabs {
     border-bottom: none;
 }
-.text-info {
-    color: #ffffff!important;
-}
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
     background-color: #17a2b8;
     border:none;
@@ -43,23 +40,19 @@
 @endsection
 @section('content')
 <div class="container"><br><br>
-    <div class="float-right">Contests({{count($allCreatedContests)}} of {{Auth::user()->max_contests}}) 
-        @if(count($allCreatedContests)<Auth::user()->max_contests) 
-            <a href="{{route('user.contests.create')}}"class="btn btn-primary float-right" style="width:8rem;margin-left: 1rem;"> Create Contest</a>
-        @endif
-    </div> 
+    
 
-    <ul class="nav nav-tabs">
-        <li class="nav-item">
-            <a class="nav-link text-info active" href="{{route('user.dashboard')}}">Message</a>
+    <ul class="nav nav-pills">
+        <li class="bg-success mr-2 p-1 border">
+            <a class="text-white" href="{{route('user.dashboard')}}">Messages</a>
         </li>
-        <li class="nav-item">
-        <a class="nav-link text-info" href="{{route('user.contests.created')}}">Created</a>
+        <li class="mr-2 p-1 border">
+            <a class="text-white" href="{{route('user.contests.created')}}">Created Contests</a>
         </li>
-        <li class="nav-item">
-        <a class="nav-link text-info" href="{{route('user.contests.joined')}}">Joined</a>
+        <li class="border p-1">
+            <a class="text-white" href="{{route('user.contests.joined')}}">Joined Contests</a>
         </li>
-    </ul> 
+    </ul><br><br>
     <div class="row justify-content-center">
         <div class="col-md-12">
                     @if (session('status'))

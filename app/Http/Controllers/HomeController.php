@@ -37,23 +37,7 @@ class HomeController extends Controller
         }
     }
 
-    public function createdContests()
-    {
-        $referredUsers=User::where('refered_user_id',Auth::id())->get();
-        $contests=Contest::where('user_id',Auth::id())->where('status','open')->orderBy('id','DESC')->paginate(12);
-        $allCreatedContests=Contest::where('user_id',Auth::id())->get();
-        return view('contests/created',compact('referredUsers','contests','allCreatedContests'));
-    }
-
-    public function deleteMessage($id){
-        $message=Message::where('id',$id)->whereRaw('JSON_CONTAINS(receivers, \'["' . Auth::id() . '"]\')')->firstOrFail();
-        $deleteList=json_decode($message->deleted);
-        array_push($deleteList,Auth::id());
-        $message->deleted=json_encode($deleteList);
-        $message->save();
-        return back()->with('success','message deleted');
-    }
-
+    
     public function userDashboard()
     {
         $messages=Message::whereRaw('JSON_CONTAINS(receivers, \'["' . Auth::id() . '"]\')')->whereRaw('not JSON_CONTAINS(deleted, \'[' . Auth::id() . ']\')')
@@ -71,6 +55,24 @@ class HomeController extends Controller
         $contests=Contest::where('status','open')->where('user_id','!=',Auth::id())->WhereIn('id',$participatedContests)->orderBy('id','DESC')->paginate(12);
         return view('contests/joined',compact('contests'));
     }
+
+    public function createdContests()
+    {
+        $referredUsers=User::where('refered_user_id',Auth::id())->get();
+        $contests=Contest::where('user_id',Auth::id())->where('status','open')->orderBy('id','DESC')->paginate(12);
+        $allCreatedContests=Contest::where('user_id',Auth::id())->get();
+        return view('contests/created',compact('referredUsers','contests','allCreatedContests'));
+    }
+
+    public function deleteMessage($id){
+        $message=Message::where('id',$id)->whereRaw('JSON_CONTAINS(receivers, \'["' . Auth::id() . '"]\')')->firstOrFail();
+        $deleteList=json_decode($message->deleted);
+        array_push($deleteList,Auth::id());
+        $message->deleted=json_encode($deleteList);
+        $message->save();
+        return back()->with('success','message deleted');
+    }
+
 
     public function fetchSubCategory(Request $request){
         $subCategories = SubCategory::where("category_id",$request->catID)->pluck("name","id");

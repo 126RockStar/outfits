@@ -4,19 +4,19 @@
 @endsection
 @section('content')
 <div class="container">
-    <h1 class="text-center">Welcome <b>{{Auth::user()->username}}</b></h1>
+        
+        <ul class="nav nav-pills">
+            <li class="mr-2 p-1 border">
+                <a class="text-white" href="{{route('user.dashboard')}}">Messages</a>
+            </li>
+            <li class="mr-2 p-1 border">
+                <a class="text-white" href="{{route('user.contests.created')}}">Created Contests</a>
+            </li>
+            <li class="bg-success border p-1">
+                <a class="text-white" href="{{route('user.contests.joined')}}">Joined Contests</a>
+            </li>
+        </ul><br><br>
 
-    <ul class="nav nav-tabs">
-        <li class="nav-item">
-            <a class="nav-link text-info" href="{{route('user.dashboard')}}">Message</a>
-          </li>
-        <li class="nav-item">
-          <a class="nav-link text-info" href="{{route('user.contests.created')}}">My Created</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-info active" href="{{route('user.contests.joined')}}">Joined</a>
-        </li>
-      </ul> 
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
