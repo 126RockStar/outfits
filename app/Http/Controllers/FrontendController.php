@@ -60,7 +60,7 @@ class FrontendController extends Controller
         }else{
             $isParticipated='';
         }
-        $contest=Contest::where('id',$id)->firstOrFail();
+        $contest=Contest::where('id',$id)->where('status','open')->firstOrFail();
         $participants=ContestParticipant::where('contest_id',$id)->get();
 
  

@@ -38,6 +38,7 @@ Route::middleware(['checkUser','verified'])->prefix('user/')->name('user.')->gro
     Route::get('/message/delete/{id}','HomeController@deleteMessage')->name('message.delete');
     Route::get('/contests/created', 'HomeController@createdContests')->name('contests.created');
     Route::get('/contests/joined', 'HomeController@joinedContests')->name('contests.joined');
+    Route::get('/contests/judging', 'HomeController@judgingContests')->name('contests.judging');
 
     route::resource('/contests','ContestController');
     route::post('/contest/participate','ContestController@participateContest')->name('contest.participate');

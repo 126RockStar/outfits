@@ -44,9 +44,6 @@
 
     <ul class="nav nav-pills">
         <li class="mr-2 p-1 border">
-            <a class="text-white" href="{{route('user.contests.judging')}}">Contests in Judge</a>
-        </li>
-        <li class="mr-2 p-1 border">
             <a class="text-white" href="{{route('user.contests.created')}}">Created Contests</a>
         </li>
         <li class="border p-1">
@@ -59,9 +56,19 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
 		   <div class="card">
-                <div class="card-header text-capitalize">Dashboard</div>
+                <div class="card-header text-capitalize">Contests in Judge</div>
 					<div class="card-body">
-                       
+                        <ul class="list-group">
+                            @forelse($contestsInJudge as $contest)
+                                <li class="list-group-item text-dark">
+                                    <img src="{{asset('public/storage/'.$contest->thumbnail)}}" class="img-thumbnail float-left mr-2" style="height:40px">
+                                    {{$contest->title}}(<small class="text-muted">{{$contest->participants}} participants</small>)
+                                </li>
+                            @empty
+                                <li class="list-group-item text-danger">No participated or created contest in judge</li>
+                            @endempty
+                        </ul>
+                        {{$contestsInJudge->links()}}
                     {{-- @if(Auth::user()->type=='user')
                         <br><br>
                         <div class="col-sm-8 d-flex flex-column align-items-center justify-content-center">

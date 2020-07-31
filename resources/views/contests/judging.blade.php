@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title') 
-  Messages
+  Contests in Judge
 @endsection
 @section('styles') 
 <style>
@@ -43,8 +43,7 @@
     
 
     <ul class="nav nav-pills">
-        
-        <li class="mr-2 p-1 border">
+        <li class="mr-2 p-1 border bg-success">
             <a class="text-white" href="{{route('user.contests.judging')}}">Contests in Judge</a>
         </li>
         <li class="mr-2 p-1 border">
@@ -53,34 +52,26 @@
         <li class="border p-1">
             <a class="text-white" href="{{route('user.contests.joined')}}">Joined Contests</a>
         </li>
-        <li class="bg-success mr-2 p-1 border">
+        <li class="mr-2 p-1 border">
             <a class="text-white" href="{{route('user.messages')}}">Messages</a>
         </li>		
     </ul><br><br>
     <div class="row justify-content-center">
         <div class="col-md-12">
 		   <div class="card">
-                <div class="card-header text-capitalize">Messages</div>
+                <div class="card-header text-capitalize">Contests in Judge</div>
 					<div class="card-body">
                         <ul class="list-group">
-                            @forelse($messages as $message)
-                                <li  class="list-group-item bg-secondary {{(in_array(Auth::id(),json_decode($message->seen))?'text-white':'text-muted bg-light')}}">
-                                    {{$message->message}}
-                                    <a class="btn btn-danger btn-sm float-right" href="{{route('user.message.delete',$message->id)}}" onclick="return confirm('are you sure to delete?')"><i class="fa fa-trash"></i></a>
+                            @forelse($contestsInJudge as $contest)
+                                <li class="list-group-item text-dark">
+                                    <img src="{{asset('public/storage/'.$contest->thumbnail)}}" class="img-thumbnail float-left mr-2" style="height:40px">
+                                    {{$contest->title}}(<small class="text-muted">{{$contest->participants}} participants</small>)
                                 </li>
-                                @if(!in_array(Auth::id(),json_decode($message->seen)))
-                                    @php 
-                                        $seenList=json_decode($message->seen);
-                                        array_push($seenList,Auth::id());
-                                        $message->seen=json_encode($seenList);
-                                        $message->save();
-                                    @endphp
-                                @endif
-                            @empty 
-                                <h3 class="text-danger text-center">No Message</h3>
-                            @endforelse
-                            {{$messages->links()}}
+                            @empty
+                                <li class="list-group-item text-danger">No participated or created contest in judge</li>
+                            @endempty
                         </ul>
+                        {{$contestsInJudge->links()}}
 					</div>
 				</div>
 			</div>

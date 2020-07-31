@@ -7,6 +7,10 @@
         
         <ul class="nav nav-pills">
             <li class="mr-2 p-1 border">
+                <a class="text-white" href="{{route('user.contests.judging')}}">Contests in Judge</a>
+            </li>
+
+            <li class="mr-2 p-1 border">
                 <a class="text-white" href="{{route('user.contests.created')}}">Created Contests</a>
             </li>
             <li class="bg-success border p-1">

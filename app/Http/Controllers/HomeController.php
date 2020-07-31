@@ -40,10 +40,15 @@ class HomeController extends Controller
     
     public function userDashboard()
     {
-        $referredUsers=User::where('refered_user_id',Auth::id())->get();
-        $contests=Contest::where('user_id',Auth::id())->where('status','open')->orderBy('id','DESC')->paginate(12);
-        $allCreatedContests=Contest::where('user_id',Auth::id())->get();
-        return view('home',compact('referredUsers','contests','allCreatedContests'));
+        return view('home');
+    }
+
+    public function judgingContests()
+    {
+        $participatedContests=ContestParticipant::where('user_id',Auth::id())->pluck('contest_id');
+        $contestsInJudge=Contest::where('status','judge')->where('user_id',Auth::id())->orWhereIn('id',$participatedContests)->orderBy('id','DESC')->paginate(12);
+        
+        return view('contests/judging',compact('contestsInJudge'));
     }
     
     public function messages()

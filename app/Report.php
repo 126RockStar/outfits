@@ -15,6 +15,7 @@ class Report extends Model
     public function getContest(){
         return $this->hasOne('App\Contest','id','contest_id');
     }
+    
     public function getEntry(){
         return $this->hasOne('App\ContestParticipant','id','entry_id');
     }
