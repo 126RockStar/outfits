@@ -6,7 +6,6 @@
 <div class="container">
         
         <ul class="nav nav-pills">
-
             <li class="mr-2 p-1 border">
                 <a class="text-white" href="{{route('user.contests.created')}}">Created Contests</a>
             </li>
@@ -14,7 +13,7 @@
                 <a class="text-white" href="{{route('user.contests.joined')}}">Joined Contests</a>
             </li>
             <li class="mr-2 p-1 border">
-                <a class="text-white" href="{{route('user.dashboard')}}">Messages</a>
+                <a class="text-white" href="{{route('user.messages')}}">Messages</a>
             </li>			
         </ul><br><br>
 

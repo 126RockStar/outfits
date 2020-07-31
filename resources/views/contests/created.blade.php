@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title') 
-  Dashboard
+  Created Contests
 @endsection
 @section('styles') 
 <style>
@@ -58,18 +58,12 @@
             <a class="text-white" href="{{route('user.contests.joined')}}">Joined Contests</a>
         </li>
        <li class="mr-2 p-1 border">
-            <a class="text-white" href="{{route('user.dashboard')}}">Messages</a>
+            <a class="text-white" href="{{route('user.messages')}}">Messages</a>
         </li>		
     </ul><br>
     <div class="row justify-content-center">
         <div class="col-md-12">
- 
-                    
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+
                     <div class="row">
                         @forelse($contests as $contest)
                         <div class=" col-md-4">
@@ -168,7 +162,7 @@
                         <div class="modal-dialog modal-lg">
                             <form method="POST" class="modal-content" action="{{ route('user.contest.post.update') }}">
                                 @csrf
-                                <input type="hidden" name="id" value="{{$contest->id}}">
+                                <input type="hidden" name="id" value="">
                     
                             <!-- Modal Header -->
                             <div class="modal-header">
@@ -179,7 +173,7 @@
                             <!-- Modal body -->
                             <div class="modal-body">
                                     <div class="form-group">
-                                            <textarea id="post" type="text" class="form-control @error('post') is-invalid @enderror" name="post" required autocomplete="post" autofocus>{{$contest->post}}</textarea>
+                                            <textarea id="post" type="text" class="form-control @error('post') is-invalid @enderror" name="post" required autocomplete="post" autofocus></textarea>
                                             @error('post')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>

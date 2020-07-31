@@ -563,7 +563,7 @@ View Contest
 
     @if($contest->file_type=='image')
         $('.parent-container').magnificPopup({
-            delegate: 'div', // child items selector, by clicking on it popup will open
+            delegate: 'a', // child items selector, by clicking on it popup will open
             type: 'image',
             gallery:{
                 enabled:true
@@ -580,7 +580,7 @@ View Contest
         });
     @else
         $('.parent-container').magnificPopup({
-            delegate: 'div', // child items selector, by clicking on it popup will open
+            delegate: 'a', // child items selector, by clicking on it popup will open
             type: 'irame',
             gallery:{
                 enabled:true
@@ -947,11 +947,8 @@ View Contest
 				@forelse($participants as $participant)
 <!--  below code I only changed the div href to an a href -->				
 				<a href="{{asset('public/storage/'.$participant->file)}}" title="{{$participant->getParticipant->username}}" data-source="{{route('user.contest.report',$participant->id)}}" class="{{$contest->file_type=='video'?'mfp-iframe':''}}" style="cursor: pointer">
-                    @if($contest->file_type=='image')
-                        <img src="{{asset('public/storage/'.$participant->file)}}"  height="120px" title="{{$participant->getParticipant->username}}">
-                    @else
-                        <video src="{{asset('public/storage/'.$participant->file)}}"  height="120px" title="{{$participant->getParticipant->username}}"></video>
-                    @endif
+                    <img src="{{asset('public/storage/'.$participant->thumbnail)}}"  height="120px" title="{{$participant->getParticipant->username}}">
+                   
                     @empty 
                 </a>
 				

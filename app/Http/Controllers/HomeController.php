@@ -40,13 +40,21 @@ class HomeController extends Controller
     
     public function userDashboard()
     {
+        $referredUsers=User::where('refered_user_id',Auth::id())->get();
+        $contests=Contest::where('user_id',Auth::id())->where('status','open')->orderBy('id','DESC')->paginate(12);
+        $allCreatedContests=Contest::where('user_id',Auth::id())->get();
+        return view('home',compact('referredUsers','contests','allCreatedContests'));
+    }
+    
+    public function messages()
+    {
         $messages=Message::whereRaw('JSON_CONTAINS(receivers, \'[' . Auth::id() . ']\')')->whereRaw('not JSON_CONTAINS(deleted, \'[' . Auth::id() . ']\')')
           ->orderBy('id','desc')->paginate(20);
 
         $referredUsers=User::where('refered_user_id',Auth::id())->get();
         $contests=Contest::where('user_id',Auth::id())->where('status','open')->orderBy('id','DESC')->paginate(12);
         $allCreatedContests=Contest::where('user_id',Auth::id())->get();
-        return view('home',compact('referredUsers','contests','allCreatedContests','messages'));
+        return view('user/message',compact('referredUsers','contests','allCreatedContests','messages'));
     }
 
     public function joinedContests()
