@@ -209,11 +209,11 @@ class ContestController extends Controller
     {
 
         $contest=Contest::where('id',$request->id)->firstOrFail();
-
+        $path=$request->file('file')->store('entries');
         $entry=ContestParticipant::create([
             'user_id'=>Auth::id(),
             'contest_id'=>$request->id,
-            'file'=>$request->file('file')->store('entries'),
+            'file'=>$path,
         ]);
 
         if($contest->file_type=='video'){
@@ -224,7 +224,7 @@ class ContestController extends Controller
             ->save($entry->file.'.jpg');
             $entry->update(['thumbnail'=>$entry->file.'.jpg']);
         }else{
-            $entry->update(['thumbnail'=>$entry->file]);
+            $entry->update(['thumbnail'=>$path]);
         }
         
 

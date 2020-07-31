@@ -23,15 +23,15 @@ class FrontendController extends Controller
     public function contests(){
         $categories=Category::all();
         if(isset($_GET['subCategory']) && isset($_GET['category'])){
-            $contests=Contest::where('sub_category',$_GET['subCategory'])->orderBy('id','DESC')->paginate(48);
+            $contests=Contest::where('sub_category',$_GET['subCategory'])->where('status','open')->orderBy('id','DESC')->paginate(48);
         }else if(isset($_GET['category']) && !isset($_GET['subCategory'])){
-            $contests=Contest::where('category',$_GET['category'])->orderBy('id','DESC')->paginate(48);
+            $contests=Contest::where('category',$_GET['category'])->where('status','open')->orderBy('id','DESC')->paginate(48);
         }else if(isset($_GET['type'])){
-            $contests=Contest::where('file_type',$_GET['type'])->orderBy('id','DESC')->paginate(48);
+            $contests=Contest::where('file_type',$_GET['type'])->where('status','open')->orderBy('id','DESC')->paginate(48);
         }else if(isset($_GET['prized'])){
-            $contests=Contest::whereNotNull('prize_description')->orderBy('id','DESC')->paginate(48);
+            $contests=Contest::whereNotNull('prize_description')->where('status','open')->orderBy('id','DESC')->paginate(48);
         }else{
-            $contests=Contest::orderBy('id','DESC')->paginate(48);
+            $contests=Contest::orderBy('id','DESC')->where('status','open')->paginate(48);
         }
 
         return view('contests/index',compact('contests','categories'));
@@ -60,7 +60,7 @@ class FrontendController extends Controller
         }else{
             $isParticipated='';
         }
-        $contest=Contest::where('id',$id)->where('status','open')->firstOrFail();
+        $contest=Contest::where('id',$id)->firstOrFail();
         $participants=ContestParticipant::where('contest_id',$id)->get();
 
  
