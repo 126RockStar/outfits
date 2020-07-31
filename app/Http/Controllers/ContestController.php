@@ -11,6 +11,9 @@ use App\SubCategory;
 use Faker\Provider\ar_JO\Company;
 use FFMpeg;
 use Illuminate\Http\Request;
+use App\Notifications\Prize;
+use App\Notifications\Judge;
+use Notification;
 
 class ContestController extends Controller
 {
@@ -102,6 +105,8 @@ class ContestController extends Controller
 
             if(isset($request->prize)){
                 $contest->update(['prize_description'=>$request->prize_description]);
+                $arr=['contest'=>$contest];
+                Notification::route('mail', $contest->getCreator->email)->notify(new Prize($arr));
             }
 
             return redirect(route('user.dashboard'))->with('success','contest added successfully');
@@ -171,6 +176,8 @@ class ContestController extends Controller
 
         if(isset($request->prize)){
             $contest->update(['prize_description'=>$request->prize_description]);
+            $arr=['contest'=>$contest];
+            Notification::route('mail', $contest->getCreator->email)->notify(new Prize($arr));
         }else{
             $contest->update(['prize_description'=>NULL]);
         }
@@ -231,6 +238,8 @@ class ContestController extends Controller
 
         if(count($contest->getParticipants)>=$contest->participants){
             $contest->update(['status'=>'judge']);
+            $arr=['contest'=>$contest];
+            Notification::route('mail', $contest->getCreator->email)->notify(new Judge($arr));
         }
 
 
